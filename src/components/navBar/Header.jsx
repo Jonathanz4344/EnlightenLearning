@@ -21,7 +21,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import CloseIcon from "@mui/icons-material/Close";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import CEC_Logo from "/images/logo/CEC_Logo.png";
+import Logo from "/images/logo/Logo.png";
 import { Helmet } from "react-helmet-async";
 import { styled } from "@mui/material/styles";
 
@@ -639,7 +639,7 @@ const Header = ({ mode, toggleColorMode }) => {
                 links: [
                   { text: "Tutoring Services", href: PathConstants.HOME },
                   { text: "Success Stories", href: PathConstants.HOME },
-                  { text: "Events & Programs", href: PathConstants.HOME },
+                  { text: "Events & Programs", href: PathConstants.EVENTS },
                 ],
               },
             ]}
@@ -656,7 +656,7 @@ const Header = ({ mode, toggleColorMode }) => {
             items={[
               {
                 links: [
-                  { text: "Volunteer Opportunities", href: PathConstants.HOME },
+                  { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES},
                   { text: "Apply as a Tutor", href: PathConstants.HOME },
                   { text: "Join the Executive Team", href: PathConstants.HOME },
 
@@ -721,7 +721,7 @@ const Header = ({ mode, toggleColorMode }) => {
                 >
                   <Box
                     component="img"
-                    src={CEC_Logo}
+                    src={Logo}
                     style={{
                       ...logoStyle,
                       filter: 'drop-shadow(0 4px 8px rgba(0,0,0,0.1))',
@@ -879,7 +879,7 @@ const Header = ({ mode, toggleColorMode }) => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
               <Box
                 component="img"
-                src={CEC_Logo}
+                src={Logo}
                 style={{
                   width: "50px",
                   height: "33px",

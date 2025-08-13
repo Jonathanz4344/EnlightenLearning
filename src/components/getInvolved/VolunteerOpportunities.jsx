@@ -73,7 +73,7 @@ const volunteerData = [
         description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
         formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
         category: "Volleyball",
-        volunteersNeeded: 15,
+        totalParticipants: 30,
         duration: "1 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-07-01",

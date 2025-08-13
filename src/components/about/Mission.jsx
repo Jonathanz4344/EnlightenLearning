@@ -32,8 +32,10 @@ import {
     MonetizationOn,
     TrendingUp,
     VolunteerActivism,
+    Event as EventIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
+import PathConstants from "../../routes/pathConstants";
 
 // Mission pillars data
 const missionPillars = [
@@ -45,7 +47,7 @@ const missionPillars = [
         icon: JoyIcon,
         color: '#4caf50',
         bgGradient: 'linear-gradient(135deg, #4caf50, #66bb6a)',
-        stats: { value: "60+", label: "Students Inspired" },
+        stats: { value: "60+", label: "Childrens Impacted" },
         features: [
             "Interactive learning experiences",
             "Gamified educational content",
@@ -61,7 +63,7 @@ const missionPillars = [
         icon: PassionIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
-        stats: { value: "50+", label: "Volunteer Hours" },
+        stats: { value: "3+", label: "Events and Programs" },
         features: [
             "Dedicated volunteer tutors",
             "Mentorship programs",
@@ -77,7 +79,7 @@ const missionPillars = [
         icon: ChangeIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
-        stats: { value: "2+", label: "Communities Reached" },
+        stats: { value: "20+", label: "Active Volunteers" },
         features: [
             "Global educational access",
             "Leadership development",
@@ -107,7 +109,9 @@ const missionPillars = [
 const impactMetrics = [
     { icon: EducationIcon, value: "60+", label: "Children Impacted", color: "#4caf50" },
     { icon: CommunityIcon, value: "20+", label: "Active Volunteers", color: "#2196f3" },
-    { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" },];
+    { icon: EventIcon, value: "3", label: "Events and Programs", color: "#e91e63" },
+    { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" }
+];
 
 // Values data
 const coreValues = [
@@ -437,8 +441,12 @@ export default function Mission() {
     const isDarkMode = mode === "dark";
     const theme = useTheme();
 
+    const handleVolunteerClick = () => {
+        window.location.href = PathConstants.VOLUNTEER_OPPORTUNITIES;
+    };
+
     const handleGetInvolvedClick = () => {
-        window.open("https://forms.gle/JVqaueQjwRexzNjz8", '_blank');
+        window.location.href = PathConstants.HOME;
     };
 
     return (
@@ -539,7 +547,7 @@ export default function Mission() {
                             <Button
                                 variant="contained"
                                 size="large"
-                                onClick={handleGetInvolvedClick}
+                                onClick={handleVolunteerClick}
                                 endIcon={<CelebrationIcon />}
                                 sx={{
                                     py: 2.5,
@@ -583,7 +591,7 @@ export default function Mission() {
 
                     <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
                         {impactMetrics.map((metric, index) => (
-                            <Grid item xs={12} sm={6} md={4} key={index}>
+                            <Grid item xs={12} sm={6} md={3} key={index}>
                                 <ImpactMetric metric={metric} index={index} />
                             </Grid>
                         ))}
@@ -753,7 +761,7 @@ export default function Mission() {
                             <Button
                                 variant="contained"
                                 size="large"
-                                onClick={handleGetInvolvedClick}
+                                onClick={handleVolunteerClick}
                                 endIcon={<VolunteerActivism />}
                                 sx={{
                                     py: 2,

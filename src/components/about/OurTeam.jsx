@@ -12,7 +12,6 @@ import {
     Paper,
     Fade,
     Grow,
-    Chip,
 } from "@mui/material";
 import {
     Person as PersonIcon,
@@ -36,90 +35,66 @@ const teamMembers = [
     {
         id: 1,
         name: "Brianna Tam",
-        role: "President",
-        description: "Leading our mission to transform education and create positive change in our community.",
+        roles: ["President", "Director of Finance"],
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
-        achievements: ["Community Leader", "Educational Innovator", "Youth Advocate"],
-        specialties: ["Strategic Planning", "Team Leadership", "Community Outreach"]
     },
     {
         id: 2,
         name: "Tiffany Qi",
-        role: "Head of Design",
-        description: "Creating beautiful and engaging educational materials that inspire learning.",
+        roles: ["Head of Design"],
         icon: DesignIcon,
         color: '#9c27b0',
         bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
-        achievements: ["Creative Director", "UX Designer", "Brand Strategist"],
-        specialties: ["Visual Design", "User Experience", "Brand Development"]
     },
     {
         id: 3,
         name: "Veronica Chung",
-        role: "Public Relations",
-        description: "Connecting with our community and spreading awareness about our educational mission.",
+        roles: ["Public Relations"],
         icon: PublicIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
-        achievements: ["Communications Expert", "Community Builder", "Media Coordinator"],
-        specialties: ["Public Speaking", "Social Media", "Event Coordination"]
     },
     {
         id: 4,
         name: "Eileen Liang",
-        role: "Volunteer Coordinator",
-        description: "Organizing and supporting our amazing team of volunteer tutors and mentors.",
+        roles: ["Volunteer Coordinator"],
         icon: VolunteerIcon,
         color: '#4caf50',
         bgGradient: 'linear-gradient(135deg, #4caf50, #66bb6a)',
-        achievements: ["Volunteer Manager", "Team Builder", "Operations Leader"],
-        specialties: ["Team Coordination", "Volunteer Training", "Project Management"]
     },
     {
         id: 5,
         name: "Tiffany Zhou",
-        role: "Outreach Ambassador",
-        description: "Expanding our reach to connect with more students and communities in need.",
+        roles: ["Outreach Ambassador"],
         icon: CampaignIcon,
         color: '#ff5722',
         bgGradient: 'linear-gradient(135deg, #ff5722, #ff8a65)',
-        achievements: ["Community Ambassador", "Outreach Specialist", "Partnership Developer"],
-        specialties: ["Community Engagement", "Partnership Building", "Program Development"]
     },
     {
         id: 6,
         name: "Anna Zou",
-        role: "Head of Academics",
-        description: "Developing curriculum and ensuring the highest quality of educational content.",
+        roles: ["Head of Academics"],
         icon: SchoolIcon,
         color: '#ff9800',
         bgGradient: 'linear-gradient(135deg, #ff9800, #ffb74d)',
-        achievements: ["Academic Director", "Curriculum Developer", "Educational Leader"],
-        specialties: ["Curriculum Design", "Academic Planning", "Quality Assurance"]
     },
     {
         id: 7,
         name: "Aarini Chakraborty",
-        role: "Head of Academics",
-        description: "Co-leading our academic initiatives and maintaining educational excellence.",
+        roles: ["Head of Academics"],
         icon: PsychologyIcon,
         color: '#795548',
         bgGradient: 'linear-gradient(135deg, #795548, #a1887f)',
-        achievements: ["Academic Co-Director", "Learning Specialist", "Student Mentor"],
-        specialties: ["Learning Psychology", "Student Assessment", "Academic Support"]
     },
     {
         id: 8,
         name: "Lauren Chen",
-        role: "Secretary",
-        description: "Keeping our team organized and ensuring smooth operations across all programs.",
+        roles: ["Secretary"],
         icon: AssignmentIcon,
         color: '#607d8b',
         bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',
-        achievements: ["Operations Manager", "Administrative Leader", "Documentation Expert"],
-        specialties: ["Organization", "Documentation", "Administrative Support"]
     }
 ];
 
@@ -155,9 +130,6 @@ const TeamMemberCard = ({ member, index }) => {
                         boxShadow: theme.shadows[20],
                         '& .member-avatar': {
                             transform: 'scale(1.1)',
-                        },
-                        '& .role-chip': {
-                            transform: 'scale(1.05)',
                         }
                     }
                 }}
@@ -171,31 +143,9 @@ const TeamMemberCard = ({ member, index }) => {
                     }}
                 />
 
-                {/* Role chip */}
-                <Box
-                    className="role-chip"
-                    sx={{
-                        position: 'absolute',
-                        top: -16,
-                        right: 20,
-                        background: member.bgGradient,
-                        color: 'white',
-                        px: 2,
-                        py: 1,
-                        borderRadius: 3,
-                        fontSize: '0.8rem',
-                        fontWeight: 700,
-                        boxShadow: theme.shadows[8],
-                        transition: 'transform 0.3s ease',
-                        zIndex: 2
-                    }}
-                >
-                    {member.role}
-                </Box>
-
-                <CardContent sx={{ flexGrow: 1, p: 4, pt: 5, display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    {/* Header - Fixed height */}
-                    <Box sx={{ mb: 3, textAlign: 'center', minHeight: 220 }}>
+                <CardContent sx={{ flexGrow: 1, p: 4, display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                    {/* Avatar and Name */}
+                    <Box sx={{ textAlign: 'center' }}>
                         <Box
                             className="member-avatar"
                             sx={{
@@ -224,116 +174,35 @@ const TeamMemberCard = ({ member, index }) => {
                             component="h3"
                             sx={{
                                 fontWeight: 800,
-                                mb: 1,
                                 background: member.bgGradient,
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
                                 WebkitTextFillColor: 'transparent',
-                                fontSize: '1.8rem'
+                                fontSize: '1.8rem',
+                                mb: 2,
+                                whiteSpace: 'nowrap',
+                                overflow: 'hidden',
+                                textOverflow: 'ellipsis'
                             }}
                         >
                             {member.name}
                         </Typography>
-                    </Box>
 
-                    {/* Description - Fixed height */}
-                    <Box sx={{ mb: 3, minHeight: 80 }}>
-                        <Typography
-                            variant="body1"
-                            color="text.primary"
-                            sx={{
-                                lineHeight: 1.6,
-                                fontSize: '1rem',
-                                textAlign: 'center'
-                            }}
-                        >
-                            {member.description}
-                        </Typography>
-                    </Box>
-
-                    {/* Achievements - Fixed height */}
-                    <Box sx={{ mb: 3, minHeight: 120 }}>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 600,
-                                mb: 2,
-                                color: member.color,
-                                textAlign: 'center',
-                                fontSize: '1.1rem'
-                            }}
-                        >
-                            Achievements:
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
-                            {member.achievements.map((achievement, achievementIndex) => (
-                                <Chip
-                                    key={achievementIndex}
-                                    label={achievement}
-                                    size="small"
+                        {/* Roles below name */}
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 0.5, alignItems: 'center' }}>
+                            {member.roles.map((role, roleIndex) => (
+                                <Typography
+                                    key={roleIndex}
+                                    variant="body1"
                                     sx={{
-                                        backgroundColor: `${member.color}15`,
                                         color: member.color,
                                         fontWeight: 600,
-                                        border: `1px solid ${member.color}30`,
-                                        fontSize: '0.75rem',
-                                        '&:hover': {
-                                            backgroundColor: `${member.color}25`,
-                                        }
-                                    }}
-                                />
-                            ))}
-                        </Box>
-                    </Box>
-
-                    {/* Specialties - Takes remaining space */}
-                    <Box sx={{ flexGrow: 1 }}>
-                        <Typography
-                            variant="h6"
-                            sx={{
-                                fontWeight: 600,
-                                mb: 2,
-                                color: member.color,
-                                textAlign: 'center',
-                                fontSize: '1.1rem'
-                            }}
-                        >
-                            Specialties:
-                        </Typography>
-                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-                            {member.specialties.map((specialty, specialtyIndex) => (
-                                <Box
-                                    key={specialtyIndex}
-                                    sx={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 2,
-                                        p: 1,
-                                        borderRadius: 2,
-                                        backgroundColor: `${member.color}08`,
-                                        border: `1px solid ${member.color}20`,
-                                        transition: 'all 0.2s ease',
-                                        '&:hover': {
-                                            backgroundColor: `${member.color}15`,
-                                            transform: 'translateX(8px)'
-                                        }
+                                        fontSize: '1rem',
+                                        textAlign: 'center'
                                     }}
                                 >
-                                    <Box
-                                        sx={{
-                                            width: 8,
-                                            height: 8,
-                                            borderRadius: '50%',
-                                            backgroundColor: member.color
-                                        }}
-                                    />
-                                    <Typography
-                                        variant="body2"
-                                        sx={{ fontWeight: 500, fontSize: '0.9rem' }}
-                                    >
-                                        {specialty}
-                                    </Typography>
-                                </Box>
+                                    {role}
+                                </Typography>
                             ))}
                         </Box>
                     </Box>
@@ -401,18 +270,16 @@ const TeamStat = ({ stat, index }) => {
     );
 };
 
-export default function OutTeam() {
+export default function OurTeam() {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
     const theme = useTheme();
 
     const handleJoinTeamClick = () => {
-        console.log('Join team clicked, navigating to:', PathConstants.EXEC_TEAM);
         window.location.href = PathConstants.EXEC_TEAM;
     };
 
     const handleVolunteerClick = () => {
-        console.log('Volunteer clicked, navigating to:', PathConstants.VOLUNTEER_OPPORTUNITIES);
         window.location.href = PathConstants.VOLUNTEER_OPPORTUNITIES;
     };
 
@@ -585,13 +452,13 @@ export default function OutTeam() {
 
                     <Grid container spacing={4}>
                         {teamMembers.map((member, index) => (
-                            <Grid item xs={12} md={6} xl={4} key={member.id}>
+                            <Grid item xs={12} sm={6} md={4} lg={3} key={member.id}>
                                 <TeamMemberCard member={member} index={index} />
                             </Grid>
                         ))}
 
                         {/* Join Us Card */}
-                        <Grid item xs={12} md={6} xl={4}>
+                        <Grid item xs={12} sm={6} md={4} lg={3}>
                             <Grow in={true} timeout={800 + teamMembers.length * 200}>
                                 <Card
                                     sx={{
@@ -647,7 +514,7 @@ export default function OutTeam() {
                                                 lineHeight: 1.6
                                             }}
                                         >
-                                            Join our passionate team of student leaders and make a difference in education. We're always looking for dedicated individuals who share our mission.
+                                            Join our passionate team of student leaders and make a difference in education.
                                         </Typography>
 
                                         <Button

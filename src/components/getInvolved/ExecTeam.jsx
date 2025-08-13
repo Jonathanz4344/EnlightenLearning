@@ -46,8 +46,6 @@ const execPositions = [
             "Ensure alignment with organizational mission and goals",
             "Facilitate cross-department communication and collaboration",
             "Provide strategic guidance and support to all positions",
-            "Represent the organization in external meetings and partnerships",
-            "Monitor and evaluate departmental progress",
             "Lead board meetings and set organizational priorities"
         ],
         currentMembers: [{ name: "Brianna Tam", avatar: "BT" }],
@@ -193,7 +191,7 @@ const execPositions = [
         ],
         category: "Operations"
     },
-    
+
 
 ];
 

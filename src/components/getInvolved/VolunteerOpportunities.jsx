@@ -28,72 +28,110 @@ import {
     VolunteerActivism as VolunteerIcon,
     HourglassTop as UpcomingIcon,
     CheckCircle as CompletedIcon,
+    Today as ExpirationIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
-// Updated volunteer opportunities data with three categories
-const volunteerData = {
-    open: [
+// Simplified volunteer data - single array with all opportunities
+const volunteerData = [
+    {
+        id: 1,
+        title: "The Art of Winter Crafts Event",
+        date: "2025-01-10",
+        time: "4:00 PM - 6:00 PM",
+        location: "Shelter Rock Library",
+        description: "Get creative this winter at our fun-filled crafts event! We'll have all the materials you need to make a 3D snowman and snowflakes.",
+        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSda9fa92M-4Q0x_8q6c1xc5yBhtGfei78FHhauze_CrSkcztQ/viewform?usp=dialog",
+        category: "Arts and Craft",
+        totalParticipants: 30,
+        duration: "2 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-01-01",
+        expirationDate: "2025-01-10", // Past event
+    },
+    {
+        id: 2,
+        title: "Easter Fun Fest",
+        date: "2025-04-18",
+        time: "4:00 PM - 6:00 PM",
+        location: "Ridder's Pond Park",
+        description: "Come and join us for a day full of surprises! We will have a scavenger hunt, crafts and field game, there will be prizes!",
+        formUrl: "https://forms.gle/vAF6viqg8trKTs4Z8",
+        category: "Scavenger Hunt",
+        totalParticipants: 30,
+        duration: "2 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-04-01",
+        expirationDate: "2025-04-18", // Past event
+    },
+    {
+        id: 3,
+        title: "Summer Volleyball Program",
+        date: "2025-07-21 - 2025-08-25",
+        time: "1:00 PM - 2:00 PM",
+        location: "Park Circle",
+        description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
+        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
+        category: "Volleyball",
+        volunteersNeeded: 15,
+        duration: "1 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-07-01",
+        expirationDate: "2025-07-21", // Past event
+    },
 
-    ],
-    upcoming: [
-        {
-            id: 4,
-            title: "Sweet Literature Event",
-            date: "",
-            time: "",
-            location: "",
-            description: "",
-            formUrl: "",
-            category: "",
-            volunteersNeeded: "",
-            duration: "",
-            skillLevel: "",
-            coordinator: "Brianna Tam"
-        },
 
-    ],
-    past: [
-        {
-            id: 1,
-            title: "The Art of Winter Crafts Event",
-            date: "2025-01-10",
-            time: "4:00 PM - 6:00 PM",
-            location: "Shelter Rock Library",
-            description: "Get creative this winter at our fun-filled crafts event! We'll have all the materials you need to make a 3D snowman and snowflakes.",
-            formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSda9fa92M-4Q0x_8q6c1xc5yBhtGfei78FHhauze_CrSkcztQ/viewform?usp=dialog",
-            category: "Arts and Craft",
-            totalParticipants: 30,
-            duration: "2 hours",
-            coordinator: "Brianna Tam"
-        },
-        {
-            id: 2,
-            title: "Easter Fun Fest",
-            date: "2025-04-18",
-            time: "4:00 PM - 6:00 PM",
-            location: "Ridder's Pond Park",
-            description: "Come and join us for a day full of surprises! We will have a scavenger hunt, crafts and field game, there will be prizes!",
-            formUrl: "https://forms.gle/vAF6viqg8trKTs4Z8",
-            category: "Scavenger Hunt",
-            totalParticipants: 35,
-            duration: "2 hours",
-            coordinator: "Brianna Tam"
-        },
-        {
-            id: 3,
-            title: "Summer Volleyball Program",
-            date: "2025-07-21 - 2025-08-25",
-            time: "1:00 PM - 2:00 PM",
-            location: "Herricks Middle School Field",
-            description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
-            formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
-            category: "Volleyball",
-            totalParticipants: 45,
-            duration: "1 hours",
-            coordinator: "Brianna Tam"
-        },
-    ]
+];
+
+// Helper function to get today's date without time
+const getTodayDate = () => {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+};
+
+// Helper function to parse date string to Date object
+const parseDate = (dateString) => {
+    if (!dateString) return null;
+    const date = new Date(dateString);
+    date.setHours(0, 0, 0, 0);
+    return date;
+};
+
+// Function to determine the status of a volunteer opportunity
+const getVolunteerStatus = (volunteer) => {
+    const today = getTodayDate();
+    const expirationDate = parseDate(volunteer.expirationDate);
+    const registrationStartDate = parseDate(volunteer.registrationStartDate);
+
+    // If expiration date has passed, it's a past event
+    if (expirationDate && expirationDate < today) {
+        return 'past';
+    }
+
+    // If there's a registration start date and it hasn't arrived yet, it's upcoming
+    if (registrationStartDate && registrationStartDate > today) {
+        return 'upcoming';
+    }
+
+    // Otherwise, it's open for registration
+    return 'open';
+};
+
+// Function to categorize volunteers based on their status
+const categorizeVolunteers = () => {
+    const categorized = {
+        open: [],
+        upcoming: [],
+        past: []
+    };
+
+    volunteerData.forEach(volunteer => {
+        const status = getVolunteerStatus(volunteer);
+        categorized[status].push(volunteer);
+    });
+
+    return categorized;
 };
 
 const getCategoryColor = (category) => {
@@ -104,6 +142,10 @@ const getCategoryColor = (category) => {
         "Animal Care": "warning",
         Healthcare: "info",
         "Youth Programs": "error",
+        Volleyball: "primary",
+        "Arts and Craft": "secondary",
+        "Scavenger Hunt": "warning",
+        Literature: "info",
     };
     return colors[category] || "default";
 };
@@ -120,7 +162,7 @@ const getSkillLevelColor = (skillLevel) => {
 const getSectionConfig = (section) => {
     const configs = {
         open: {
-            borderColor: '#4caf50', // Green border
+            borderColor: '#4caf50',
             statusBgColor: '#4caf50',
             statusText: 'OPEN NOW',
             buttonColor: '#4caf50',
@@ -130,7 +172,7 @@ const getSectionConfig = (section) => {
             statsColor: '#4caf50'
         },
         upcoming: {
-            borderColor: '#ff9800', // Orange border
+            borderColor: '#ff9800',
             statusBgColor: '#ff9800',
             statusText: 'UPCOMING',
             buttonColor: '#ff9800',
@@ -140,7 +182,7 @@ const getSectionConfig = (section) => {
             statsColor: '#ff9800'
         },
         past: {
-            borderColor: '#2196f3', // Blue border
+            borderColor: '#2196f3',
             statusBgColor: '#2196f3',
             statusText: 'COMPLETED',
             buttonColor: '#2196f3',
@@ -160,7 +202,29 @@ const VolunteerCard = ({ volunteer, section }) => {
     const config = getSectionConfig(section);
 
     const handleFormClick = () => {
-        window.open(volunteer.formUrl, '_blank');
+        if (volunteer.formUrl) {
+            window.open(volunteer.formUrl, '_blank');
+        }
+    };
+
+    // Format date for display
+    const formatDate = (dateString) => {
+        if (!dateString) return null;
+        const date = new Date(dateString);
+        return date.toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric'
+        });
+    };
+
+    // Check if expiration is soon (within 7 days)
+    const isExpiringSoon = (dateString) => {
+        if (!dateString) return false;
+        const expirationDate = parseDate(dateString);
+        const today = getTodayDate();
+        const sevenDaysFromNow = new Date(today.getTime() + (7 * 24 * 60 * 60 * 1000));
+        return expirationDate <= sevenDaysFromNow && expirationDate >= today;
     };
 
     return (
@@ -201,6 +265,28 @@ const VolunteerCard = ({ volunteer, section }) => {
                 {config.statusText}
             </Box>
 
+            {/* Expiring Soon Warning */}
+            {section === 'open' && volunteer.expirationDate && isExpiringSoon(volunteer.expirationDate) && (
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        top: -12,
+                        left: 16,
+                        backgroundColor: '#ff5722',
+                        color: 'white',
+                        px: 1.5,
+                        py: 0.5,
+                        borderRadius: 2,
+                        fontSize: '0.7rem',
+                        fontWeight: 600,
+                        zIndex: 1,
+                        boxShadow: theme.shadows[4]
+                    }}
+                >
+                    EXPIRING SOON!
+                </Box>
+            )}
+
             <CardContent sx={{ flexGrow: 1, p: 3, pt: 4 }}>
                 {/* Header */}
                 <Box sx={{ mb: 3 }}>
@@ -226,7 +312,7 @@ const VolunteerCard = ({ volunteer, section }) => {
                             color={getCategoryColor(volunteer.category)}
                             size="small"
                         />
-                        {(section === 'open' || section === 'upcoming') && (
+                        {(section === 'open' || section === 'upcoming') && volunteer.skillLevel && (
                             <Chip
                                 label={volunteer.skillLevel}
                                 color={getSkillLevelColor(volunteer.skillLevel)}
@@ -266,6 +352,44 @@ const VolunteerCard = ({ volunteer, section }) => {
                             Duration: {volunteer.duration}
                         </Typography>
                     </Box>
+
+                    {/* Registration Opens Date for Upcoming Events */}
+                    {section === 'upcoming' && volunteer.registrationStartDate && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <ExpirationIcon fontSize="small" sx={{ color: config.titleColor }} />
+                            <Typography variant="body2" color="text.secondary">
+                                Registration Opens: {formatDate(volunteer.registrationStartDate)}
+                            </Typography>
+                        </Box>
+                    )}
+
+                    {/* Expiration Date for Open Events */}
+                    {section === 'open' && volunteer.expirationDate && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <ExpirationIcon fontSize="small" sx={{
+                                color: isExpiringSoon(volunteer.expirationDate) ? '#ff5722' : config.titleColor
+                            }} />
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: isExpiringSoon(volunteer.expirationDate) ? '#ff5722' : 'text.secondary',
+                                    fontWeight: isExpiringSoon(volunteer.expirationDate) ? 600 : 400
+                                }}
+                            >
+                                Registration Closes: {formatDate(volunteer.expirationDate)}
+                            </Typography>
+                        </Box>
+                    )}
+
+                    {/* Completion Date for Past Events */}
+                    {section === 'past' && volunteer.expirationDate && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+                            <CompletedIcon fontSize="small" sx={{ color: config.titleColor }} />
+                            <Typography variant="body2" color="text.secondary">
+                                Completed: {formatDate(volunteer.expirationDate)}
+                            </Typography>
+                        </Box>
+                    )}
                 </Box>
 
                 {/* Stats */}
@@ -286,7 +410,7 @@ const VolunteerCard = ({ volunteer, section }) => {
                                             Volunteers Needed
                                         </Typography>
                                         <Typography variant="h6" sx={{ color: config.statsColor }} fontWeight="bold">
-                                            {volunteer.volunteersNeeded}
+                                            {volunteer.volunteersNeeded || volunteer.totalParticipants}
                                         </Typography>
                                     </Box>
                                 </Grid>
@@ -318,7 +442,7 @@ const VolunteerCard = ({ volunteer, section }) => {
                                             sx={{ color: config.statsColor, display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 0.5 }}
                                             fontWeight="bold"
                                         >
-                                            {volunteer.totalParticipants}
+                                            {volunteer.totalParticipants || volunteer.volunteersNeeded}
                                             <Typography
                                                 component="span"
                                                 sx={{
@@ -364,18 +488,18 @@ const VolunteerCard = ({ volunteer, section }) => {
                 <Button
                     variant="contained"
                     fullWidth
-                    onClick={section === 'upcoming' || section === 'past' ? undefined : handleFormClick}
+                    onClick={section === 'open' ? handleFormClick : undefined}
                     endIcon={<LaunchIcon />}
-                    disabled={section === 'upcoming' || section === 'past'}
+                    disabled={section === 'upcoming' || section === 'past' || !volunteer.formUrl}
                     sx={{
-                        backgroundColor: (section === 'upcoming' || section === 'past') ? '#e0e0e0' : config.buttonColor,
-                        color: (section === 'upcoming' || section === 'past') ? '#9e9e9e' : 'white',
+                        backgroundColor: (section === 'upcoming' || section === 'past' || !volunteer.formUrl) ? '#e0e0e0' : config.buttonColor,
+                        color: (section === 'upcoming' || section === 'past' || !volunteer.formUrl) ? '#9e9e9e' : 'white',
                         py: 1.5,
                         fontWeight: 600,
                         fontSize: '0.95rem',
-                        cursor: (section === 'upcoming' || section === 'past') ? 'not-allowed' : 'pointer',
+                        cursor: (section === 'upcoming' || section === 'past' || !volunteer.formUrl) ? 'not-allowed' : 'pointer',
                         '&:hover': {
-                            backgroundColor: (section === 'upcoming' || section === 'past') ? '#e0e0e0' : config.buttonHoverColor,
+                            backgroundColor: (section === 'upcoming' || section === 'past' || !volunteer.formUrl) ? '#e0e0e0' : config.buttonHoverColor,
                         },
                         '&.Mui-disabled': {
                             backgroundColor: '#e0e0e0',
@@ -591,8 +715,7 @@ const VolunteerCarousel = ({ volunteers, section, title, subtitle, icon: Icon })
                                 cursor: 'pointer',
                                 transition: 'all 0.3s ease',
                                 border: '2px solid',
-                                borderColor: index === currentIndex
-                                    ? config.titleColor
+                                borderColor: index === currentIndex ? config.titleColor
                                     : 'transparent',
                                 '&:hover': {
                                     transform: 'scale(1.2)',
@@ -607,9 +730,10 @@ const VolunteerCarousel = ({ volunteers, section, title, subtitle, icon: Icon })
     );
 };
 
-export default function VolunteerOpportunities() {
+const VolunteerOpportunities = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
+    const categorizedData = categorizeVolunteers();
 
     return (
         <Box
@@ -640,7 +764,7 @@ export default function VolunteerOpportunities() {
                             fontWeight: 900,
                             mb: 3,
                             fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
-                            background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+                            background: 'linear-gradient(45deg, #2196f3, #4caf50, #ff9800)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
@@ -659,8 +783,7 @@ export default function VolunteerOpportunities() {
                             mb: 4
                         }}
                     >
-                        Make a difference in your community! Join our dedicated volunteers in creating positive change
-                        through meaningful service opportunities.
+                        Make a meaningful impact in your community. Join us in creating positive change through volunteering!
                     </Typography>
 
                     {/* Stats Section */}
@@ -672,71 +795,149 @@ export default function VolunteerOpportunities() {
                         mt: 4
                     }}>
                         <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{ color: '#4caf50' }} fontWeight="bold">
-                                {volunteerData.open.length}
+                            <Typography variant="h3" sx={{
+                                color: '#4caf50',
+                                fontWeight: 'bold'
+                            }}>
+                                {categorizedData.open.length}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                Open Now
+                                Open Opportunities
                             </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
-                                {volunteerData.upcoming.length}
+                            <Typography variant="h3" sx={{
+                                color: '#ff9800',
+                                fontWeight: 'bold'
+                            }}>
+                                {categorizedData.upcoming.length}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Upcoming Events
                             </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" color="primary.main" fontWeight="bold">
-                                {volunteerData.past.length}
+                            <Typography variant="h3" sx={{
+                                color: '#2196f3',
+                                fontWeight: 'bold'
+                            }}>
+                                {categorizedData.past.length}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                Completed Projects
-                            </Typography>
-                        </Box>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" color="secondary.main" fontWeight="bold">
-                                110+
-                            </Typography>
-                            <Typography variant="body1" color="text.secondary">
-                                Lives Impacted
+                                Completed Events
                             </Typography>
                         </Box>
                     </Box>
                 </Box>
 
-                {/* Open Opportunities (Green) */}
+                <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />
+
+                {/* Open Opportunities Section */}
                 <VolunteerCarousel
-                    volunteers={volunteerData.open}
+                    volunteers={categorizedData.open}
                     section="open"
-                    title="Open Now"
-                    subtitle="Join these exciting volunteer opportunities happening soon! Registration is open and spots are available."
+                    title="Open for Registration"
+                    subtitle="These volunteer opportunities are currently accepting applications. Sign up now to secure your spot and make a difference!"
                     icon={VolunteerIcon}
                 />
 
-                <Divider sx={{ my: 8, borderColor: isDarkMode ? '#333' : '#ddd' }} />
-
-                {/* Upcoming Opportunities (Orange) */}
+                {/* Upcoming Opportunities Section */}
                 <VolunteerCarousel
-                    volunteers={volunteerData.upcoming}
+                    volunteers={categorizedData.upcoming}
                     section="upcoming"
                     title="Coming Soon"
-                    subtitle="Get ready for these amazing upcoming volunteer opportunities! "
+                    subtitle="Get ready for these exciting volunteer opportunities! Registration will open soon, so stay tuned for updates."
                     icon={UpcomingIcon}
                 />
 
-                <Divider sx={{ my: 8, borderColor: isDarkMode ? '#333' : '#ddd' }} />
-
-                {/* Past Opportunities (Blue) */}
+                {/* Past Events Section */}
                 <VolunteerCarousel
-                    volunteers={volunteerData.past}
+                    volunteers={categorizedData.past}
                     section="past"
-                    title="Our Impact Together"
-                    subtitle="Celebrate the amazing work we've accomplished with our incredible volunteers! See the difference we've made in our community."
+                    title="Our Impact History"
+                    subtitle="Celebrating the amazing volunteer work we've accomplished together. Thank you to all our dedicated volunteers!"
                     icon={CompletedIcon}
                 />
+
+                {/* Call to Action Section */}
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        mt: { xs: 8, sm: 10, md: 12 },
+                        p: { xs: 4, sm: 6 },
+                        backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+                        borderRadius: 4,
+                        boxShadow: theme => theme.shadows[8],
+                        border: '1px solid',
+                        borderColor: 'divider'
+                    }}
+                >
+                    <VolunteerIcon sx={{
+                        fontSize: 60,
+                        color: 'primary.main',
+                        mb: 2
+                    }} />
+                    <Typography
+                        variant="h4"
+                        component="h2"
+                        sx={{
+                            fontWeight: 700,
+                            mb: 2,
+                            color: 'primary.main'
+                        }}
+                    >
+                        Ready to Make a Difference?
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        sx={{
+                            mb: 4,
+                            maxWidth: '600px',
+                            mx: 'auto',
+                            fontSize: '1.1rem',
+                            lineHeight: 1.6
+                        }}
+                    >
+                        Join our community of volunteers and help us create positive change.
+                        Whether you have an hour or a day to spare, every contribution matters.
+                    </Typography>
+                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                borderRadius: 3
+                            }}
+                        >
+                            Get Started Today
+                        </Button>
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                borderRadius: 3,
+                                borderWidth: 2,
+                                '&:hover': {
+                                    borderWidth: 2
+                                }
+                            }}
+                        >
+                            Learn More
+                        </Button>
+                    </Box>
+                </Box>
             </Container>
         </Box>
     );
-}
+};
+
+export default VolunteerOpportunities;

@@ -41,7 +41,7 @@ const eventsData = [
         time: "4:00 PM - 6:00 PM",
         location: "Shelter Rock Library",
         description: "Get creative this winter at our fun-filled crafts event! We'll have all the materials you need to make a 3D snowman and snowflakes.",
-        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSda9fa92M-4Q0x_8q6c1xc5yBhtGfei78FHhauze_CrSkcztQ/viewform?usp=dialog",
+        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf6FGGIfX3Xe7yK-MwdC-Y2wm2ysWjRbzxxIxid-oIF-WWDzw/viewform?usp=dialog",
         category: "Arts and Craft",
         totalParticipants: 30,
         duration: "2 hours",
@@ -56,7 +56,7 @@ const eventsData = [
         time: "4:00 PM - 6:00 PM",
         location: "Ridder's Pond Park",
         description: "Come and join us for a day full of surprises! We will have a scavenger hunt, crafts and field game, there will be prizes!",
-        formUrl: "https://forms.gle/vAF6viqg8trKTs4Z8",
+        formUrl: "https://forms.gle/KzTLV8EsQaMccSmdA",
         category: "Scavenger Hunt",
         totalParticipants: 30,
         duration: "2 hours",
@@ -71,13 +71,28 @@ const eventsData = [
         time: "1:00 PM - 2:00 PM",
         location: "Park Circle",
         description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
-        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
+        formUrl: "https://forms.gle/gUzvfJNfhUzqJrxp7",
         category: "Volleyball",
         totalParticipants: 30,
         duration: "1 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-07-01",
         expirationDate: "2025-07-21", // Past event
+    },
+    {
+        id: 4,
+        title: "Sweet Literature event",
+        date: "",
+        time: "",
+        location: "",
+        description: "",
+        formUrl: "",
+        category: "Literature",
+        totalParticipants: 20,
+        duration: "",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2325-07-01",
+        expirationDate: "",
     },
 ];
 
@@ -333,14 +348,14 @@ const EventCard = ({ event, section }) => {
                     </Box>
 
                     {/* Registration Opens Date for Future Events */}
-                    {section === 'future' && event.registrationStartDate && (
+                    {/* {section === 'future' && event.registrationStartDate && (
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
                             <ExpirationIcon fontSize="small" sx={{ color: config.titleColor }} />
                             <Typography variant="body2" color="text.secondary">
                                 Registration Opens: {formatDate(event.registrationStartDate)}
                             </Typography>
                         </Box>
-                    )}
+                    )} */}
 
                     {/* Expiration Date for Current Events */}
                     {section === 'current' && event.expirationDate && (
@@ -389,8 +404,9 @@ const EventCard = ({ event, section }) => {
                                             Expected
                                         </Typography>
                                         <Typography variant="h6" sx={{ color: config.statsColor }} fontWeight="bold">
-                                            {event.expectedParticipants}
+                                            {event.totalParticipants}+
                                         </Typography>
+                                        
                                     </Box>
                                 </Grid>
                                 <Grid item xs={6}>

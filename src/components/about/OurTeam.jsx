@@ -1,0 +1,801 @@
+import * as React from "react";
+import {
+    Box,
+    Button,
+    Container,
+    Card,
+    CardContent,
+    Typography,
+    useTheme,
+    Grid,
+    Avatar,
+    Paper,
+    Fade,
+    Grow,
+    Chip,
+} from "@mui/material";
+import {
+    Person as PersonIcon,
+    Star as StarIcon,
+    Group as GroupIcon,
+    Celebration as CelebrationIcon,
+    VolunteerActivism as VolunteerIcon,
+    School as SchoolIcon,
+    Campaign as CampaignIcon,
+    Palette as DesignIcon,
+    Public as PublicIcon,
+    AdminPanelSettings as AdminIcon,
+    Psychology as PsychologyIcon,
+    Assignment as AssignmentIcon,
+} from "@mui/icons-material";
+import { useMode } from "../Layout";
+import PathConstants from "../../routes/pathConstants";
+
+// Team members data
+const teamMembers = [
+    {
+        id: 1,
+        name: "Brianna Tam",
+        role: "President",
+        description: "Leading our mission to transform education and create positive change in our community.",
+        icon: AdminIcon,
+        color: '#e91e63',
+        bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
+        achievements: ["Community Leader", "Educational Innovator", "Youth Advocate"],
+        specialties: ["Strategic Planning", "Team Leadership", "Community Outreach"]
+    },
+    {
+        id: 2,
+        name: "Tiffany Qi",
+        role: "Head of Design",
+        description: "Creating beautiful and engaging educational materials that inspire learning.",
+        icon: DesignIcon,
+        color: '#9c27b0',
+        bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
+        achievements: ["Creative Director", "UX Designer", "Brand Strategist"],
+        specialties: ["Visual Design", "User Experience", "Brand Development"]
+    },
+    {
+        id: 3,
+        name: "Veronica Chung",
+        role: "Public Relations",
+        description: "Connecting with our community and spreading awareness about our educational mission.",
+        icon: PublicIcon,
+        color: '#2196f3',
+        bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
+        achievements: ["Communications Expert", "Community Builder", "Media Coordinator"],
+        specialties: ["Public Speaking", "Social Media", "Event Coordination"]
+    },
+    {
+        id: 4,
+        name: "Eileen Liang",
+        role: "Volunteer Coordinator",
+        description: "Organizing and supporting our amazing team of volunteer tutors and mentors.",
+        icon: VolunteerIcon,
+        color: '#4caf50',
+        bgGradient: 'linear-gradient(135deg, #4caf50, #66bb6a)',
+        achievements: ["Volunteer Manager", "Team Builder", "Operations Leader"],
+        specialties: ["Team Coordination", "Volunteer Training", "Project Management"]
+    },
+    {
+        id: 5,
+        name: "Tiffany Zhou",
+        role: "Outreach Ambassador",
+        description: "Expanding our reach to connect with more students and communities in need.",
+        icon: CampaignIcon,
+        color: '#ff5722',
+        bgGradient: 'linear-gradient(135deg, #ff5722, #ff8a65)',
+        achievements: ["Community Ambassador", "Outreach Specialist", "Partnership Developer"],
+        specialties: ["Community Engagement", "Partnership Building", "Program Development"]
+    },
+    {
+        id: 6,
+        name: "Anna Zou",
+        role: "Head of Academics",
+        description: "Developing curriculum and ensuring the highest quality of educational content.",
+        icon: SchoolIcon,
+        color: '#ff9800',
+        bgGradient: 'linear-gradient(135deg, #ff9800, #ffb74d)',
+        achievements: ["Academic Director", "Curriculum Developer", "Educational Leader"],
+        specialties: ["Curriculum Design", "Academic Planning", "Quality Assurance"]
+    },
+    {
+        id: 7,
+        name: "Aarini Chakraborty",
+        role: "Head of Academics",
+        description: "Co-leading our academic initiatives and maintaining educational excellence.",
+        icon: PsychologyIcon,
+        color: '#795548',
+        bgGradient: 'linear-gradient(135deg, #795548, #a1887f)',
+        achievements: ["Academic Co-Director", "Learning Specialist", "Student Mentor"],
+        specialties: ["Learning Psychology", "Student Assessment", "Academic Support"]
+    },
+    {
+        id: 8,
+        name: "Lauren Chen",
+        role: "Secretary",
+        description: "Keeping our team organized and ensuring smooth operations across all programs.",
+        icon: AssignmentIcon,
+        color: '#607d8b',
+        bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',
+        achievements: ["Operations Manager", "Administrative Leader", "Documentation Expert"],
+        specialties: ["Organization", "Documentation", "Administrative Support"]
+    }
+];
+
+// Team stats
+const teamStats = [
+    { icon: GroupIcon, value: "8", label: "Team Members", color: "#4caf50" },
+    { icon: SchoolIcon, value: "60+", label: "Students Helped", color: "#2196f3" },
+    { icon: VolunteerIcon, value: "20+", label: "Active Volunteers", color: "#e91e63" },
+    { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
+];
+
+const TeamMemberCard = ({ member, index }) => {
+    const { mode = "light" } = useMode() || {};
+    const isDarkMode = mode === "dark";
+    const theme = useTheme();
+    const IconComponent = member.icon;
+
+    return (
+        <Grow in={true} timeout={800 + index * 200}>
+            <Card
+                sx={{
+                    height: '100%',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+                    border: `3px solid ${member.color}`,
+                    borderRadius: 4,
+                    overflow: 'visible',
+                    position: 'relative',
+                    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                    '&:hover': {
+                        transform: 'translateY(-12px) scale(1.02)',
+                        boxShadow: theme.shadows[20],
+                        '& .member-avatar': {
+                            transform: 'scale(1.1)',
+                        },
+                        '& .role-chip': {
+                            transform: 'scale(1.05)',
+                        }
+                    }
+                }}
+            >
+                {/* Decorative top gradient */}
+                <Box
+                    sx={{
+                        height: 8,
+                        background: member.bgGradient,
+                        borderRadius: '4px 4px 0 0'
+                    }}
+                />
+
+                {/* Role chip */}
+                <Box
+                    className="role-chip"
+                    sx={{
+                        position: 'absolute',
+                        top: -16,
+                        right: 20,
+                        background: member.bgGradient,
+                        color: 'white',
+                        px: 2,
+                        py: 1,
+                        borderRadius: 3,
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        boxShadow: theme.shadows[8],
+                        transition: 'transform 0.3s ease',
+                        zIndex: 2
+                    }}
+                >
+                    {member.role}
+                </Box>
+
+                <CardContent sx={{ flexGrow: 1, p: 4, pt: 5, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                    {/* Header - Fixed height */}
+                    <Box sx={{ mb: 3, textAlign: 'center', minHeight: 220 }}>
+                        <Box
+                            className="member-avatar"
+                            sx={{
+                                display: 'inline-flex',
+                                mb: 3,
+                                transition: 'transform 0.3s ease'
+                            }}
+                        >
+                            <Avatar
+                                sx={{
+                                    width: 120,
+                                    height: 120,
+                                    background: member.bgGradient,
+                                    fontSize: '3rem',
+                                    border: `4px solid ${member.color}30`,
+                                    boxShadow: theme.shadows[12]
+                                }}
+                            >
+                                <IconComponent sx={{ fontSize: 48, color: 'white' }} />
+                                {/* TODO: Replace with actual member photo */}
+                            </Avatar>
+                        </Box>
+
+                        <Typography
+                            variant="h4"
+                            component="h3"
+                            sx={{
+                                fontWeight: 800,
+                                mb: 1,
+                                background: member.bgGradient,
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                fontSize: '1.8rem'
+                            }}
+                        >
+                            {member.name}
+                        </Typography>
+                    </Box>
+
+                    {/* Description - Fixed height */}
+                    <Box sx={{ mb: 3, minHeight: 80 }}>
+                        <Typography
+                            variant="body1"
+                            color="text.primary"
+                            sx={{
+                                lineHeight: 1.6,
+                                fontSize: '1rem',
+                                textAlign: 'center'
+                            }}
+                        >
+                            {member.description}
+                        </Typography>
+                    </Box>
+
+                    {/* Achievements - Fixed height */}
+                    <Box sx={{ mb: 3, minHeight: 120 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontWeight: 600,
+                                mb: 2,
+                                color: member.color,
+                                textAlign: 'center',
+                                fontSize: '1.1rem'
+                            }}
+                        >
+                            Achievements:
+                        </Typography>
+                        <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 1, justifyContent: 'center' }}>
+                            {member.achievements.map((achievement, achievementIndex) => (
+                                <Chip
+                                    key={achievementIndex}
+                                    label={achievement}
+                                    size="small"
+                                    sx={{
+                                        backgroundColor: `${member.color}15`,
+                                        color: member.color,
+                                        fontWeight: 600,
+                                        border: `1px solid ${member.color}30`,
+                                        fontSize: '0.75rem',
+                                        '&:hover': {
+                                            backgroundColor: `${member.color}25`,
+                                        }
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    </Box>
+
+                    {/* Specialties - Takes remaining space */}
+                    <Box sx={{ flexGrow: 1 }}>
+                        <Typography
+                            variant="h6"
+                            sx={{
+                                fontWeight: 600,
+                                mb: 2,
+                                color: member.color,
+                                textAlign: 'center',
+                                fontSize: '1.1rem'
+                            }}
+                        >
+                            Specialties:
+                        </Typography>
+                        <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+                            {member.specialties.map((specialty, specialtyIndex) => (
+                                <Box
+                                    key={specialtyIndex}
+                                    sx={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        gap: 2,
+                                        p: 1,
+                                        borderRadius: 2,
+                                        backgroundColor: `${member.color}08`,
+                                        border: `1px solid ${member.color}20`,
+                                        transition: 'all 0.2s ease',
+                                        '&:hover': {
+                                            backgroundColor: `${member.color}15`,
+                                            transform: 'translateX(8px)'
+                                        }
+                                    }}
+                                >
+                                    <Box
+                                        sx={{
+                                            width: 8,
+                                            height: 8,
+                                            borderRadius: '50%',
+                                            backgroundColor: member.color
+                                        }}
+                                    />
+                                    <Typography
+                                        variant="body2"
+                                        sx={{ fontWeight: 500, fontSize: '0.9rem' }}
+                                    >
+                                        {specialty}
+                                    </Typography>
+                                </Box>
+                            ))}
+                        </Box>
+                    </Box>
+                </CardContent>
+            </Card>
+        </Grow>
+    );
+};
+
+const TeamStat = ({ stat, index }) => {
+    const { mode = "light" } = useMode() || {};
+    const isDarkMode = mode === "dark";
+    const IconComponent = stat.icon;
+
+    return (
+        <Fade in={true} timeout={600 + index * 150}>
+            <Paper
+                sx={{
+                    p: 4,
+                    textAlign: 'center',
+                    height: '100%',
+                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+                    border: `2px solid ${stat.color}30`,
+                    borderRadius: 3,
+                    transition: 'all 0.3s ease',
+                    '&:hover': {
+                        transform: 'translateY(-8px)',
+                        boxShadow: theme => theme.shadows[12],
+                        borderColor: stat.color,
+                        '& .stat-icon': {
+                            transform: 'scale(1.2) rotate(-5deg)',
+                            color: stat.color
+                        }
+                    }
+                }}
+            >
+                <IconComponent
+                    className="stat-icon"
+                    sx={{
+                        fontSize: 56,
+                        color: `${stat.color}80`,
+                        mb: 2,
+                        transition: 'all 0.3s ease'
+                    }}
+                />
+                <Typography
+                    variant="h3"
+                    sx={{
+                        fontWeight: 900,
+                        color: stat.color,
+                        mb: 1
+                    }}
+                >
+                    {stat.value}
+                </Typography>
+                <Typography
+                    variant="body1"
+                    color="text.secondary"
+                    sx={{ fontWeight: 600 }}
+                >
+                    {stat.label}
+                </Typography>
+            </Paper>
+        </Fade>
+    );
+};
+
+export default function OutTeam() {
+    const { mode = "light" } = useMode() || {};
+    const isDarkMode = mode === "dark";
+    const theme = useTheme();
+
+    const handleJoinTeamClick = () => {
+        console.log('Join team clicked, navigating to:', PathConstants.EXEC_TEAM);
+        window.location.href = PathConstants.EXEC_TEAM;
+    };
+
+    const handleVolunteerClick = () => {
+        console.log('Volunteer clicked, navigating to:', PathConstants.VOLUNTEER_OPPORTUNITIES);
+        window.location.href = PathConstants.VOLUNTEER_OPPORTUNITIES;
+    };
+
+    return (
+        <Box
+            component="section"
+            sx={{
+                backgroundColor: isDarkMode ? "#121212" : "#f9f9f9",
+                color: isDarkMode ? "#fff" : "#333",
+                minHeight: "100vh",
+                py: { xs: 4, sm: 6, md: 8 },
+                transition: "background-color 0.3s, color 0.3s",
+            }}
+        >
+            <Container maxWidth="lg">
+                {/* Hero Section */}
+                <Box sx={{ textAlign: 'center', mb: { xs: 8, sm: 10, md: 12 } }}>
+                    <Fade in={true} timeout={800}>
+                        <Box>
+                            <Box sx={{ display: 'flex', justifyContent: 'center', mb: 4 }}>
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        gap: 2,
+                                        p: 3,
+                                        borderRadius: 4,
+                                        background: isDarkMode
+                                            ? 'linear-gradient(135deg, #1a1a1a, #2d2d2d)'
+                                            : 'linear-gradient(135deg, #ffffff, #f8f9fa)',
+                                        boxShadow: theme.shadows[12],
+                                        border: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`
+                                    }}
+                                >
+                                    <GroupIcon sx={{ fontSize: 60, color: '#4caf50' }} />
+                                    <StarIcon sx={{ fontSize: 60, color: '#e91e63' }} />
+                                    <PersonIcon sx={{ fontSize: 60, color: '#2196f3' }} />
+                                    <CelebrationIcon sx={{ fontSize: 60, color: '#ff9800' }} />
+                                </Box>
+                            </Box>
+
+                            <Typography
+                                variant="h1"
+                                component="h1"
+                                sx={{
+                                    fontWeight: 900,
+                                    mb: 4,
+                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
+                                    background: 'linear-gradient(45deg, #4caf50, #e91e63, #2196f3, #ff9800)',
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                    lineHeight: 1.2
+                                }}
+                            >
+                                Meet Our Team
+                            </Typography>
+
+                            <Typography
+                                variant="h4"
+                                sx={{
+                                    fontWeight: 700,
+                                    mb: 3,
+                                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
+                                    color: 'primary.main',
+                                    lineHeight: 1.3
+                                }}
+                            >
+                                Passionate students changing the world through education
+                            </Typography>
+
+                            <Typography
+                                variant="h6"
+                                color="text.secondary"
+                                sx={{
+                                    maxWidth: '800px',
+                                    mx: 'auto',
+                                    lineHeight: 1.6,
+                                    fontSize: { xs: '1rem', sm: '1.2rem' },
+                                    mb: 6
+                                }}
+                            >
+                                Our diverse team of dedicated high school students brings together unique talents, perspectives, and unwavering commitment to making quality education accessible to all. Each member plays a vital role in our mission to learn with joy, give with passion, and change the world.
+                            </Typography>
+
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handleJoinTeamClick}
+                                endIcon={<GroupIcon />}
+                                sx={{
+                                    py: 2.5,
+                                    px: 5,
+                                    fontSize: '1.2rem',
+                                    fontWeight: 700,
+                                    borderRadius: 4,
+                                    background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
+                                    boxShadow: theme.shadows[8],
+                                    '&:hover': {
+                                        background: 'linear-gradient(45deg, #45a049, #5cb85c)',
+                                        transform: 'translateY(-3px)',
+                                        boxShadow: theme.shadows[16],
+                                    },
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                Join Our Team
+                            </Button>
+                        </Box>
+                    </Fade>
+                </Box>
+
+                {/* Team Stats */}
+                <Box sx={{ mb: { xs: 8, sm: 10, md: 12 } }}>
+                    <Typography
+                        variant="h3"
+                        component="h2"
+                        sx={{
+                            textAlign: 'center',
+                            fontWeight: 800,
+                            mb: 6,
+                            background: 'linear-gradient(45deg, #2196f3, #42a5f5)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                        }}
+                    >
+                        Our Team Impact
+                    </Typography>
+
+                    <Grid container spacing={4} sx={{ justifyContent: 'center' }}>
+                        {teamStats.map((stat, index) => (
+                            <Grid item xs={12} sm={6} md={3} key={index}>
+                                <TeamStat stat={stat} index={index} />
+                            </Grid>
+                        ))}
+                    </Grid>
+                </Box>
+
+                {/* Team Members Grid */}
+                <Box sx={{ mb: { xs: 8, sm: 10, md: 12 } }}>
+                    <Typography
+                        variant="h3"
+                        component="h2"
+                        sx={{
+                            textAlign: 'center',
+                            fontWeight: 800,
+                            mb: 3,
+                            background: 'linear-gradient(45deg, #4caf50, #e91e63, #2196f3, #ff9800)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                        }}
+                    >
+                        Our Amazing Team Members
+                    </Typography>
+
+                    <Typography
+                        variant="h6"
+                        color="text.secondary"
+                        sx={{
+                            textAlign: 'center',
+                            maxWidth: '600px',
+                            mx: 'auto',
+                            mb: 8,
+                            lineHeight: 1.6
+                        }}
+                    >
+                        Each team member brings unique skills, passion, and dedication to our educational mission
+                    </Typography>
+
+                    <Grid container spacing={4}>
+                        {teamMembers.map((member, index) => (
+                            <Grid item xs={12} md={6} xl={4} key={member.id}>
+                                <TeamMemberCard member={member} index={index} />
+                            </Grid>
+                        ))}
+
+                        {/* Join Us Card */}
+                        <Grid item xs={12} md={6} xl={4}>
+                            <Grow in={true} timeout={800 + teamMembers.length * 200}>
+                                <Card
+                                    sx={{
+                                        height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        backgroundColor: isDarkMode ? '#1a1a1a' : '#f8f9fa',
+                                        border: `3px dashed #4caf50`,
+                                        borderRadius: 4,
+                                        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        cursor: 'pointer',
+                                        '&:hover': {
+                                            transform: 'translateY(-12px) scale(1.02)',
+                                            boxShadow: theme.shadows[20],
+                                            backgroundColor: isDarkMode ? '#2a2a2a' : '#ffffff',
+                                            borderColor: '#4caf50',
+                                            borderStyle: 'solid'
+                                        }
+                                    }}
+                                    onClick={handleJoinTeamClick}
+                                >
+                                    <CardContent sx={{ flexGrow: 1, p: 4, textAlign: 'center', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+                                        <Avatar
+                                            sx={{
+                                                width: 120,
+                                                height: 120,
+                                                background: 'linear-gradient(135deg, #4caf50, #66bb6a)',
+                                                mx: 'auto',
+                                                mb: 3,
+                                                fontSize: '3rem'
+                                            }}
+                                        >
+                                            <PersonIcon sx={{ fontSize: 48, color: 'white' }} />
+                                        </Avatar>
+
+                                        <Typography
+                                            variant="h4"
+                                            component="h3"
+                                            sx={{
+                                                fontWeight: 800,
+                                                mb: 2,
+                                                color: '#4caf50'
+                                            }}
+                                        >
+                                            This Could Be You!
+                                        </Typography>
+
+                                        <Typography
+                                            variant="body1"
+                                            color="text.secondary"
+                                            sx={{
+                                                mb: 4,
+                                                lineHeight: 1.6
+                                            }}
+                                        >
+                                            Join our passionate team of student leaders and make a difference in education. We're always looking for dedicated individuals who share our mission.
+                                        </Typography>
+
+                                        <Button
+                                            variant="contained"
+                                            onClick={handleJoinTeamClick}
+                                            endIcon={<GroupIcon />}
+                                            sx={{
+                                                background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
+                                                fontWeight: 600,
+                                                '&:hover': {
+                                                    background: 'linear-gradient(45deg, #45a049, #5cb85c)',
+                                                }
+                                            }}
+                                        >
+                                            Apply Now
+                                        </Button>
+                                    </CardContent>
+                                </Card>
+                            </Grow>
+                        </Grid>
+                    </Grid>
+                </Box>
+
+                {/* Call to Action */}
+                <Box
+                    sx={{
+                        textAlign: 'center',
+                        p: { xs: 4, sm: 6, md: 8 },
+                        borderRadius: 4,
+                        background: isDarkMode
+                            ? 'linear-gradient(135deg, #1e1e1e, #2d2d2d, #1a1a1a)'
+                            : 'linear-gradient(135deg, #ffffff, #f8f9fa, #e3f2fd)',
+                        border: `2px solid ${isDarkMode ? '#333' : '#e0e0e0'}`,
+                        boxShadow: theme.shadows[12],
+                        position: 'relative',
+                        overflow: 'hidden'
+                    }}
+                >
+                    {/* Decorative background elements */}
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: -50,
+                            right: -50,
+                            width: 200,
+                            height: 200,
+                            borderRadius: '50%',
+                            background: 'linear-gradient(45deg, #4caf5020, #2196f320)',
+                            zIndex: 0
+                        }}
+                    />
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            bottom: -50,
+                            left: -50,
+                            width: 150,
+                            height: 150,
+                            borderRadius: '50%',
+                            background: 'linear-gradient(45deg, #e91e6320, #ff980020)',
+                            zIndex: 0
+                        }}
+                    />
+
+                    <Box sx={{ position: 'relative', zIndex: 1 }}>
+                        <Typography
+                            variant="h3"
+                            component="h2"
+                            sx={{
+                                fontWeight: 800,
+                                mb: 3,
+                                background: 'linear-gradient(45deg, #4caf50, #2196f3)',
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                            }}
+                        >
+                            Want to Join Our Team?
+                        </Typography>
+
+                        <Typography
+                            variant="body1"
+                            color="text.secondary"
+                            sx={{
+                                mb: 6,
+                                maxWidth: '700px',
+                                mx: 'auto',
+                                lineHeight: 1.6,
+                                fontSize: '1.1rem'
+                            }}
+                        >
+                            We're always looking for passionate, dedicated students who want to make a difference
+                            in education. Whether you're interested in tutoring, design, outreach, or leadership,
+                            there's a place for you on our team. Join us in our mission to change the world through education!
+                        </Typography>
+
+                        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 3 }}>
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handleJoinTeamClick}
+                                endIcon={<GroupIcon />}
+                                sx={{
+                                    py: 2,
+                                    px: 4,
+                                    fontSize: '1.1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
+                                    '&:hover': {
+                                        background: 'linear-gradient(45deg, #45a049, #5cb85c)',
+                                        transform: 'translateY(-2px)',
+                                    },
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                Join Our Team
+                            </Button>
+
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                onClick={handleVolunteerClick}
+                                endIcon={<VolunteerIcon />}
+                                sx={{
+                                    py: 2,
+                                    px: 4,
+                                    fontSize: '1.1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    borderColor: '#e91e63',
+                                    color: '#e91e63',
+                                    borderWidth: 2,
+                                    '&:hover': {
+                                        backgroundColor: '#e91e63',
+                                        color: 'white',
+                                        transform: 'translateY(-2px)',
+                                        borderColor: '#e91e63',
+                                    },
+                                    transition: 'all 0.3s ease'
+                                }}
+                            >
+                                Volunteer With Us
+                            </Button>
+                        </Box>
+                    </Box>
+                </Box>
+            </Container>
+        </Box>
+    );
+}

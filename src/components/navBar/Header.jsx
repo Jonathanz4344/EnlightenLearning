@@ -615,11 +615,11 @@ const Header = ({ mode, toggleColorMode }) => {
                 links: [
                   {
                     text: "Our Mission",
-                    href: PathConstants.HOME,
+                    href: PathConstants.MISSION,
                   },
                   {
                     text: "Meet Our Team",
-                    href: PathConstants.HOME,
+                    href: PathConstants.OUR_TEAM
                   },
                 ],
               },
@@ -656,9 +656,9 @@ const Header = ({ mode, toggleColorMode }) => {
             items={[
               {
                 links: [
-                  { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES},
+                  { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES },
                   { text: "Apply as a Tutor", href: PathConstants.HOME },
-                  { text: "Join the Executive Team", href: PathConstants.HOME },
+                  { text: "Join the Executive Team", href: PathConstants.EXEC_TEAM },
 
 
                 ],

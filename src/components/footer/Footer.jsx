@@ -19,7 +19,7 @@ import SmsIcon from "@mui/icons-material/Sms";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmailIcon from "@mui/icons-material/Email";
-import Ceclogo from "/images/logo/CEC_Logo.png";
+import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
 import { useMode } from "../Layout";
 
@@ -113,7 +113,7 @@ export default function Footer() {
                 aria-label="Go to Citywide Eye Care homepage"
               >
                 <img
-                  src={Ceclogo}
+                  src={Logo}
                   style={logoStyle}
                   alt="Citywide Eye Care logo"
                   itemProp="logo"

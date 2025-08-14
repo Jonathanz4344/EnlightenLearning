@@ -26,8 +26,8 @@ import { Helmet } from "react-helmet-async";
 import { styled } from "@mui/material/styles";
 
 const logoStyle = {
-  width: "50px",
-  height: "50px",
+  width: "40px",
+  height: "40px",
   cursor: "pointer",
   borderRadius: "50%",
   objectFit: "cover",
@@ -104,8 +104,8 @@ const ModernToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
   justifyContent: 'space-between',
-  minHeight: '70px !important',
-  padding: '0 32px',
+  minHeight: '64px !important',
+  padding: '0 24px',
   position: 'relative',
   [theme.breakpoints.down('md')]: {
     padding: '0 20px',
@@ -116,10 +116,10 @@ const ModernToolbar = styled(Toolbar)(({ theme }) => ({
 const NavButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.primary,
   fontWeight: 600,
-  fontSize: '0.9rem',
+  fontSize: '0.875rem',
   textTransform: 'none',
-  padding: '10px 20px',
-  borderRadius: '16px',
+  padding: '8px 16px',
+  borderRadius: '12px',
   position: 'relative',
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   background: 'transparent',
@@ -130,7 +130,7 @@ const NavButton = styled(Button)(({ theme }) => ({
     left: 0,
     right: 0,
     bottom: 0,
-    borderRadius: '16px',
+    borderRadius: '12px',
     background: theme.palette.mode === 'light'
       ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)'
       : 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)',
@@ -159,7 +159,7 @@ const NavButton = styled(Button)(({ theme }) => ({
     transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   },
   '&:hover::after': {
-    width: '70%',
+    width: '60%',
   }
 }));
 
@@ -167,8 +167,9 @@ const ContactButton = styled(Button)(({ theme }) => ({
   color: theme.palette.text.primary,
   fontWeight: 600,
   textTransform: 'none',
-  padding: '10px 20px',
-  borderRadius: '16px',
+  padding: '8px 16px',
+  fontSize: '0.875rem',
+  borderRadius: '12px',
   border: `2px solid ${theme.palette.divider}`,
   background: theme.palette.mode === 'light'
     ? 'rgba(255, 255, 255, 0.5)'
@@ -215,8 +216,9 @@ const DonateButton = styled(Button)(({ theme }) => ({
   color: 'white',
   fontWeight: 700,
   textTransform: 'none',
-  padding: '12px 28px',
-  borderRadius: '20px',
+  padding: '10px 20px',
+  fontSize: '0.875rem',
+  borderRadius: '16px',
   boxShadow: theme.palette.mode === 'light'
     ? '0 8px 32px rgba(59, 130, 246, 0.4)'
     : '0 8px 32px rgba(37, 99, 235, 0.4)',
@@ -267,18 +269,18 @@ const DropdownContainer = styled(motion.div)(({ theme }) => ({
   left: '50%',
   transform: 'translateX(-50%)',
   zIndex: 1300,
-  minWidth: '280px',
+  minWidth: '240px',
   background: theme.palette.mode === 'light'
     ? 'rgba(255, 255, 255, 0.95)'
     : 'rgba(17, 24, 39, 0.95)',
   backdropFilter: 'blur(20px)',
-  borderRadius: '20px',
+  borderRadius: '16px',
   border: `1px solid ${theme.palette.divider}`,
   boxShadow: theme.palette.mode === 'light'
     ? '0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1)'
     : '0 20px 60px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.3)',
-  padding: '12px',
-  marginTop: '12px',
+  padding: '8px',
+  marginTop: '8px',
   '&::before': {
     content: '""',
     position: 'absolute',
@@ -295,9 +297,10 @@ const DropdownContainer = styled(motion.div)(({ theme }) => ({
 }));
 
 const DropdownItem = styled(MenuItem)(({ theme }) => ({
-  borderRadius: '12px',
-  margin: '4px 0',
-  padding: '12px 16px',
+  borderRadius: '10px',
+  margin: '2px 0',
+  padding: '10px 12px',
+  fontSize: '0.875rem',
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
@@ -315,7 +318,7 @@ const DropdownItem = styled(MenuItem)(({ theme }) => ({
   },
   '&:hover': {
     backgroundColor: theme.palette.action.hover,
-    transform: 'translateX(8px)',
+    transform: 'translateX(6px)',
     '&::before': {
       left: '100%',
     },
@@ -351,10 +354,10 @@ const FlyoutContent = memo(
     return (
       <Box
         sx={{
-          minWidth: "200px",
+          minWidth: "180px",
           bgcolor: "transparent",
-          borderRadius: "16px",
-          padding: "8px",
+          borderRadius: "12px",
+          padding: "6px",
         }}
         role="menu"
       >
@@ -488,13 +491,13 @@ const MenuLink = memo(
             >
               <Box
                 sx={{
-                  minWidth: "200px",
+                  minWidth: "180px",
                   bgcolor: "background.paper",
-                  borderRadius: "16px",
+                  borderRadius: "12px",
                   border: "1px solid",
                   borderColor: "divider",
                   boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.12)",
-                  p: 1,
+                  p: 0.5,
                 }}
                 role="menu"
               >
@@ -714,14 +717,14 @@ const Header = ({ mode, toggleColorMode }) => {
       </Helmet>
 
       <StyledAppBar className={isScrolled ? 'scrolled' : ''}>
-        <Container maxWidth="xl">
+        <Container maxWidth="lg">
           <ModernToolbar component="nav" aria-label="Main navigation">
             {/* Logo Section */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 2,
+                gap: 1.5,
                 position: 'relative',
                 zIndex: 2,
               }}
@@ -746,8 +749,8 @@ const Header = ({ mode, toggleColorMode }) => {
                 sx={{
                   display: { xs: "flex", md: "none" },
                   color: "text.primary",
-                  borderRadius: "16px",
-                  padding: "10px",
+                  borderRadius: "12px",
+                  padding: "8px",
                   background: (theme) => theme.palette.mode === 'light'
                     ? 'rgba(255, 255, 255, 0.2)'
                     : 'rgba(255, 255, 255, 0.1)',
@@ -768,7 +771,7 @@ const Header = ({ mode, toggleColorMode }) => {
               sx={{
                 display: { xs: "none", md: "flex" },
                 alignItems: "center",
-                gap: 1,
+                gap: 0.5,
                 flex: 1,
                 justifyContent: "center",
               }}
@@ -808,18 +811,16 @@ const Header = ({ mode, toggleColorMode }) => {
                           transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
                         }}
                       />
-                    </NavButton>)}
+                    </NavButton>
+                  )}
 
                   <AnimatePresence>
                     {open === item.menu && (
                       <DropdownContainer
-                        initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
                         animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -20, scale: 0.95 }}
-                        transition={{
-                          duration: 0.2,
-                          ease: [0.4, 0, 0.2, 1],
-                        }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        transition={{ duration: 0.2, ease: "easeOut" }}
                       >
                         {renderMenuContent(item.menu)}
                       </DropdownContainer>
@@ -829,22 +830,18 @@ const Header = ({ mode, toggleColorMode }) => {
               ))}
             </Box>
 
-            {/* Action Buttons */}
+            {/* Right Side Actions */}
             <Box
               sx={{
                 display: "flex",
                 alignItems: "center",
-                gap: 2,
-                position: 'relative',
-                zIndex: 2,
+                gap: { xs: 1, sm: 2 },
               }}
             >
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-
               <ContactButton
                 component={Link}
                 to={PathConstants.CONTACT}
-                sx={{ display: { xs: "none", sm: "flex" } }}
+                sx={{ display: { xs: "none", sm: "inline-flex" } }}
               >
                 Contact Us
               </ContactButton>
@@ -852,11 +849,29 @@ const Header = ({ mode, toggleColorMode }) => {
               <DonateButton
                 component={Link}
                 to={PathConstants.DONATE_NOW}
-                startIcon={<FavoriteIcon />}
-                sx={{ display: { xs: "none", sm: "flex" } }}
+                startIcon={<FavoriteIcon sx={{ fontSize: "1rem" }} />}
+                sx={{
+                  display: { xs: "none", sm: "inline-flex" },
+                  minWidth: "120px",
+                }}
               >
                 Donate
               </DonateButton>
+
+              {/* Mobile Donate Button */}
+              <DonateButton
+                component={Link}
+                to={PathConstants.DONATE_NOW}
+                sx={{
+                  display: { xs: "inline-flex", sm: "none" },
+                  minWidth: "auto",
+                  padding: "8px 12px",
+                }}
+              >
+                <VolunteerActivismIcon sx={{ fontSize: "1.1rem" }} />
+              </DonateButton>
+
+              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>
           </ModernToolbar>
         </Container>
@@ -868,7 +883,7 @@ const Header = ({ mode, toggleColorMode }) => {
         open={drawerOpen}
         onClose={handleDrawerClose}
         ModalProps={{
-          keepMounted: true, // Better performance on mobile
+          keepMounted: true,
         }}
       >
         <Box
@@ -876,40 +891,33 @@ const Header = ({ mode, toggleColorMode }) => {
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            padding: "24px 20px",
+            position: "relative",
           }}
           role="navigation"
-          aria-label="Mobile navigation"
+          aria-label="Mobile navigation menu"
         >
-          {/* Mobile Header */}
+          {/* Drawer Header */}
           <Box
             sx={{
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
-              mb: 3,
-              pb: 2,
+              p: 3,
               borderBottom: "1px solid",
               borderColor: "divider",
             }}
           >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Box
                 component="img"
                 src={Logo}
-                alt="Miracle's Group Logo"
                 style={drawerLogoStyle}
+                alt="Miracle's Group Logo"
               />
               <Typography
                 variant="h6"
-                sx={{
-                  fontWeight: 700,
-                  background: (theme) => theme.palette.mode === 'light'
-                    ? 'linear-gradient(135deg, #1e40af, #7c3aed)'
-                    : 'linear-gradient(135deg, #3b82f6, #a855f7)',
-                  WebkitBackgroundClip: 'text',
-                  WebkitTextFillColor: 'transparent',
-                }}
+                color="text.primary"
+                sx={{ fontWeight: 700 }}
               >
                 Miracle's Group
               </Typography>
@@ -919,10 +927,7 @@ const Header = ({ mode, toggleColorMode }) => {
               sx={{
                 color: "text.primary",
                 borderRadius: "12px",
-                padding: "8px",
-                '&:hover': {
-                  backgroundColor: 'action.hover',
-                }
+                background: (theme) => theme.palette.action.hover,
               }}
               aria-label="Close navigation menu"
             >
@@ -930,17 +935,18 @@ const Header = ({ mode, toggleColorMode }) => {
             </IconButton>
           </Box>
 
-          {/* Mobile Navigation List */}
-          <List sx={{ flex: 1, py: 0 }}>
+          {/* Mobile Menu Items */}
+          <List sx={{ flex: 1, p: 2 }}>
             {menuItems.map((item) => (
-              <ListItem
-                key={item.menu || item.text}
-                sx={{ px: 0, py: 0.5 }}
-              >
+              <ListItem key={item.menu || item.text} disablePadding sx={{ mb: 1 }}>
                 <Box sx={{ width: "100%", position: "relative" }}>
                   {item.href ? (
-                    <Link to={item.href} style={{ textDecoration: "none" }}>
-                      <DropdownItem onClick={handleDrawerClose}>
+                    <Link
+                      to={item.href}
+                      style={{ textDecoration: "none", display: "block" }}
+                      onClick={handleDrawerClose}
+                    >
+                      <DropdownItem sx={{ width: "100%" }}>
                         <Typography
                           variant="body1"
                           color="text.primary"
@@ -952,30 +958,31 @@ const Header = ({ mode, toggleColorMode }) => {
                     </Link>
                   ) : (
                     <>
-                      <DropdownItem onClick={handleMouseEnter(item.menu)}>
+                      <DropdownItem
+                        onClick={handleMouseEnter(item.menu)}
+                        sx={{
+                          width: "100%",
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "space-between",
+                        }}
+                      >
                         <Typography
                           variant="body1"
                           color="text.primary"
-                          sx={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            fontWeight: 600,
-                          }}
+                          sx={{ fontWeight: 600 }}
                         >
                           {item.text}
-                          <ExpandMoreIcon
-                            fontSize="small"
-                            sx={{
-                              fontSize: "1.2rem",
-                              transform:
-                                open === item.menu
-                                  ? "rotate(180deg)"
-                                  : "rotate(0deg)",
-                              transition: "transform 0.3s ease",
-                            }}
-                          />
                         </Typography>
+                        <ExpandMoreIcon
+                          sx={{
+                            transform:
+                              open === item.menu
+                                ? "rotate(180deg)"
+                                : "rotate(0deg)",
+                            transition: "transform 0.3s ease",
+                          }}
+                        />
                       </DropdownItem>
 
                       <AnimatePresence>
@@ -984,10 +991,10 @@ const Header = ({ mode, toggleColorMode }) => {
                             initial={{ opacity: 0, height: 0 }}
                             animate={{ opacity: 1, height: "auto" }}
                             exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: "easeInOut" }}
+                            transition={{ duration: 0.3, ease: "easeOut" }}
                             style={{ overflow: "hidden" }}
                           >
-                            <Box sx={{ pl: 2, py: 1 }}>
+                            <Box sx={{ pl: 2, mt: 1 }}>
                               {renderMenuContent(item.menu)}
                             </Box>
                           </motion.div>
@@ -1000,43 +1007,33 @@ const Header = ({ mode, toggleColorMode }) => {
             ))}
           </List>
 
-          {/* Mobile Action Buttons */}
-          <Divider sx={{ my: 2 }} />
+          <Divider />
 
-          <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+          {/* Mobile Action Buttons */}
+          <Box sx={{ p: 3, space: 2 }}>
             <ContactButton
               component={Link}
               to={PathConstants.CONTACT}
               fullWidth
+              sx={{ mb: 2 }}
               onClick={handleDrawerClose}
             >
               Contact Us
             </ContactButton>
-
-            <DonateButton
-              component={Link}
-              to={PathConstants.DONATE_NOW}
-              fullWidth
-              startIcon={<VolunteerActivismIcon />}
-              onClick={handleDrawerClose}
-            >
-              Support Our Cause
-            </DonateButton>
-          </Box>
-
-          {/* Color Mode Toggle */}
-          <Box sx={{ display: "flex", justifyContent: "center", mt: 2 }}>
-            <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
           </Box>
         </Box>
       </ModernDrawer>
+
+      {/* Spacer to prevent content from being hidden under fixed header */}
+      <Box sx={{ height: { xs: "60px", md: "64px" } }} />
     </>
   );
 };
 
 Header.propTypes = {
-  mode: PropTypes.string.isRequired,
+  mode: PropTypes.oneOf(["light", "dark"]).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };
 
 export default Header;
+

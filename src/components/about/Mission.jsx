@@ -446,7 +446,7 @@ export default function Mission() {
     };
 
     const handleGetInvolvedClick = () => {
-        window.location.href = PathConstants.HOME;
+        window.location.href = PathConstants.DONATE_NOW;
     };
 
     return (

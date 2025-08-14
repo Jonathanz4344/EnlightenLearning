@@ -657,7 +657,7 @@ const Header = ({ mode, toggleColorMode }) => {
               {
                 links: [
                   { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES },
-                  { text: "Apply as a Tutor", href: PathConstants.HOME },
+                  { text: "Apply as a Tutor", href: PathConstants.TUTOR },
                   { text: "Join the Executive Team", href: PathConstants.EXEC_TEAM },
 
 

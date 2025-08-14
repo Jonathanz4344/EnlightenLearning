@@ -543,30 +543,6 @@ export default function Mission() {
                             >
                                 At Enlighten Learning, we're a passionate team of high school students working together to make a difference in our community through collaborative leadership, impactful service, and positive change, driven by a vision to do something bigger than ourselves.
                             </Typography>
-
-                            <Button
-                                variant="contained"
-                                size="large"
-                                onClick={handleVolunteerClick}
-                                endIcon={<CelebrationIcon />}
-                                sx={{
-                                    py: 2.5,
-                                    px: 5,
-                                    fontSize: '1.2rem',
-                                    fontWeight: 700,
-                                    borderRadius: 4,
-                                    background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                                    boxShadow: theme.shadows[8],
-                                    '&:hover': {
-                                        background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                        transform: 'translateY(-3px)',
-                                        boxShadow: theme.shadows[16],
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                Join Our Mission
-                            </Button>
                         </Box>
                     </Fade>
                 </Box>

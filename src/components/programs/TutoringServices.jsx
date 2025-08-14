@@ -549,29 +549,6 @@ export default function TutoringServices() {
                         Expert tutoring services designed to help students excel academically and build lasting confidence in their studies.
                     </Typography>
 
-                    {/* Call to Action */}
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleGeneralBookClick}
-                        endIcon={<BookIcon />}
-                        sx={{
-                            py: 2,
-                            px: 4,
-                            fontSize: '1.1rem',
-                            fontWeight: 600,
-                            borderRadius: 3,
-                            background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                            '&:hover': {
-                                background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                transform: 'translateY(-2px)',
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Book a Tutoring Session
-                    </Button>
-
                     {/* Quick Stats */}
                     <Box sx={{
                         display: 'flex',
@@ -834,67 +811,6 @@ export default function TutoringServices() {
                             </Grid>
                         </Grid>
                     </Container>
-                </Box>
-
-                {/* Final Call to Action */}
-                <Box
-                    sx={{
-                        textAlign: 'center',
-                        p: 6,
-                        backgroundColor: isDarkMode ? '#1a1a1a' : 'primary.main',
-                        color: 'white',
-                        borderRadius: 4,
-                        background: 'linear-gradient(135deg, #1976d2, #42a5f5)'
-                    }}
-                >
-                    <Typography
-                        variant="h4"
-                        component="h3"
-                        sx={{ fontWeight: 700, mb: 3 }}
-                    >
-                        Ready to Help Your Child Succeed?
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{ mb: 4, opacity: 0.9 }}
-                    >
-                        Book a tutoring session today and watch your child's confidence soar.
-                    </Typography>
-                    <Typography
-                        variant="body2"
-                        sx={{
-                            mb: 4,
-                            fontStyle: 'italic',
-                            opacity: 0.8
-                        }}
-                    >
-                        "*Subject to tutor availability and scheduling"
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleGeneralBookClick}
-                        endIcon={<HeartIcon />}
-                        sx={{
-                            py: 2,
-                            px: 4,
-                            fontSize: '1.1rem',
-                            fontWeight: 600,
-                            backgroundColor: 'rgba(255,255,255,0.2)',
-                            color: 'white',
-                            border: '2px solid rgba(255,255,255,0.3)',
-                            borderRadius: 3,
-                            backdropFilter: 'blur(10px)',
-                            '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.3)',
-                                transform: 'translateY(-2px)',
-                                boxShadow: '0 10px 30px rgba(0,0,0,0.2)'
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Get Started Today
-                    </Button>
                 </Box>
             </Container>
         </Box>

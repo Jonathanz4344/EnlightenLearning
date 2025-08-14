@@ -82,7 +82,7 @@ const volunteerData = [
         registrationStartDate: "2025-07-01",
         expirationDate: "2025-07-21", // Past event
     },
-     {
+    {
         id: 4,
         title: "Sweet Literature event",
         date: "",
@@ -877,83 +877,6 @@ const VolunteerOpportunities = () => {
                     subtitle="Celebrating the amazing volunteer work we've accomplished together. Thank you to all our dedicated volunteers!"
                     icon={CompletedIcon}
                 />
-
-                {/* Call to Action Section */}
-                <Box
-                    sx={{
-                        textAlign: 'center',
-                        mt: { xs: 8, sm: 10, md: 12 },
-                        p: { xs: 4, sm: 6 },
-                        backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                        borderRadius: 4,
-                        boxShadow: theme => theme.shadows[8],
-                        border: '1px solid',
-                        borderColor: 'divider'
-                    }}
-                >
-                    <VolunteerIcon sx={{
-                        fontSize: 60,
-                        color: 'primary.main',
-                        mb: 2
-                    }} />
-                    <Typography
-                        variant="h4"
-                        component="h2"
-                        sx={{
-                            fontWeight: 700,
-                            mb: 2,
-                            color: 'primary.main'
-                        }}
-                    >
-                        Ready to Make a Difference?
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{
-                            mb: 4,
-                            maxWidth: '600px',
-                            mx: 'auto',
-                            fontSize: '1.1rem',
-                            lineHeight: 1.6
-                        }}
-                    >
-                        Join our community of volunteers and help us create positive change.
-                        Whether you have an hour or a day to spare, every contribution matters.
-                    </Typography>
-                    <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2, flexWrap: 'wrap' }}>
-                        <Button
-                            variant="contained"
-                            size="large"
-                            sx={{
-                                px: 4,
-                                py: 1.5,
-                                fontSize: '1.1rem',
-                                fontWeight: 600,
-                                borderRadius: 3
-                            }}
-                        >
-                            Get Started Today
-                        </Button>
-                        <Button
-                            variant="outlined"
-                            size="large"
-                            sx={{
-                                px: 4,
-                                py: 1.5,
-                                fontSize: '1.1rem',
-                                fontWeight: 600,
-                                borderRadius: 3,
-                                borderWidth: 2,
-                                '&:hover': {
-                                    borderWidth: 2
-                                }
-                            }}
-                        >
-                            Learn More
-                        </Button>
-                    </Box>
-                </Box>
             </Container>
         </Box>
     );

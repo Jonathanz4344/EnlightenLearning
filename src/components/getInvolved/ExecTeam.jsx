@@ -748,29 +748,6 @@ export default function ExecTeam() {
                         and impactful for everyone in our community.
                     </Typography>
 
-                    {/* Call to Action */}
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleJoinTeamClick}
-                        endIcon={<JoinIcon />}
-                        sx={{
-                            py: 2,
-                            px: 4,
-                            fontSize: '1.1rem',
-                            fontWeight: 600,
-                            borderRadius: 3,
-                            background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                            '&:hover': {
-                                background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                transform: 'translateY(-2px)',
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Join Our Executive Board
-                    </Button>
-
                     {/* Quick Stats */}
                     <Box sx={{
                         display: 'flex',
@@ -951,38 +928,6 @@ export default function ExecTeam() {
                         Whether you're interested in academics, design, finance, or community outreach,
                         there's a place for you on our executive board. Join us in building a brighter
                         future through education.
-                    </Typography>
-
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleJoinTeamClick}
-                        endIcon={<LaunchIcon />}
-                        sx={{
-                            py: 2.5,
-                            px: 5,
-                            fontSize: '1.2rem',
-                            fontWeight: 700,
-                            borderRadius: 3,
-                            background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
-                            boxShadow: theme => theme.shadows[8],
-                            '&:hover': {
-                                background: 'linear-gradient(45deg, #1565c0, #2196f3)',
-                                transform: 'translateY(-3px)',
-                                boxShadow: theme => theme.shadows[12],
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Apply Now - Make Your Mark
-                    </Button>
-
-                    <Typography
-                        variant="caption"
-                        color="text.secondary"
-                        sx={{ display: 'block', mt: 2 }}
-                    >
-                        Application deadline: Rolling basis - Apply today!
                     </Typography>
                 </Box>
             </Container>

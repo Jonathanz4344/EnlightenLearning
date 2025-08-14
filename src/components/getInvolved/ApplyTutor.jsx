@@ -538,29 +538,6 @@ export default function ApplyTutor() {
                         Join our team of dedicated tutors today!
                     </Typography>
 
-                    {/* Call to Action */}
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleGeneralApplyClick}
-                        endIcon={<JoinIcon />}
-                        sx={{
-                            py: 2,
-                            px: 4,
-                            fontSize: '1.1rem',
-                            fontWeight: 600,
-                            borderRadius: 3,
-                            background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                            '&:hover': {
-                                background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                transform: 'translateY(-2px)',
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Apply to Become a Tutor
-                    </Button>
-
                     {/* Quick Stats */}
                     <Box sx={{
                         display: 'flex',
@@ -823,54 +800,6 @@ export default function ApplyTutor() {
                             </Grid>
                         </Grid>
                     </Container>
-                </Box>
-
-                {/* Final Call to Action */}
-                <Box
-                    sx={{
-                        textAlign: 'center',
-                        p: 6,
-                        backgroundColor: isDarkMode ? '#1a1a1a' : 'primary.main',
-                        color: 'white',
-                        borderRadius: 4,
-                        background: 'linear-gradient(135deg, #1976d2, #42a5f5)'
-                    }}
-                >
-                    <Typography
-                        variant="h4"
-                        component="h3"
-                        sx={{ fontWeight: 700, mb: 3 }}
-                    >
-                        Ready to Start Your Tutoring Journey?
-                    </Typography>
-                    <Typography
-                        variant="h6"
-                        sx={{ mb: 4, opacity: 0.9 }}
-                    >
-                        Join our community of educators and help students reach their full potential.
-                    </Typography>
-                    <Button
-                        variant="contained"
-                        size="large"
-                        onClick={handleGeneralApplyClick}
-                        endIcon={<JoinIcon />}
-                        sx={{
-                            py: 2,
-                            px: 4,
-                            fontSize: '1.2rem',
-                            fontWeight: 600,
-                            borderRadius: 3,
-                            backgroundColor: 'white',
-                            color: '#1976d2',
-                            '&:hover': {
-                                backgroundColor: '#f5f5f5',
-                                transform: 'translateY(-2px)',
-                            },
-                            transition: 'all 0.3s ease'
-                        }}
-                    >
-                        Apply Now - It's Free!
-                    </Button>
                 </Box>
             </Container>
         </Box>

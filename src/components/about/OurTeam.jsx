@@ -363,30 +363,6 @@ export default function OurTeam() {
                             >
                                 Our diverse team of dedicated high school students brings together unique talents, perspectives, and unwavering commitment to making quality education accessible to all. Each member plays a vital role in our mission to learn with joy, give with passion, and change the world.
                             </Typography>
-
-                            <Button
-                                variant="contained"
-                                size="large"
-                                onClick={handleJoinTeamClick}
-                                endIcon={<GroupIcon />}
-                                sx={{
-                                    py: 2.5,
-                                    px: 5,
-                                    fontSize: '1.2rem',
-                                    fontWeight: 700,
-                                    borderRadius: 4,
-                                    background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                                    boxShadow: theme.shadows[8],
-                                    '&:hover': {
-                                        background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                        transform: 'translateY(-3px)',
-                                        boxShadow: theme.shadows[16],
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                Join Our Team
-                            </Button>
                         </Box>
                     </Fade>
                 </Box>
@@ -612,28 +588,6 @@ export default function OurTeam() {
                         </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 3 }}>
-                            <Button
-                                variant="contained"
-                                size="large"
-                                onClick={handleJoinTeamClick}
-                                endIcon={<GroupIcon />}
-                                sx={{
-                                    py: 2,
-                                    px: 4,
-                                    fontSize: '1.1rem',
-                                    fontWeight: 600,
-                                    borderRadius: 3,
-                                    background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                                    '&:hover': {
-                                        background: 'linear-gradient(45deg, #45a049, #5cb85c)',
-                                        transform: 'translateY(-2px)',
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                Join Our Team
-                            </Button>
-
                             <Button
                                 variant="outlined"
                                 size="large"

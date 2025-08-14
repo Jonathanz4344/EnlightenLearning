@@ -637,7 +637,7 @@ const Header = ({ mode, toggleColorMode }) => {
             items={[
               {
                 links: [
-                  { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES},
+                  { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES },
                   { text: "Success Stories", href: PathConstants.HOME },
                   { text: "Events & Programs", href: PathConstants.EVENTS },
                 ],
@@ -844,7 +844,7 @@ const Header = ({ mode, toggleColorMode }) => {
               {/* Donate Button - Desktop */}
               <DonateButton
                 component={Link}
-                to={PathConstants.HOME}
+                to={PathConstants.DONATE_NOW}
                 sx={{ display: { xs: "none", sm: "flex" } }}
                 startIcon={<FavoriteIcon />}
               >

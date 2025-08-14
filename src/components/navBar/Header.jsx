@@ -637,7 +637,7 @@ const Header = ({ mode, toggleColorMode }) => {
             items={[
               {
                 links: [
-                  { text: "Tutoring Services", href: PathConstants.HOME },
+                  { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES},
                   { text: "Success Stories", href: PathConstants.HOME },
                   { text: "Events & Programs", href: PathConstants.EVENTS },
                 ],

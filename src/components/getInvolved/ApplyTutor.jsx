@@ -49,7 +49,7 @@ const subjectAreas = [
     {
         id: 2,
         title: "Regents Prep",
-        subtitle: "High School",
+        subtitle: "Middle School & High School",
         description: "Support high school students in preparing for New York State Regents examinations across various subjects. Provide comprehensive review sessions and exam strategies.",
         icon: RegentsIcon,
         color: "#2196f3",
@@ -587,10 +587,10 @@ export default function ApplyTutor() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
-                                100+
+                                10+
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                Students Helped
+                                Dedicated Tutors
                             </Typography>
                         </Box>
                     </Box>

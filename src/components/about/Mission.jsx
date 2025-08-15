@@ -491,18 +491,16 @@ export default function Mission() {
                                 component="h1"
                                 sx={{
                                     fontWeight: 900,
-                                    mb: 4,
-                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-                                    background: 'linear-gradient(45deg, #4caf50, #e91e63, #2196f3, #ff9800)',
+                                    mb: 3,
+                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
+                                    background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
                                     backgroundClip: 'text',
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
-                                    lineHeight: 1.2
                                 }}
                             >
                                 Our Mission
                             </Typography>
-
                             <Typography
                                 variant="h4"
                                 sx={{

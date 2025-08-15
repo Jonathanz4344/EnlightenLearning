@@ -100,7 +100,7 @@ const teamMembers = [
 
 // Team stats
 const teamStats = [
-    { icon: GroupIcon, value: "8", label: "Team Members", color: "#4caf50" },
+    { icon: GroupIcon, value: "130", label: "Sessions Taught", color: "#4caf50" },
     { icon: SchoolIcon, value: "60+", label: "Students Helped", color: "#2196f3" },
     { icon: VolunteerIcon, value: "20+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
@@ -319,24 +319,21 @@ export default function OurTeam() {
                                     <CelebrationIcon sx={{ fontSize: 60, color: '#ff9800' }} />
                                 </Box>
                             </Box>
-
                             <Typography
                                 variant="h1"
                                 component="h1"
                                 sx={{
                                     fontWeight: 900,
-                                    mb: 4,
-                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' },
-                                    background: 'linear-gradient(45deg, #4caf50, #e91e63, #2196f3, #ff9800)',
+                                    mb: 3,
+                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
+                                    background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
                                     backgroundClip: 'text',
                                     WebkitBackgroundClip: 'text',
                                     WebkitTextFillColor: 'transparent',
-                                    lineHeight: 1.2
                                 }}
                             >
                                 Meet Our Team
                             </Typography>
-
                             <Typography
                                 variant="h4"
                                 sx={{

@@ -238,30 +238,22 @@ export default function Footer() {
               </Link>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.MISSION}
                 underline="hover"
                 aria-label="Learn about our doctor"
               >
-                Doctor
+                Our Mission
               </Link>
               <Link
                 color="inherit"
-                href={`${PathConstants.HOME}`}
-                underline="hover"
-                aria-label="Read patient testimonials"
-              >
-                Testimonials
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.OUR_TEAM}
                 underline="hover"
                 aria-label="View frequently asked questions"
               >
-                FAQ
+                Meet Our Team
               </Link>
 
-              <Typography
+              {/* <Typography
                 variant="h6"
                 component="h3"
                 id="footer-patient-heading"
@@ -293,7 +285,7 @@ export default function Footer() {
                 aria-label="View current promotions"
               >
                 Promotions
-              </Link>
+              </Link> */}
             </Box>
 
             {/* Myopia Management & Vision Therapy Links */}
@@ -315,42 +307,25 @@ export default function Footer() {
                 color="primary.main"
                 sx={{ fontWeight: 600 }}
               >
-                Myopia Management
+                Programs
               </Typography>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.TUTORING_SERVICES}
                 underline="hover"
                 aria-label="Learn about myopia management"
               >
-                Myopia
+                Tutoring Services
               </Link>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.EVENTS}
                 underline="hover"
                 aria-label="Learn about Ortho-K treatment"
               >
-                Ortho-K
+                Events & Programs
               </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Learn about MiSight contact lenses"
-              >
-                MiSight
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Learn about Atropine Drop treatment"
-              >
-                Atropine Drop
-              </Link>
-
-              <Typography
+              {/* <Typography
                 variant="h6"
                 component="h3"
                 id="footer-vision-heading"
@@ -374,7 +349,7 @@ export default function Footer() {
                 aria-label="Explore our therapy program"
               >
                 Therapy Program
-              </Link>
+              </Link> */}
             </Box>
 
             {/* Dry Eyes Links */}
@@ -396,31 +371,31 @@ export default function Footer() {
                 color="primary.main"
                 sx={{ fontWeight: 600 }}
               >
-                Dry Eyes
+                 Get Involved
               </Typography>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.VOLUNTEER_OPPORTUNITIES}
                 underline="hover"
                 aria-label="Learn about dry eye treatments"
               >
-                Dry Eyes
+                Volunteer Opportunities
               </Link>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.TUTOR}
                 underline="hover"
                 aria-label="Learn about RF treatment for dry eyes"
               >
-                RF Treatment
+                Apply as a Tutor
               </Link>
               <Link
                 color="inherit"
-                href={PathConstants.HOME}
+                href={PathConstants.EXEC_TEAM}
                 underline="hover"
                 aria-label="Learn about IPL treatment for dry eyes"
               >
-                IPL Treatment
+                Join the Executive Team
               </Link>
             </Box>
           </Box>
@@ -446,7 +421,7 @@ export default function Footer() {
               alignItems: { xs: "center", sm: "flex-start" },
             }}
           >
-            <Box>
+            {/* <Box>
               <Link
                 color="inherit"
                 href={PathConstants.HOME}
@@ -466,7 +441,7 @@ export default function Footer() {
               >
                 Accessibility Statement
               </Link>
-            </Box>
+            </Box> */}
             <Copyright />
           </Box>
 

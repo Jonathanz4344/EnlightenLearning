@@ -238,11 +238,17 @@ const getCategoryColor = (category) => {
     return colors[category] || '#757575';
 };
 
-// Helper function to calculate total active members
+// Helper function to calculate total unique active members
 const getTotalActiveMembers = (positions) => {
-    return positions.reduce((total, position) => {
-        return total + position.currentMembers.length;
-    }, 0);
+    const uniqueMembers = new Set();
+
+    positions.forEach(position => {
+        position.currentMembers.forEach(member => {
+            uniqueMembers.add(member.name);
+        });
+    });
+
+    return uniqueMembers.size;
 };
 
 const PositionCard = ({ position }) => {
@@ -691,10 +697,6 @@ export default function ExecTeam() {
 
     // Calculate total active members dynamically
     const totalActiveMembers = getTotalActiveMembers(execPositions);
-
-    const handleJoinTeamClick = () => {
-        window.open("https://forms.gle/JVqaueQjwRexzNjz8", '_blank');
-    };
 
     return (
         <Box

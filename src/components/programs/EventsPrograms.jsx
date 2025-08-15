@@ -73,7 +73,7 @@ const eventsData = [
         description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
         formUrl: "https://forms.gle/gUzvfJNfhUzqJrxp7",
         category: "Volleyball",
-        totalParticipants: 30,
+        totalParticipants: 20,
         duration: "1 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-07-01",

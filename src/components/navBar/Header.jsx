@@ -578,7 +578,7 @@ const Header = ({ mode, toggleColorMode }) => {
 
   const menuItems = [
     { text: "Home", href: PathConstants.HOME },
-    { text: "About", menu: "about" },
+    { text: "About Us", menu: "about" },
     { text: "Programs", menu: "programs" },
     { text: "Get Involved", menu: "get-involved" },
   ];
@@ -654,7 +654,7 @@ const Header = ({ mode, toggleColorMode }) => {
               {
                 links: [
                   { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES },
-                  { text: "Success Stories", href: PathConstants.HOME },
+                  // { text: "Success Stories", href: PathConstants.HOME },
                   { text: "Events & Programs", href: PathConstants.EVENTS },
                 ],
               },

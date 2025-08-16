@@ -30,7 +30,7 @@ const ReviewCard = ({ review, index }) => {
     // Generate a consistent color based on the reviewer's name
     const getAvatarColor = (name) => {
         const colors = [
-            '#1976d2', '#388e3c', '#f57c00', '#d32f2f', 
+            '#1976d2', '#388e3c', '#f57c00', '#d32f2f',
             '#7b1fa2', '#0097a7', '#5d4037', '#616161'
         ];
         const charCode = name.charCodeAt(0);
@@ -70,13 +70,13 @@ const ReviewCard = ({ review, index }) => {
                 <CardContent sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
                     {/* Quote Icon */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
-                        <QuoteIcon 
-                            sx={{ 
-                                fontSize: 32, 
+                        <QuoteIcon
+                            sx={{
+                                fontSize: 32,
                                 color: avatarColor,
                                 opacity: 0.7,
                                 transform: 'rotate(180deg)'
-                            }} 
+                            }}
                         />
                     </Box>
 
@@ -99,9 +99,9 @@ const ReviewCard = ({ review, index }) => {
 
                     {/* Rating */}
                     <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-                        <Rating 
-                            value={5} 
-                            readOnly 
+                        <Rating
+                            value={5}
+                            readOnly
                             sx={{
                                 '& .MuiRating-iconFilled': {
                                     color: '#ffc107',
@@ -239,10 +239,16 @@ export default function Reviews() {
         <Box
             component="section"
             sx={{
-                backgroundColor: isDarkMode ? "#121212" : "#f9f9f9",
-                color: isDarkMode ? "#fff" : "#333",
+                width: "100%",
+                pt: { xs: 8, sm: 10, md: 12 },
+                pb: { xs: 6, md: 8 },
+                overflow: "hidden",
+                background: isDarkMode
+                    ? 'radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)'
+                    : 'radial-gradient(ellipse at top, #f8faff 0%, #e3f2fd 50%, #ffffff 100%)',
+                position: "relative",
                 minHeight: "100vh",
-                py: { xs: 4, sm: 6, md: 8 },
+                color: isDarkMode ? "#fff" : "#333",
                 transition: "background-color 0.3s, color 0.3s",
             }}
         >
@@ -299,7 +305,7 @@ export default function Reviews() {
                         >
                             Real stories from real people who have experienced the impact of our programs
                         </Typography>
-                        
+
                         {/* Review Button */}
                         <Button
                             variant="contained"
@@ -377,9 +383,9 @@ export default function Reviews() {
 
                 {/* Call to Action */}
                 <Fade in timeout={2000}>
-                    <Box 
-                        sx={{ 
-                            textAlign: 'center', 
+                    <Box
+                        sx={{
+                            textAlign: 'center',
                             mt: { xs: 6, sm: 8, md: 10 },
                             p: 4,
                             backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
@@ -409,10 +415,10 @@ export default function Reviews() {
                                 mb: 3
                             }}
                         >
-                            Ready to be part of something special? Whether you're looking for tutoring, 
+                            Ready to be part of something special? Whether you're looking for tutoring,
                             want to volunteer, or support our mission, we'd love to hear from you.
                         </Typography>
-                        
+
                         {/* Additional Review Button in CTA */}
                         <Button
                             variant="outlined"

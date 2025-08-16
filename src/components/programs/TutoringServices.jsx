@@ -494,18 +494,20 @@ export default function TutoringServices() {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
 
-    const handleGeneralBookClick = () => {
-        window.open("https://forms.gle/yBkAste1jFLEVqLw9", '_blank');
-    };
-
     return (
         <Box
             component="section"
             sx={{
-                backgroundColor: isDarkMode ? "#121212" : "#f9f9f9",
-                color: isDarkMode ? "#fff" : "#333",
+                width: "100%",
+                pt: { xs: 8, sm: 10, md: 12 },
+                pb: { xs: 6, md: 8 },
+                overflow: "hidden",
+                background: isDarkMode
+                    ? 'radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)'
+                    : 'radial-gradient(ellipse at top, #f8faff 0%, #e3f2fd 50%, #ffffff 100%)',
+                position: "relative",
                 minHeight: "100vh",
-                py: { xs: 4, sm: 6, md: 8 },
+                color: isDarkMode ? "#fff" : "#333",
                 transition: "background-color 0.3s, color 0.3s",
             }}
         >

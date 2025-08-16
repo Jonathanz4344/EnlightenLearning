@@ -451,14 +451,36 @@ export default function Mission() {
         <Box
             component="section"
             sx={{
-                backgroundColor: isDarkMode ? "#121212" : "#f9f9f9",
-                color: isDarkMode ? "#fff" : "#333",
+                width: "100%",
+                pt: { xs: 8, sm: 10, md: 12 },
+                pb: { xs: 6, md: 8 },
+                overflow: "hidden",
+                background: isDarkMode
+                    ? 'radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 50%, #0f0f23 100%)'
+                    : 'radial-gradient(ellipse at top, #f8faff 0%, #e3f2fd 50%, #ffffff 100%)',
+                position: "relative",
                 minHeight: "100vh",
-                py: { xs: 4, sm: 6, md: 8 },
+                color: isDarkMode ? "#fff" : "#333",
                 transition: "background-color 0.3s, color 0.3s",
             }}
         >
-            <Container maxWidth="lg">
+            {/* Background decorative elements */}
+            <Box sx={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                opacity: 0.1,
+                background: `
+                    radial-gradient(circle at 20% 20%, #4CAF50 0%, transparent 50%),
+                    radial-gradient(circle at 80% 80%, #E91E63 0%, transparent 50%),
+                    radial-gradient(circle at 40% 90%, #2196F3 0%, transparent 50%)
+                `,
+                zIndex: 0
+            }} />
+
+            <Container maxWidth="lg" sx={{ position: 'relative', zIndex: 1 }}>
                 {/* Hero Section */}
                 <Box sx={{ textAlign: 'center', mb: { xs: 8, sm: 10, md: 12 } }}>
                     <Fade in={true} timeout={800}>

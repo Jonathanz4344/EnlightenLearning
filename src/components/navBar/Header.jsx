@@ -210,8 +210,8 @@ const ContactButton = styled(Button)(({ theme }) => ({
 
 const DonateButton = styled(Button)(({ theme }) => ({
   background: theme.palette.mode === 'light'
-    ? 'linear-gradient(135deg, #1e3a8a 0%, #3b82f6 25%, #fbbf24 50%, #f59e0b 75%, #0ea5e9 100%)'
-    : 'linear-gradient(135deg, #1d4ed8 0%, #2563eb 25%, #fcd34d 50%, #f59e0b 75%, #0284c7 100%)',
+    ? 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 25%, #c084fc 50%, #d946ef 75%, #e879f9 100%)'
+    : 'linear-gradient(135deg, #a78bfa 0%, #c4b5fd 25%, #ddd6fe 50%, #e879f9 75%, #f0abfc 100%)',
   backgroundSize: '300% 300%',
   color: 'white',
   fontWeight: 700,
@@ -220,8 +220,8 @@ const DonateButton = styled(Button)(({ theme }) => ({
   fontSize: '0.875rem',
   borderRadius: '16px',
   boxShadow: theme.palette.mode === 'light'
-    ? '0 8px 32px rgba(59, 130, 246, 0.4)'
-    : '0 8px 32px rgba(37, 99, 235, 0.4)',
+    ? '0 8px 32px rgba(139, 92, 246, 0.4)' // Updated to match purple theme
+    : '0 8px 32px rgba(167, 139, 250, 0.4)',
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
@@ -240,8 +240,8 @@ const DonateButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-3px) scale(1.05)',
     boxShadow: theme.palette.mode === 'light'
-      ? '0 12px 40px rgba(59, 130, 246, 0.5)'
-      : '0 12px 40px rgba(37, 99, 235, 0.5)',
+      ? '0 12px 40px rgba(139, 92, 246, 0.5)' // Updated to match purple theme
+      : '0 12px 40px rgba(167, 139, 250, 0.5)',
     '&::before': {
       transform: 'translateX(100%)',
     },
@@ -840,7 +840,7 @@ const Header = ({ mode, toggleColorMode }) => {
             >
               <ContactButton
                 component={Link}
-                to={PathConstants.CONTACT}
+                to={PathConstants.CONTACT_US}
                 sx={{ display: { xs: "none", sm: "inline-flex" } }}
               >
                 Contact Us
@@ -1013,7 +1013,7 @@ const Header = ({ mode, toggleColorMode }) => {
           <Box sx={{ p: 3, space: 2 }}>
             <ContactButton
               component={Link}
-              to={PathConstants.CONTACT}
+              to={PathConstants.CONTACT_US}
               fullWidth
               sx={{ mb: 2 }}
               onClick={handleDrawerClose}

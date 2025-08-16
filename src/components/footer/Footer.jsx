@@ -14,7 +14,6 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import { SiTiktok as TikTokIcon } from "react-icons/si";
 import GoogleIcon from "@mui/icons-material/Google";
 import PhoneIcon from "@mui/icons-material/Phone";
-// import SmartphoneIcon from "@mui/icons-material/Smartphone";
 import SmsIcon from "@mui/icons-material/Sms";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";

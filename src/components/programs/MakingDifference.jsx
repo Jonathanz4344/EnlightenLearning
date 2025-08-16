@@ -12,12 +12,14 @@ import {
     Fade,
     Zoom,
     Rating,
+    Button,
 } from "@mui/material";
 import {
     Reviews as ReviewsIcon,
     FormatQuote as QuoteIcon,
     Star as StarIcon,
     People as PeopleIcon,
+    RateReview as RateReviewIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
@@ -165,6 +167,7 @@ const StatsCard = ({ icon: Icon, title, value, color }) => {
                 backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
                 borderRadius: 3,
                 transition: 'all 0.3s ease',
+                position: 'relative',
                 '&:hover': {
                     transform: 'translateY(-4px)',
                     boxShadow: `0 12px 28px ${color}30`,
@@ -228,6 +231,10 @@ export default function Reviews() {
         }
     ];
 
+    const handleReviewClick = () => {
+        window.open('https://forms.gle/V8LRoe4RJm3iUaXu5', '_blank');
+    };
+
     return (
         <Box
             component="section"
@@ -286,11 +293,38 @@ export default function Reviews() {
                                 maxWidth: '600px',
                                 mx: 'auto',
                                 lineHeight: 1.6,
-                                fontSize: '1rem'
+                                fontSize: '1rem',
+                                mb: 4
                             }}
                         >
                             Real stories from real people who have experienced the impact of our programs
                         </Typography>
+                        
+                        {/* Review Button */}
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={handleReviewClick}
+                            startIcon={<RateReviewIcon />}
+                            sx={{
+                                mt: 2,
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                borderRadius: 3,
+                                background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+                                boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: '0 12px 32px rgba(25, 118, 210, 0.4)',
+                                    background: 'linear-gradient(45deg, #1565c0, #1976d2)',
+                                }
+                            }}
+                        >
+                            Share Your Experience
+                        </Button>
                     </Box>
                 </Fade>
 
@@ -371,12 +405,40 @@ export default function Reviews() {
                                 maxWidth: '600px',
                                 mx: 'auto',
                                 lineHeight: 1.6,
-                                fontSize: '1.1rem'
+                                fontSize: '1.1rem',
+                                mb: 3
                             }}
                         >
                             Ready to be part of something special? Whether you're looking for tutoring, 
                             want to volunteer, or support our mission, we'd love to hear from you.
                         </Typography>
+                        
+                        {/* Additional Review Button in CTA */}
+                        <Button
+                            variant="outlined"
+                            size="large"
+                            onClick={handleReviewClick}
+                            startIcon={<RateReviewIcon />}
+                            sx={{
+                                px: 3,
+                                py: 1.5,
+                                fontSize: '1rem',
+                                fontWeight: 600,
+                                borderRadius: 3,
+                                borderColor: '#1976d2',
+                                color: '#1976d2',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    borderColor: '#1976d2',
+                                    backgroundColor: '#1976d2',
+                                    color: 'white',
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
+                                }
+                            }}
+                        >
+                            Leave a Review
+                        </Button>
                     </Box>
                 </Fade>
             </Container>

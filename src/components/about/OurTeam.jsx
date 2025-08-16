@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useNavigate } from "react-router-dom";
 import {
     Box,
     Button,
@@ -274,13 +275,14 @@ export default function OurTeam() {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
     const theme = useTheme();
+    const navigate = useNavigate();
 
     const handleJoinTeamClick = () => {
-        window.location.href = PathConstants.EXEC_TEAM;
+        navigate(PathConstants.EXEC_TEAM);
     };
 
     const handleVolunteerClick = () => {
-        window.location.href = PathConstants.VOLUNTEER_OPPORTUNITIES;
+        navigate(PathConstants.VOLUNTEER_OPPORTUNITIES);
     };
 
     return (
@@ -492,7 +494,10 @@ export default function OurTeam() {
 
                                         <Button
                                             variant="contained"
-                                            onClick={handleJoinTeamClick}
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleJoinTeamClick();
+                                            }}
                                             endIcon={<GroupIcon />}
                                             sx={{
                                                 background: 'linear-gradient(45deg, #4caf50, #66bb6a)',

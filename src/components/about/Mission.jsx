@@ -30,6 +30,7 @@ import {
     Event as EventIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import PathConstants from "../../routes/pathConstants";
 
 // Mission pillars data
@@ -435,13 +436,15 @@ export default function Mission() {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
     const theme = useTheme();
+    const navigate = useNavigate(); // Add useNavigate hook
 
+    // Replace window.location.href with navigate
     const handleVolunteerClick = () => {
-        window.location.href = PathConstants.VOLUNTEER_OPPORTUNITIES;
+        navigate(PathConstants.VOLUNTEER_OPPORTUNITIES);
     };
 
     const handleGetInvolvedClick = () => {
-        window.location.href = PathConstants.DONATE_NOW;
+        navigate(PathConstants.DONATE_NOW);
     };
 
     return (
@@ -520,8 +523,6 @@ export default function Mission() {
                             >
                                 Fundraising for a good cause!
                             </Typography>
-
-
 
                             <Typography
                                 variant="h6"

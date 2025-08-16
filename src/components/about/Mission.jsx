@@ -1,4 +1,3 @@
-import * as React from "react";
 import {
     Box,
     Button,
@@ -7,14 +6,11 @@ import {
     CardContent,
     Typography,
     useTheme,
-    useMediaQuery,
     Grid,
     Divider,
-    Avatar,
     Paper,
     Fade,
     Grow,
-    Chip,
 } from "@mui/material";
 import {
     School as LearnIcon,
@@ -23,12 +19,11 @@ import {
     MonetizationOn as FundraisingIcon,
     EmojiEvents as JoyIcon,
     VolunteerActivism as PassionIcon,
-    TrendingUp as ImpactIcon,
     Group as CommunityIcon,
     AutoStories as EducationIcon,
     Lightbulb as InnovationIcon,
     FavoriteRounded as HeartIcon,
-    Celebration as CelebrationIcon,
+
     MonetizationOn,
     TrendingUp,
     VolunteerActivism,
@@ -193,7 +188,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                         px: 2,
                         py: 1,
                         borderRadius: 3,
-                        fontSize: { xs: '0.9rem', sm: '0.8rem' }, // Increased mobile font size
+                        fontSize: '0.8rem',
                         fontWeight: 700,
                         boxShadow: theme.shadows[8],
                         transition: 'transform 0.3s ease',
@@ -203,7 +198,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                     {pillar.stats.value} {pillar.stats.label}
                 </Box>
 
-                <CardContent sx={{ flexGrow: 1, p: { xs: 3, sm: 4 }, pt: { xs: 4, sm: 5 } }}>
+                <CardContent sx={{ flexGrow: 1, p: 4, pt: 5 }}>
                     {/* Header */}
                     <Box sx={{ mb: 4, textAlign: 'center' }}>
                         <Box
@@ -219,7 +214,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                         >
                             <IconComponent
                                 sx={{
-                                    fontSize: { xs: 42, sm: 48 }, // Slightly smaller on mobile but still visible
+                                    fontSize: 48,
                                     color: pillar.color
                                 }}
                             />
@@ -231,7 +226,6 @@ const MissionPillarCard = ({ pillar, index }) => {
                             sx={{
                                 fontWeight: 800,
                                 mb: 1,
-                                fontSize: { xs: '1.8rem', sm: '2.125rem', md: '2.5rem' }, // Increased mobile font size
                                 background: pillar.bgGradient,
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
@@ -246,8 +240,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                             sx={{
                                 color: pillar.color,
                                 fontWeight: 600,
-                                fontStyle: 'italic',
-                                fontSize: { xs: '1.1rem', sm: '1rem' } // Increased mobile font size
+                                fontStyle: 'italic'
                             }}
                         >
                             {pillar.subtitle}
@@ -261,7 +254,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                         sx={{
                             lineHeight: 1.7,
                             mb: 4,
-                            fontSize: { xs: '1.1rem', sm: '1.05rem' } // Increased mobile font size
+                            fontSize: '1.05rem'
                         }}
                     >
                         {pillar.description}
@@ -274,8 +267,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                             sx={{
                                 fontWeight: 600,
                                 mb: 2,
-                                color: pillar.color,
-                                fontSize: { xs: '1.3rem', sm: '1.25rem' } // Increased mobile font size
+                                color: pillar.color
                             }}
                         >
                             Key Features:
@@ -309,10 +301,7 @@ const MissionPillarCard = ({ pillar, index }) => {
                                     />
                                     <Typography
                                         variant="body2"
-                                        sx={{
-                                            fontWeight: 500,
-                                            fontSize: { xs: '1rem', sm: '0.875rem' } // Increased mobile font size
-                                        }}
+                                        sx={{ fontWeight: 500 }}
                                     >
                                         {feature}
                                     </Typography>
@@ -335,7 +324,7 @@ const ImpactMetric = ({ metric, index }) => {
         <Fade in={true} timeout={600 + index * 150}>
             <Paper
                 sx={{
-                    p: { xs: 3, sm: 4 }, // Responsive padding
+                    p: 4,
                     textAlign: 'center',
                     height: '100%',
                     backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
@@ -356,7 +345,7 @@ const ImpactMetric = ({ metric, index }) => {
                 <IconComponent
                     className="metric-icon"
                     sx={{
-                        fontSize: { xs: 48, sm: 56 }, // Responsive icon size
+                        fontSize: 56,
                         color: `${metric.color}80`,
                         mb: 2,
                         transition: 'all 0.3s ease'
@@ -367,8 +356,7 @@ const ImpactMetric = ({ metric, index }) => {
                     sx={{
                         fontWeight: 900,
                         color: metric.color,
-                        mb: 1,
-                        fontSize: { xs: '2.5rem', sm: '3rem' } // Increased mobile font size
+                        mb: 1
                     }}
                 >
                     {metric.value}
@@ -376,10 +364,7 @@ const ImpactMetric = ({ metric, index }) => {
                 <Typography
                     variant="body1"
                     color="text.secondary"
-                    sx={{
-                        fontWeight: 600,
-                        fontSize: { xs: '1.1rem', sm: '1rem' } // Increased mobile font size
-                    }}
+                    sx={{ fontWeight: 600 }}
                 >
                     {metric.label}
                 </Typography>
@@ -397,7 +382,7 @@ const ValueCard = ({ value, index }) => {
         <Grow in={true} timeout={1000 + index * 100}>
             <Box
                 sx={{
-                    p: { xs: 2.5, sm: 3 }, // Responsive padding
+                    p: 3,
                     textAlign: 'center',
                     height: '100%',
                     backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
@@ -418,7 +403,7 @@ const ValueCard = ({ value, index }) => {
                 <IconComponent
                     className="value-icon"
                     sx={{
-                        fontSize: { xs: 36, sm: 40 }, // Responsive icon size
+                        fontSize: 40,
                         color: `${value.color}70`,
                         mb: 2,
                         transition: 'all 0.3s ease'
@@ -429,8 +414,7 @@ const ValueCard = ({ value, index }) => {
                     sx={{
                         fontWeight: 600,
                         mb: 2,
-                        color: value.color,
-                        fontSize: { xs: '1.3rem', sm: '1.25rem' } // Increased mobile font size
+                        color: value.color
                     }}
                 >
                     {value.title}
@@ -438,10 +422,7 @@ const ValueCard = ({ value, index }) => {
                 <Typography
                     variant="body2"
                     color="text.secondary"
-                    sx={{
-                        lineHeight: 1.6,
-                        fontSize: { xs: '1rem', sm: '0.875rem' } // Increased mobile font size
-                    }}
+                    sx={{ lineHeight: 1.6 }}
                 >
                     {value.description}
                 </Typography>
@@ -483,8 +464,8 @@ export default function Mission() {
                                 <Box
                                     sx={{
                                         display: 'flex',
-                                        gap: { xs: 1, sm: 2 },
-                                        p: { xs: 2, sm: 3 },
+                                        gap: 2,
+                                        p: 3,
                                         borderRadius: 4,
                                         background: isDarkMode
                                             ? 'linear-gradient(135deg, #1a1a1a, #2d2d2d)'
@@ -493,10 +474,10 @@ export default function Mission() {
                                         border: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`
                                     }}
                                 >
-                                    <LearnIcon sx={{ fontSize: { xs: 48, sm: 60 }, color: '#4caf50' }} />
-                                    <GiveIcon sx={{ fontSize: { xs: 48, sm: 60 }, color: '#e91e63' }} />
-                                    <ChangeIcon sx={{ fontSize: { xs: 48, sm: 60 }, color: '#2196f3' }} />
-                                    <FundraisingIcon sx={{ fontSize: { xs: 48, sm: 60 }, color: '#ff9800' }} />
+                                    <LearnIcon sx={{ fontSize: 60, color: '#4caf50' }} />
+                                    <GiveIcon sx={{ fontSize: 60, color: '#e91e63' }} />
+                                    <ChangeIcon sx={{ fontSize: 60, color: '#2196f3' }} />
+                                    <FundraisingIcon sx={{ fontSize: 60, color: '#ff9800' }} />
                                 </Box>
                             </Box>
 
@@ -506,7 +487,7 @@ export default function Mission() {
                                 sx={{
                                     fontWeight: 900,
                                     mb: 3,
-                                    fontSize: { xs: '3rem', sm: '3.5rem', md: '4rem' }, // Increased mobile font size
+                                    fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
                                     background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
                                     backgroundClip: 'text',
                                     WebkitBackgroundClip: 'text',
@@ -520,7 +501,7 @@ export default function Mission() {
                                 sx={{
                                     fontWeight: 700,
                                     mb: 3,
-                                    fontSize: { xs: '1.8rem', sm: '2rem', md: '2.5rem' }, // Increased mobile font size
+                                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                                     color: 'primary.main',
                                     lineHeight: 1.3
                                 }}
@@ -532,13 +513,15 @@ export default function Mission() {
                                 sx={{
                                     fontWeight: 700,
                                     mb: 3,
-                                    fontSize: { xs: '1.8rem', sm: '2rem', md: '2.5rem' }, // Increased mobile font size
+                                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' },
                                     color: 'primary.main',
                                     lineHeight: 1.3
                                 }}
                             >
                                 Fundraising for a good cause!
                             </Typography>
+
+
 
                             <Typography
                                 variant="h6"
@@ -547,9 +530,8 @@ export default function Mission() {
                                     maxWidth: '800px',
                                     mx: 'auto',
                                     lineHeight: 1.6,
-                                    fontSize: { xs: '1.2rem', sm: '1.2rem' }, // Increased mobile font size
-                                    mb: 6,
-                                    px: { xs: 2, sm: 0 } // Add horizontal padding on mobile
+                                    fontSize: { xs: '1rem', sm: '1.2rem' },
+                                    mb: 6
                                 }}
                             >
                                 At Enlighten Learning, we're a passionate team of high school students working together to make a difference in our community through collaborative leadership, impactful service, and positive change, driven by a vision to do something bigger than ourselves.
@@ -567,7 +549,6 @@ export default function Mission() {
                             textAlign: 'center',
                             fontWeight: 800,
                             mb: 6,
-                            fontSize: { xs: '2.2rem', sm: '3rem' }, // Increased mobile font size
                             background: 'linear-gradient(45deg, #2196f3, #42a5f5)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
@@ -597,7 +578,6 @@ export default function Mission() {
                             textAlign: 'center',
                             fontWeight: 800,
                             mb: 3,
-                            fontSize: { xs: '2.2rem', sm: '3rem' }, // Increased mobile font size
                             background: 'linear-gradient(45deg, #4caf50, #e91e63, #2196f3, #ff9800)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
@@ -615,9 +595,7 @@ export default function Mission() {
                             maxWidth: '600px',
                             mx: 'auto',
                             mb: 8,
-                            lineHeight: 1.6,
-                            fontSize: { xs: '1.2rem', sm: '1.25rem' }, // Increased mobile font size
-                            px: { xs: 2, sm: 0 } // Add horizontal padding on mobile
+                            lineHeight: 1.6
                         }}
                     >
                         Each pillar represents our commitment to creating lasting positive change through education and community service
@@ -643,7 +621,6 @@ export default function Mission() {
                             textAlign: 'center',
                             fontWeight: 800,
                             mb: 3,
-                            fontSize: { xs: '2.2rem', sm: '3rem' }, // Increased mobile font size
                             background: 'linear-gradient(45deg, #9c27b0, #f44336)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
@@ -661,9 +638,7 @@ export default function Mission() {
                             maxWidth: '600px',
                             mx: 'auto',
                             mb: 6,
-                            lineHeight: 1.6,
-                            fontSize: { xs: '1.2rem', sm: '1.25rem' }, // Increased mobile font size
-                            px: { xs: 2, sm: 0 } // Add horizontal padding on mobile
+                            lineHeight: 1.6
                         }}
                     >
                         These values guide everything we do and shape how we interact with our community
@@ -726,7 +701,6 @@ export default function Mission() {
                             sx={{
                                 fontWeight: 800,
                                 mb: 3,
-                                fontSize: { xs: '2.2rem', sm: '3rem' }, // Increased mobile font size
                                 background: 'linear-gradient(45deg, #4caf50, #2196f3)',
                                 backgroundClip: 'text',
                                 WebkitBackgroundClip: 'text',
@@ -744,8 +718,7 @@ export default function Mission() {
                                 maxWidth: '700px',
                                 mx: 'auto',
                                 lineHeight: 1.6,
-                                fontSize: { xs: '1.2rem', sm: '1.1rem' }, // Increased mobile font size
-                                px: { xs: 2, sm: 0 } // Add horizontal padding on mobile
+                                fontSize: '1.1rem'
                             }}
                         >
                             Whether you're a student looking to learn, a volunteer ready to give, or someone
@@ -753,27 +726,19 @@ export default function Mission() {
                             Join us in building a brighter, more educated world - one student at a time.
                         </Typography>
 
-                        <Box sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            flexWrap: 'wrap',
-                            gap: 3,
-                            flexDirection: { xs: 'column', sm: 'row' }, // Stack buttons vertically on mobile
-                            alignItems: 'center'
-                        }}>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 3 }}>
                             <Button
                                 variant="contained"
                                 size="large"
                                 onClick={handleVolunteerClick}
                                 endIcon={<VolunteerActivism />}
                                 sx={{
-                                    py: { xs: 2.5, sm: 2 }, // Larger buttons on mobile
-                                    px: { xs: 6, sm: 4 },
-                                    fontSize: { xs: '1.2rem', sm: '1.1rem' }, // Larger text on mobile
+                                    py: 2,
+                                    px: 4,
+                                    fontSize: '1.1rem',
                                     fontWeight: 600,
                                     borderRadius: 3,
                                     background: 'linear-gradient(45deg, #4caf50, #66bb6a)',
-                                    minWidth: { xs: '200px', sm: 'auto' }, // Minimum width on mobile
                                     '&:hover': {
                                         background: 'linear-gradient(45deg, #45a049, #5cb85c)',
                                         transform: 'translateY(-2px)',
@@ -790,19 +755,19 @@ export default function Mission() {
                                 onClick={handleGetInvolvedClick}
                                 endIcon={<MonetizationOn />}
                                 sx={{
-                                    py: { xs: 2.5, sm: 2 }, // Larger buttons on mobile
-                                    px: { xs: 6, sm: 4 },
-                                    fontSize: { xs: '1.2rem', sm: '1.1rem' }, // Larger text on mobile
+                                    py: 2,
+                                    px: 4,
+                                    fontSize: '1.1rem',
                                     fontWeight: 600,
                                     borderRadius: 3,
-                                    borderColor: '#2196f3',
-                                    color: '#2196f3',
+                                    borderColor: '#ff9800',
+                                    color: '#ff9800',
                                     borderWidth: 2,
-                                    minWidth: { xs: '200px', sm: 'auto' }, // Minimum width on mobile
                                     '&:hover': {
-                                        borderColor: '#1976d2',
-                                        backgroundColor: '#2196f310',
+                                        backgroundColor: '#ff9800',
+                                        color: 'white',
                                         transform: 'translateY(-2px)',
+                                        borderColor: '#ff9800',
                                     },
                                     transition: 'all 0.3s ease'
                                 }}

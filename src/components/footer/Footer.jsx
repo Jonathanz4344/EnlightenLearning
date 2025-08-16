@@ -4,7 +4,6 @@ import {
   Button,
   Container,
   IconButton,
-  Link,
   Stack,
   TextField,
   Typography,
@@ -21,11 +20,65 @@ import EmailIcon from "@mui/icons-material/Email";
 import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
 import { useMode } from "../Layout";
+import { Link } from "react-router-dom"; // Import React Router Link
+import { styled } from "@mui/material/styles"; // Import styled
 
 const logoStyle = {
   width: "140px",
   height: "auto",
 };
+
+// Styled component for footer links to match header styling
+const FooterLink = styled(Link)(({ theme }) => ({
+  color: 'inherit',
+  textDecoration: 'none',
+  transition: 'all 0.3s ease',
+  position: 'relative',
+  display: 'inline-block',
+  '&:hover': {
+    color: theme.palette.primary.main,
+    transform: 'translateX(4px)',
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: '-2px',
+    left: 0,
+    width: 0,
+    height: '2px',
+    background: theme.palette.primary.main,
+    transition: 'width 0.3s ease',
+  },
+  '&:hover::after': {
+    width: '100%',
+  }
+}));
+
+// Styled external link component
+const ExternalLink = styled('a')(({ theme }) => ({
+  color: 'inherit',
+  textDecoration: 'none',
+  transition: 'all 0.3s ease',
+  position: 'relative',
+  display: 'inline-block',
+  '&:hover': {
+    color: theme.palette.primary.main,
+    transform: 'translateX(4px)',
+  },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    bottom: '-2px',
+    left: 0,
+    width: 0,
+    height: '2px',
+    background: theme.palette.primary.main,
+    transition: 'width 0.3s ease',
+  },
+  '&:hover::after': {
+    width: '100%',
+  }
+}));
 
 function Copyright() {
   return (
@@ -57,8 +110,6 @@ export default function Footer() {
       }, 3000);
     }
   };
-
-
 
   return (
     <footer
@@ -106,8 +157,8 @@ export default function Footer() {
             }}
           >
             <Box>
-              <Link
-                href={PathConstants.HOME}
+              <FooterLink
+                to={PathConstants.HOME}
                 title="Citywide Eye Care Home"
                 aria-label="Go to Citywide Eye Care homepage"
               >
@@ -117,7 +168,7 @@ export default function Footer() {
                   alt="Citywide Eye Care logo"
                   itemProp="logo"
                 />
-              </Link>
+              </FooterLink>
 
               {/* Business Address and Contact */}
               <Box
@@ -130,20 +181,15 @@ export default function Footer() {
                   gap: 1,
                 }}
               >
-
                 <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                   <EmailIcon fontSize="small" />
-                  <Link
+                  <ExternalLink
                     href="mailto:enlightenandlearning@gmail.com"
-                    color="inherit"
                     itemProp="email"
-                    underline="hover"
                   >
                     enlightenandlearning@gmail.com
-                  </Link>
+                  </ExternalLink>
                 </Box>
-
-
               </Box>
             </Box>
 
@@ -227,71 +273,31 @@ export default function Footer() {
               >
                 About Us
               </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
+              <FooterLink
+                to={PathConstants.HOME}
                 aria-label="Go to Home page"
               >
                 Home
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.MISSION}
-                underline="hover"
-                aria-label="Learn about our doctor"
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.MISSION}
+                aria-label="Learn about our mission"
               >
                 Our Mission
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.OUR_TEAM}
-                underline="hover"
-                aria-label="View frequently asked questions"
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.OUR_TEAM}
+                aria-label="Meet our team"
               >
                 Meet Our Team
-              </Link>
-
-              {/* <Typography
-                variant="h6"
-                component="h3"
-                id="footer-patient-heading"
-                color="primary.main"
-                sx={{ mt: 2, fontWeight: 600 }}
-              >
-                Patient Center
-              </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Access patient forms"
-              >
-                Insurance
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Access patient forms"
-              >
-                Patient Forms
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="View current promotions"
-              >
-                Promotions
-              </Link> */}
+              </FooterLink>
             </Box>
 
-            {/* Myopia Management & Vision Therapy Links */}
+            {/* Programs Links */}
             <Box
               component="div"
               role="navigation"
-              aria-labelledby="footer-myopia-heading"
+              aria-labelledby="footer-programs-heading"
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -302,60 +308,31 @@ export default function Footer() {
               <Typography
                 variant="h6"
                 component="h3"
-                id="footer-myopia-heading"
+                id="footer-programs-heading"
                 color="primary.main"
                 sx={{ fontWeight: 600 }}
               >
                 Programs
               </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.TUTORING_SERVICES}
-                underline="hover"
-                aria-label="Learn about myopia management"
+              <FooterLink
+                to={PathConstants.TUTORING_SERVICES}
+                aria-label="Learn about tutoring services"
               >
                 Tutoring Services
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.EVENTS}
-                underline="hover"
-                aria-label="Learn about Ortho-K treatment"
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.EVENTS}
+                aria-label="View events and programs"
               >
                 Events & Programs
-              </Link>
-              {/* <Typography
-                variant="h6"
-                component="h3"
-                id="footer-vision-heading"
-                color="primary.main"
-                sx={{ mt: 2, fontWeight: 600 }}
-              >
-                Vision Therapy
-              </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Learn about vision therapy"
-              >
-                Vision Therapy
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Explore our therapy program"
-              >
-                Therapy Program
-              </Link> */}
+              </FooterLink>
             </Box>
 
-            {/* Dry Eyes Links */}
+            {/* Get Involved Links */}
             <Box
               component="div"
               role="navigation"
-              aria-labelledby="footer-dryeyes-heading"
+              aria-labelledby="footer-getinvolved-heading"
               sx={{
                 display: "flex",
                 flexDirection: "column",
@@ -366,36 +343,30 @@ export default function Footer() {
               <Typography
                 variant="h6"
                 component="h3"
-                id="footer-dryeyes-heading"
+                id="footer-getinvolved-heading"
                 color="primary.main"
                 sx={{ fontWeight: 600 }}
               >
-                 Get Involved
+                Get Involved
               </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.VOLUNTEER_OPPORTUNITIES}
-                underline="hover"
-                aria-label="Learn about dry eye treatments"
+              <FooterLink
+                to={PathConstants.VOLUNTEER_OPPORTUNITIES}
+                aria-label="Learn about volunteer opportunities"
               >
                 Volunteer Opportunities
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.TUTOR}
-                underline="hover"
-                aria-label="Learn about RF treatment for dry eyes"
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.TUTOR}
+                aria-label="Apply as a tutor"
               >
                 Apply as a Tutor
-              </Link>
-              <Link
-                color="inherit"
-                href={PathConstants.EXEC_TEAM}
-                underline="hover"
-                aria-label="Learn about IPL treatment for dry eyes"
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.EXEC_TEAM}
+                aria-label="Join the executive team"
               >
                 Join the Executive Team
-              </Link>
+              </FooterLink>
             </Box>
           </Box>
         </Box>
@@ -420,27 +391,6 @@ export default function Footer() {
               alignItems: { xs: "center", sm: "flex-start" },
             }}
           >
-            {/* <Box>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="Read our privacy policy"
-              >
-                Privacy Policy
-              </Link>
-              <Typography display="inline" sx={{ mx: 0.5, opacity: 0.5 }}>
-                &nbsp;•&nbsp;
-              </Typography>
-              <Link
-                color="inherit"
-                href={PathConstants.HOME}
-                underline="hover"
-                aria-label="View our accessibility statement"
-              >
-                Accessibility Statement
-              </Link>
-            </Box> */}
             <Copyright />
           </Box>
 
@@ -453,17 +403,13 @@ export default function Footer() {
               mt: { xs: 2, sm: 0 },
             }}
           >
-            {/* <IconButton
-              href="https://g.co/kgs/1UPZmiY"
-              aria-label="Visit our Google Business profile"
-              color="inherit"
-            >
-              <GoogleIcon />
-            </IconButton> */}
             <IconButton
               href="https://www.instagram.com/enlighten_learning/"
               aria-label="Follow us on Instagram"
               color="inherit"
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <InstagramIcon />
             </IconButton>
@@ -471,16 +417,12 @@ export default function Footer() {
               href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/"
               aria-label="Like us on Facebook"
               color="inherit"
+              component="a"
+              target="_blank"
+              rel="noopener noreferrer"
             >
               <FacebookIcon />
             </IconButton>
-            {/* <IconButton
-              href="https://www.tiktok.com/@citywideeyecare/"
-              aria-label="Follow us on TikTok"
-              color="inherit"
-            >
-              <TikTokIcon />
-            </IconButton> */}
           </Stack>
         </Box>
       </Container>

@@ -67,8 +67,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
       : 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
     backdropFilter: 'blur(10px)',
     borderRadius: '0 0 24px 24px',
-    border: `1px solid ${theme.palette.divider}`,
-    borderTop: 'none',
+    // REMOVED: All border properties
     opacity: 0,
     transition: 'opacity 0.4s ease',
     zIndex: -1,
@@ -84,8 +83,7 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
       : 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%)',
     backdropFilter: 'blur(20px)',
     borderRadius: '0 0 24px 24px',
-    border: `1px solid ${theme.palette.divider}`,
-    borderTop: 'none',
+    // REMOVED: All border properties
     boxShadow: theme.palette.mode === 'light'
       ? '0 8px 32px rgba(0, 0, 0, 0.08)'
       : '0 8px 32px rgba(0, 0, 0, 0.3)',

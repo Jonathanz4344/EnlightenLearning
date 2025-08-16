@@ -3,7 +3,7 @@ const PathConstants = {
   MISSION: "/About/Our-Mission",
   OUR_TEAM: "/About/Meet-Our-Team",
   TUTORING_SERVICES: "/Program/Tutoring-Services",
-  SUCCESS_STORIES: "/Program/Success-Stories",
+  MAKING_DIFF: "/Program/Making-a-Difference",
   EVENTS: "/Program/Events-Programs",
   VOLUNTEER_OPPORTUNITIES: "/Get-Involved/Volunteer-Opportunities",
   TUTOR: "/Get-Involved/Apply-as-Tutor",

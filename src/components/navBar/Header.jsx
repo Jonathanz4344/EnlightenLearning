@@ -637,6 +637,10 @@ const Header = ({ mode, toggleColorMode }) => {
                     text: "Meet Our Team",
                     href: PathConstants.OUR_TEAM
                   },
+                  {
+                    text: "Making a Difference",
+                    href: PathConstants.MAKING_DIFF
+                  },
                 ],
               },
             ]}

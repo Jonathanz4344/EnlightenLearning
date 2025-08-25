@@ -25,7 +25,7 @@ import {
     AccountBalanceWallet as WalletIcon,
     TrendingUp as TrendingUpIcon,
     Groups as GroupsIcon,
-    Star as AwardIcon, // Changed from EmojiEvents to Star
+    Star as AwardIcon,
     QrCode as QrCodeIcon,
     ContentCopy as CopyIcon,
     CheckCircle as CheckIcon,
@@ -37,41 +37,8 @@ import { useMode } from "../Layout";
 import Logo from "/images/logo/Logo.png";
 import ZelleQr from "/images/donate/Zelle.jpg"
 
-// Donation tiers data
-const donationTiers = [
-    {
-        id: 1,
-        amount: 25,
-        title: "Supporter",
-        description: "Help us cover basic activities and materials for student learning.",
-        icon: SupportIcon,
-        color: "#4caf50",
-    },
-    {
-        id: 2,
-        amount: 50,
-        title: "Champion",
-        description: "Support our tutoring programs and help provide educational resources.",
-        icon: TrendingUpIcon,
-        color: "#2196f3",
-    },
-    {
-        id: 3,
-        amount: 100,
-        title: "Advocate",
-        description: "Enable us to expand our reach and help more students in our community.",
-        icon: AwardIcon,
-        color: "#ff9800",
-    },
-    {
-        id: 4,
-        amount: 250,
-        title: "Leader",
-        description: "Make a significant impact on our growth and educational initiatives.",
-        icon: LibraryIcon,
-        color: "#9c27b0",
-    }
-];
+// Simple donation amounts
+const donationAmounts = [25, 50, 100, 250];
 
 // Updated Fundraising Progress component
 const FundraisingProgress = ({ currentAmount, goalAmount }) => {
@@ -375,12 +342,11 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
     );
 };
 
-// Donation tier card component
-const DonationTierCard = ({ tier }) => {
+// Simple donation button component
+const DonationButton = ({ amount }) => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
     const theme = useTheme();
-    const IconComponent = tier.icon;
 
     const handleDonateClick = () => {
         // For demo purposes, we'll just show the Zelle info
@@ -390,102 +356,44 @@ const DonationTierCard = ({ tier }) => {
         });
     };
 
+    const getButtonColor = (amount) => {
+        if (amount <= 50) return '#4caf50';
+        if (amount <= 100) return '#2196f3';
+        if (amount <= 250) return '#ff9800';
+        if (amount <= 500) return '#9c27b0';
+        return '#e91e63';
+    };
+
+    const buttonColor = getButtonColor(amount);
+
     return (
-        <Card
+        <Button
+            variant="contained"
+            fullWidth
+            onClick={handleDonateClick}
             sx={{
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                border: `3px solid ${tier.color}`,
+                py: 3,
+                px: 4,
+                fontSize: '1.5rem',
+                fontWeight: 700,
+                backgroundColor: buttonColor,
+                color: 'white',
                 borderRadius: 3,
-                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
-                position: 'relative',
-                overflow: 'visible',
+                border: `3px solid ${buttonColor}`,
+                transition: 'all 0.3s ease',
                 '&:hover': {
-                    transform: 'translateY(-8px)',
-                    boxShadow: theme.shadows[12],
+                    backgroundColor: buttonColor,
+                    opacity: 0.9,
+                    transform: 'translateY(-4px)',
+                    boxShadow: `0 8px 24px rgba(${buttonColor === '#4caf50' ? '76, 175, 80' :
+                        buttonColor === '#2196f3' ? '33, 150, 243' :
+                            buttonColor === '#ff9800' ? '255, 152, 0' :
+                                buttonColor === '#9c27b0' ? '156, 39, 176' : '233, 30, 99'}, 0.4)`
                 }
             }}
         >
-            {/* Amount Badge */}
-            <Box
-                sx={{
-                    position: 'absolute',
-                    top: -12,
-                    right: 16,
-                    backgroundColor: tier.color,
-                    color: 'white',
-                    px: 2,
-                    py: 0.5,
-                    borderRadius: 2,
-                    fontSize: '0.85rem',
-                    fontWeight: 700,
-                    zIndex: 1,
-                    boxShadow: theme.shadows[4]
-                }}
-            >
-                ${tier.amount}
-            </Box>
-
-            <CardContent sx={{ flexGrow: 1, p: 3, pt: 4 }}>
-                {/* Header */}
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-                    <IconComponent sx={{ color: tier.color, fontSize: 32, mr: 2 }} />
-                    <Box>
-                        <Typography
-                            variant="h6"
-                            component="h3"
-                            sx={{
-                                fontWeight: 700,
-                                color: tier.color,
-                                fontSize: '1.2rem'
-                            }}
-                        >
-                            {tier.title}
-                        </Typography>
-                        <Typography
-                            variant="caption"
-                            color="text.secondary"
-                            sx={{ fontWeight: 600 }}
-                        >
-                            ${tier.amount} Donation
-                        </Typography>
-                    </Box>
-                </Box>
-
-                {/* Description */}
-                <Typography
-                    variant="body2"
-                    color="text.primary"
-                    sx={{ lineHeight: 1.6, mb: 3 }}
-                >
-                    {tier.description}
-                </Typography>
-            </CardContent>
-
-            {/* Action Button */}
-            <Box sx={{ p: 3, pt: 0 }}>
-                <Button
-                    variant="contained"
-                    fullWidth
-                    onClick={handleDonateClick}
-                    sx={{
-                        backgroundColor: tier.color,
-                        color: 'white',
-                        py: 1.5,
-                        fontWeight: 600,
-                        fontSize: '0.95rem',
-                        '&:hover': {
-                            backgroundColor: tier.color,
-                            opacity: 0.9,
-                        }
-                    }}
-                >
-                    Donate ${tier.amount}
-                </Button>
-            </Box>
-        </Card>
+            ${amount}
+        </Button>
     );
 };
 
@@ -562,22 +470,8 @@ export default function DonateNow() {
                             mb: 4
                         }}
                     >
-                        Help Enlighten Learning continue providing quality tutoring services and educational support to our community.
+                        Donations help us raise money to donate to charities that provide hope care and support to those in need. Striving to make a positive impact on as many lives possible.
                     </Typography>
-
-                    <Alert
-                        severity="info"
-                        sx={{
-                            maxWidth: '600px',
-                            mx: 'auto',
-                            mb: 4,
-                            backgroundColor: isDarkMode ? 'rgba(33, 150, 243, 0.1)' : 'rgba(33, 150, 243, 0.05)',
-                            border: '1px solid rgba(33, 150, 243, 0.3)'
-                        }}
-                    >
-                        <AlertTitle sx={{ fontWeight: 600 }}>Educational Organization Fundraising</AlertTitle>
-                        Your donations help us cover activities, materials, and expand our tutoring programs within our community.
-                    </Alert>
                 </Box>
 
                 {/* Fundraising Progress */}
@@ -608,7 +502,7 @@ export default function DonateNow() {
 
                 <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />
 
-                {/* Donation Tiers */}
+                {/* Simple Donation Buttons */}
                 <Box sx={{ mb: 8 }}>
                     <Typography
                         variant="h4"
@@ -620,7 +514,7 @@ export default function DonateNow() {
                             color: isDarkMode ? '#fff' : '#333'
                         }}
                     >
-                        Choose Your Support Level
+                        Choose Your Donation Amount
                     </Typography>
                     <Typography
                         variant="h6"
@@ -633,13 +527,13 @@ export default function DonateNow() {
                             mb: 6
                         }}
                     >
-                        Select a donation amount that works for you and help us reach our goal
+                        Select any amount below to make your donation
                     </Typography>
 
-                    <Grid container spacing={4} justifyContent="center">
-                        {donationTiers.map((tier) => (
-                            <Grid item xs={12} sm={6} md={3} key={tier.id}>
-                                <DonationTierCard tier={tier} />
+                    <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 800, mx: 'auto' }}>
+                        {donationAmounts.map((amount) => (
+                            <Grid item xs={6} sm={4} md={3} key={amount}>
+                                <DonationButton amount={amount} />
                             </Grid>
                         ))}
                     </Grid>
@@ -803,7 +697,7 @@ export default function DonateNow() {
                                         }}
                                     >
                                         <img
-                                            src={ZelleQr} // Use your imported QR code image
+                                            src={ZelleQr}
                                             alt="Zelle QR Code for Enlighten Learning Donations"
                                             style={{
                                                 width: '100%',
@@ -869,7 +763,7 @@ export default function DonateNow() {
                                     Student Success
                                 </Typography>
                                 <Typography variant="body1" color="text.secondary">
-                                    Your donations help us provide free tutoring services to students who need academic support.
+                                    Your donations help us provide tutoring services to students who need academic support.
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -965,18 +859,18 @@ export default function DonateNow() {
                         <Typography
                             variant="h6"
                             color="text.secondary"
-                            sx={{ lineHeight: 1.6, mb: 3 }}
+                            sx={{
+                                lineHeight: 1.6,
+                                mb: 3
+                            }}
                         >
-                            Every donation, no matter the size, makes a meaningful difference in our students' lives.
-                            Your generosity helps us continue our mission of providing quality education and support
-                            to those who need it most.
+                            Every donation, no matter the size, makes a meaningful difference in our students' lives. Your generosity helps us continue our mission of providing quality education and support to those who need it most.
                         </Typography>
                         <Typography
                             variant="body1"
-                            color="text.primary"
+                            color="text.secondary"
                             sx={{
-                                fontStyle: 'italic',
-                                fontWeight: 500
+                                fontStyle: 'italic'
                             }}
                         >
                             Together, we're building a brighter future for our community.
@@ -988,32 +882,50 @@ export default function DonateNow() {
                 <Box sx={{ textAlign: 'center' }}>
                     <Typography
                         variant="h5"
-                        sx={{ fontWeight: 600, mb: 3, color: isDarkMode ? '#fff' : '#333' }}
+                        sx={{
+                            fontWeight: 600,
+                            mb: 3,
+                            color: isDarkMode ? '#fff' : '#333'
+                        }}
                     >
                         Questions About Donations?
                     </Typography>
                     <Typography
                         variant="body1"
                         color="text.secondary"
-                        sx={{ mb: 2 }}
+                        sx={{ mb: 4 }}
                     >
                         Contact our Financial Director for any questions about donations or payment methods.
                     </Typography>
-                    <Chip
-                        label="Enlightenlearningfinance@gmail.com"
-                        variant="outlined"
-                        sx={{
-                            fontSize: '1rem',
-                            py: 2,
-                            px: 1,
-                            color: '#6f42c1',
-                            borderColor: '#6f42c1',
-                            '&:hover': {
-                                backgroundColor: 'rgba(111, 66, 193, 0.1)'
-                            }
-                        }}
-                        onClick={() => window.location.href = 'mailto:Enlightenlearningfinance@gmail.com'}
-                    />
+
+                    <Stack
+                        direction={{ xs: 'column', sm: 'row' }}
+                        spacing={2}
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <Chip
+                            icon={<SupportIcon />}
+                            label="Enlightenlearningfinance@gmail.com"
+                            variant="outlined"
+                            clickable
+                            onClick={() => window.location.href = 'mailto:Enlightenlearningfinance@gmail.com'}
+                            sx={{
+                                px: 2,
+                                py: 1,
+                                fontSize: '1rem',
+                                borderColor: '#2196f3',
+                                color: '#2196f3',
+                                cursor: 'pointer',
+                                '&:hover': {
+                                    backgroundColor: 'rgba(33, 150, 243, 0.1)',
+                                    borderColor: '#1976d2',
+                                    color: '#1976d2'
+                                }
+                            }}
+                        />
+
+                    </Stack>
                 </Box>
             </Container>
         </Box>

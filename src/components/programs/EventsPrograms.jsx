@@ -815,10 +815,10 @@ export default function EventsProgram() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="primary.main" fontWeight="bold">
-                                {categorizedData.past.length}
+                                130
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
-                                Completed Events
+                                Sessions Taught
                             </Typography>
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>

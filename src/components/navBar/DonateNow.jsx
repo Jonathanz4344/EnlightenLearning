@@ -35,6 +35,7 @@ import {
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 import Logo from "/images/logo/Logo.png";
+import ZelleQr from "/images/donate/Zelle.jpg"
 
 // Donation tiers data
 const donationTiers = [
@@ -801,20 +802,16 @@ export default function DonateNow() {
                                             display: 'inline-block'
                                         }}
                                     >
-                                        <QrCodeIcon
-                                            sx={{
-                                                fontSize: 120,
-                                                color: '#6f42c1',
-                                                mb: 2
+                                        <img
+                                            src={ZelleQr} // Use your imported QR code image
+                                            alt="Zelle QR Code for Enlighten Learning Donations"
+                                            style={{
+                                                width: '100%',
+                                                height: 'auto',
+                                                maxWidth: '200px',
+                                                borderRadius: '8px'
                                             }}
                                         />
-                                        <Typography
-                                            variant="body2"
-                                            color="text.secondary"
-                                            sx={{ fontStyle: 'italic' }}
-                                        >
-                                            QR Code will be added here
-                                        </Typography>
                                     </Card>
 
                                     <Typography

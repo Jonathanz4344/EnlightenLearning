@@ -6,7 +6,6 @@ import {
     CardContent,
     Typography,
     useMediaQuery,
-    Grid,
     Avatar,
     Paper,
     Fade,
@@ -23,7 +22,7 @@ import {
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
-const ReviewCard = ({ review, index }) => {
+const ReviewCard = ({ review, index, priority }) => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
 
@@ -40,21 +39,65 @@ const ReviewCard = ({ review, index }) => {
     const avatarColor = getAvatarColor(review.author);
     const getInitials = (name) => name.charAt(0).toUpperCase();
 
+    // Dynamic sizing based on priority
+    const getCardSize = () => {
+        switch (priority) {
+            case 'large': return {
+                minHeight: '400px',
+                fontSize: '1.1rem',
+                avatarSize: 60,
+                quoteSize: 40,
+                titleSize: 'h5',
+                padding: 5
+            };
+            case 'medium': return {
+                minHeight: '320px',
+                fontSize: '1rem',
+                avatarSize: 50,
+                quoteSize: 32,
+                titleSize: 'h6',
+                padding: 4
+            };
+            case 'small': return {
+                minHeight: '250px',
+                fontSize: '0.95rem',
+                avatarSize: 45,
+                quoteSize: 28,
+                titleSize: 'body1',
+                padding: 3.5
+            };
+            default: return {
+                minHeight: '280px',
+                fontSize: '1rem',
+                avatarSize: 50,
+                quoteSize: 32,
+                titleSize: 'h6',
+                padding: 4
+            };
+        }
+    };
+
+    const cardSize = getCardSize();
+
     return (
         <Zoom in timeout={800 + (index * 100)}>
             <Card
-                elevation={8}
+                elevation={priority === 'large' ? 12 : 8}
                 sx={{
                     height: '100%',
+                    minHeight: cardSize.minHeight,
                     backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                    borderRadius: 4,
+                    borderRadius: priority === 'large' ? 6 : 4,
                     overflow: 'hidden',
                     position: 'relative',
                     transition: 'all 0.3s ease',
                     cursor: 'pointer',
+                    transform: priority === 'large' ? 'scale(1.02)' : 'scale(1)',
                     '&:hover': {
-                        transform: 'translateY(-8px)',
-                        boxShadow: '0 20px 40px rgba(0,0,0,0.15)',
+                        transform: priority === 'large' ? 'translateY(-12px) scale(1.02)' : 'translateY(-8px)',
+                        boxShadow: priority === 'large'
+                            ? '0 24px 48px rgba(0,0,0,0.2)'
+                            : '0 20px 40px rgba(0,0,0,0.15)',
                     },
                     '&::before': {
                         content: '""',
@@ -62,17 +105,27 @@ const ReviewCard = ({ review, index }) => {
                         top: 0,
                         left: 0,
                         right: 0,
-                        height: 4,
+                        height: priority === 'large' ? 6 : 4,
                         background: `linear-gradient(90deg, ${avatarColor}, ${avatarColor}cc)`,
-                    }
+                    },
+                    // Add glow effect for high priority cards
+                    ...(priority === 'large' && {
+                        boxShadow: `0 8px 32px ${avatarColor}20, 0 0 0 1px ${avatarColor}10`,
+                    })
                 }}
             >
-                <CardContent sx={{ p: 4, display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <CardContent sx={{
+                    p: cardSize.padding,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    height: '100%',
+                    justifyContent: 'space-between'
+                }}>
                     {/* Quote Icon */}
                     <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 2 }}>
                         <QuoteIcon
                             sx={{
-                                fontSize: 32,
+                                fontSize: cardSize.quoteSize,
                                 color: avatarColor,
                                 opacity: 0.7,
                                 transform: 'rotate(180deg)'
@@ -86,66 +139,68 @@ const ReviewCard = ({ review, index }) => {
                         sx={{
                             mb: 3,
                             lineHeight: 1.7,
-                            fontSize: '1rem',
+                            fontSize: cardSize.fontSize,
                             fontStyle: 'italic',
                             color: isDarkMode ? '#e0e0e0' : '#555',
                             flex: 1,
-                            display: 'flex',
-                            alignItems: 'center'
+                            fontWeight: priority === 'large' ? 500 : 400,
                         }}
                     >
                         "{review.text}"
                     </Typography>
 
-                    {/* Rating */}
-                    <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
-                        <Rating
-                            value={5}
-                            readOnly
-                            sx={{
-                                '& .MuiRating-iconFilled': {
-                                    color: '#ffc107',
-                                },
-                                '& .MuiRating-iconEmpty': {
-                                    color: '#e0e0e0',
-                                }
-                            }}
-                        />
-                    </Box>
-
-                    {/* Author */}
-                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                        <Avatar
-                            sx={{
-                                width: 50,
-                                height: 50,
-                                backgroundColor: avatarColor,
-                                background: `linear-gradient(135deg, ${avatarColor}, ${avatarColor}cc)`,
-                                boxShadow: `0 4px 12px ${avatarColor}40`,
-                                fontWeight: 600,
-                                fontSize: '1.2rem'
-                            }}
-                        >
-                            {getInitials(review.author)}
-                        </Avatar>
-                        <Box>
-                            <Typography
-                                variant="h6"
+                    <Box>
+                        {/* Rating */}
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                            <Rating
+                                value={5}
+                                readOnly
+                                size={priority === 'large' ? 'large' : 'medium'}
                                 sx={{
+                                    '& .MuiRating-iconFilled': {
+                                        color: '#ffc107',
+                                    },
+                                    '& .MuiRating-iconEmpty': {
+                                        color: '#e0e0e0',
+                                    }
+                                }}
+                            />
+                        </Box>
+
+                        {/* Author */}
+                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                            <Avatar
+                                sx={{
+                                    width: cardSize.avatarSize,
+                                    height: cardSize.avatarSize,
+                                    backgroundColor: avatarColor,
+                                    background: `linear-gradient(135deg, ${avatarColor}, ${avatarColor}cc)`,
+                                    boxShadow: `0 4px 12px ${avatarColor}40`,
                                     fontWeight: 600,
-                                    color: avatarColor,
-                                    mb: 0.5
+                                    fontSize: priority === 'large' ? '1.4rem' : '1.2rem'
                                 }}
                             >
-                                {review.author}
-                            </Typography>
-                            <Typography
-                                variant="caption"
-                                color="text.secondary"
-                                sx={{ fontSize: '0.85rem' }}
-                            >
-                                Verified Reviewer
-                            </Typography>
+                                {getInitials(review.author)}
+                            </Avatar>
+                            <Box>
+                                <Typography
+                                    variant={cardSize.titleSize}
+                                    sx={{
+                                        fontWeight: 600,
+                                        color: avatarColor,
+                                        mb: 0.5
+                                    }}
+                                >
+                                    {review.author}
+                                </Typography>
+                                <Typography
+                                    variant="caption"
+                                    color="text.secondary"
+                                    sx={{ fontSize: priority === 'large' ? '0.9rem' : '0.85rem' }}
+                                >
+                                    Verified Reviewer
+                                </Typography>
+                            </Box>
                         </Box>
                     </Box>
                 </CardContent>
@@ -199,41 +254,121 @@ export default function Reviews() {
     const isDarkMode = mode === "dark";
     const isMobile = useMediaQuery('(max-width:900px)');
 
-    // Mixed reviews from different categories
+    // Pagination state
+    const [visibleCount, setVisibleCount] = React.useState(6); // Show 6 reviews initially
+    const [isLoading, setIsLoading] = React.useState(false);
+
+    // Enhanced reviews with priority scoring
     const reviews = [
         {
-            text: "Kingsley has been tutoring with Tiffany for about 12 weeks. I totally understand it is not a long period of time, but I still do see improvements from it. His reading comprehension and answering multiple choices are much better than before. I appreciated Tiffany and Brianna who are very responsive and addressed Kingsley's reading problems. I am very satisfied with the pairing process and will definitely consider coming back. I would also recommend others to this program.",
-            author: "Iris"
+            text: "My experience as a tutor was very valuable and beneficial. It allowed me to gain strong communication skills, learn to be more patient, and how to adapt my teaching style to better suit the student I worked with. Additionally, watching the student make progress and become more confident was extremely fulfilling. Given the personal growth and positive impact, I would definitely participate again.",
+            author: "Tiffany",
+            priority: "large", // Detailed, impact-focused
+            category: "tutor"
         },
         {
-            text: "I loved being able to teach other people the basics on how to play volleyball! it was a fun experience, and was a great way to be active and helpful!",
-            author: "Sonali"
+            text: "As the Volunteer Coordinator of Enlighten Learning, I became more organized and efficient in managing schedules and resources. Being apart of the Enlighten Learning team taught me how to finish tasks effectively and collaborate with diverse stakeholders. Seeing the program run smoothly due to these efforts was incredibly rewarding. Would I participate again? Absolutely. The experience was fulfilling, and I'd love to contribute to help scale the program's impact.",
+            author: "Eileen",
+            priority: "large", // Comprehensive, leadership perspective
+            category: "coordinator"
         },
         {
             text: "My kid loves Tiffany's teaching very much. She knows how to teach kids and how to make them be very interested to learn knowledge. Anna always be very happy after tutoring and cannot wait for next lesson. She also has patient and acts as Anna's friend too. Easy communicate with me. I believe she definitely improved her English. Overall highly recommended.",
-            author: "Eugena"
+            author: "Eugena",
+            priority: "large", // Parent perspective with specific outcomes
+            category: "parent"
+        },
+        {
+            text: "Kingsley has been tutoring with Tiffany for about 12 weeks. I totally understand it is not a long period of time, but I still do see improvements from it. His reading comprehension and answering multiple choices are much better than before. I appreciated Tiffany and Brianna who are very responsive and addressed Kingsley's reading problems. I am very satisfied with the pairing process and will definitely consider coming back. I would also recommend others to this program.",
+            author: "Iris",
+            priority: "medium", // Specific progress mentioned
+            category: "parent"
+        },
+        {
+            text: "I had a great experience being a tutor. I really learned a lot about responsibility, time management, patience etc. These skills are very useful not only in the tutoring environment but also school, later work, and life. I would love to tutor again.",
+            author: "Anna",
+            priority: "medium", // Good detail about personal growth
+            category: "tutor"
+        },
+        {
+            text: "I enjoyed being a board member and felt that my contributions were really helping Enlighten Learning grow. I gained the skills to develop events and ideas with the help of others, and actually act on those ideas.",
+            author: "Aarini",
+            priority: "medium", // Leadership perspective
+            category: "board"
         },
         {
             text: "The experience helped me develop patience and communication skills, also helping me find new ways to present different concepts to children.",
-            author: "Alison"
+            author: "Alison",
+            priority: "medium", // Skill development focus
+            category: "tutor"
+        },
+        {
+            text: "It was a good experience. I got to work with a lot of good people. I earned leadership skills and also learned how to collaborate with my team for a united goal.",
+            author: "Veronica",
+            priority: "small", // Brief but positive
+            category: "volunteer"
+        },
+        {
+            text: "I loved being able to teach other people the basics on how to play volleyball! it was a fun experience, and was a great way to be active and helpful!",
+            author: "Sonali",
+            priority: "small", // Enthusiastic but brief
         },
         {
             text: "Very fun and enjoyable to be able to share my expertise and help younger kids practice and play volleyball.",
-            author: "Abigail"
+            author: "Abigail",
+            priority: "small", // Brief sports review
         },
         {
             text: "This was a great program and I love how it was set up!",
-            author: "Ayana"
+            author: "Ayana",
+            priority: "small", // Short and sweet
         },
         {
             text: "I had lots of fun with this clinic.",
-            author: "Juhee"
+            author: "Juhee",
+            priority: "small", // Brief positive
         }
     ];
+
+    // Sort reviews by priority for better arrangement
+    const sortedReviews = reviews.sort((a, b) => {
+        const priorityOrder = { large: 3, medium: 2, small: 1 };
+        return priorityOrder[b.priority] - priorityOrder[a.priority];
+    });
+
+    // Get visible reviews based on current count
+    const visibleReviews = sortedReviews.slice(0, visibleCount);
+    const hasMoreReviews = visibleCount < sortedReviews.length;
+
+    const handleLoadMore = () => {
+        setIsLoading(true);
+        // Simulate loading delay for smooth UX
+        setTimeout(() => {
+            setVisibleCount(prev => Math.min(prev + 6, sortedReviews.length));
+            setIsLoading(false);
+        }, 500);
+    };
 
     const handleReviewClick = () => {
         window.open('https://forms.gle/V8LRoe4RJm3iUaXu5', '_blank');
     };
+
+    // Custom masonry layout function
+    const createMasonryLayout = () => {
+        const columns = isMobile ? 1 : 3;
+        const columnArrays = Array.from({ length: columns }, () => []);
+
+        visibleReviews.forEach((review, index) => {
+            const shortestColumn = columnArrays.reduce((shortest, current) =>
+                current.length < shortest.length ? current : shortest
+            );
+            shortestColumn.push({ ...review, index });
+        });
+
+        return columnArrays;
+    };
+
+    const masonryColumns = createMasonryLayout();
 
     return (
         <Box
@@ -336,50 +471,128 @@ export default function Reviews() {
 
                 {/* Stats Section */}
                 <Fade in timeout={1200}>
-                    <Grid container spacing={4} sx={{ mb: 8 }}>
-                        <Grid item xs={6} sm={3}>
-                            <StatsCard
-                                icon={PeopleIcon}
-                                title="Students Helped"
-                                value="60+"
-                                color="#9c27b0"
-                            />
-                        </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <StatsCard
-                                icon={PeopleIcon}
-                                title="Tutoring Sessions"
-                                value="130+"
-                                color="#4caf50"
-                            />
-                        </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <StatsCard
-                                icon={ReviewsIcon}
-                                title="Total Reviews"
-                                value={reviews.length}
-                                color="#2196f3"
-                            />
-                        </Grid>
-                        <Grid item xs={6} sm={3}>
-                            <StatsCard
-                                icon={PeopleIcon}
-                                title="Active Volunteers"
-                                value="20+"
-                                color="#ff9800"
-                            />
-                        </Grid>
-                    </Grid>
+                    <Box sx={{
+                        display: 'grid',
+                        gridTemplateColumns: { xs: 'repeat(2, 1fr)', sm: 'repeat(4, 1fr)' },
+                        gap: 4,
+                        mb: 8
+                    }}>
+                        <StatsCard
+                            icon={PeopleIcon}
+                            title="Students Helped"
+                            value="60+"
+                            color="#9c27b0"
+                        />
+                        <StatsCard
+                            icon={PeopleIcon}
+                            title="Tutoring Sessions"
+                            value="130+"
+                            color="#4caf50"
+                        />
+                        <StatsCard
+                            icon={ReviewsIcon}
+                            title="Total Reviews"
+                            value={sortedReviews.length}
+                            color="#2196f3"
+                        />
+                        <StatsCard
+                            icon={PeopleIcon}
+                            title="Active Volunteers"
+                            value="20+"
+                            color="#ff9800"
+                        />
+                    </Box>
                 </Fade>
 
-                {/* Reviews Grid */}
-                <Grid container spacing={4}>
-                    {reviews.map((review, index) => (
-                        <Grid item xs={12} sm={6} lg={4} key={index}>
-                            <ReviewCard review={review} index={index} />
-                        </Grid>
+                {/* Dynamic Masonry Reviews Layout */}
+                <Box sx={{
+                    display: 'grid',
+                    gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)',
+                    gap: 3,
+                    alignItems: 'start'
+                }}>
+                    {masonryColumns.map((column, columnIndex) => (
+                        <Box key={columnIndex} sx={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
+                            {column.map((review) => (
+                                <ReviewCard
+                                    key={review.index}
+                                    review={review}
+                                    index={review.index}
+                                    priority={review.priority}
+                                />
+                            ))}
+                        </Box>
                     ))}
-                </Grid>
+                </Box>
+
+                {/* Load More Button */}
+                {hasMoreReviews && (
+                    <Fade in timeout={1000}>
+                        <Box sx={{ textAlign: 'center', mt: 6 }}>
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handleLoadMore}
+                                disabled={isLoading}
+                                sx={{
+                                    px: 5,
+                                    py: 2,
+                                    fontSize: '1.1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    background: isDarkMode
+                                        ? 'linear-gradient(45deg, #424242, #616161)'
+                                        : 'linear-gradient(45deg, #f5f5f5, #e0e0e0)',
+                                    color: isDarkMode ? '#fff' : '#333',
+                                    boxShadow: '0 8px 24px rgba(0,0,0,0.1)',
+                                    transition: 'all 0.3s ease',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    '&:hover': {
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: '0 12px 32px rgba(0,0,0,0.15)',
+                                        background: isDarkMode
+                                            ? 'linear-gradient(45deg, #616161, #757575)'
+                                            : 'linear-gradient(45deg, #e0e0e0, #d5d5d5)',
+                                    },
+                                    '&:disabled': {
+                                        transform: 'none',
+                                        opacity: 0.7,
+                                    },
+                                    '&::before': isLoading ? {
+                                        content: '""',
+                                        position: 'absolute',
+                                        top: 0,
+                                        left: '-100%',
+                                        width: '100%',
+                                        height: '100%',
+                                        background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)',
+                                        animation: 'shimmer 1.5s infinite',
+                                    } : {},
+                                    '@keyframes shimmer': {
+                                        '0%': { left: '-100%' },
+                                        '100%': { left: '100%' },
+                                    }
+                                }}
+                            >
+                                {isLoading ? 'Loading More Reviews...' : `See More Reviews `}
+                            </Button>
+
+                            {/* Progress indicator */}
+                            {/* <Typography
+                                variant="caption"
+                                color="text.secondary"
+                                sx={{ 
+                                    display: 'block', 
+                                    mt: 2,
+                                    fontSize: '0.9rem'
+                                }}
+                            >
+                                Showing {visibleCount} of {sortedReviews.length} reviews
+                            </Typography> */}
+                        </Box>
+                    </Fade>
+                )}
 
                 {/* Call to Action */}
                 <Fade in timeout={2000}>

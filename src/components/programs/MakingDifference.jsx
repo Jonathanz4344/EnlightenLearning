@@ -151,7 +151,7 @@ const ReviewCard = ({ review, index, priority }) => {
 
                     <Box>
                         {/* Rating */}
-                        <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
+                        {/* <Box sx={{ display: 'flex', justifyContent: 'center', mb: 3 }}>
                             <Rating
                                 value={5}
                                 readOnly
@@ -165,7 +165,7 @@ const ReviewCard = ({ review, index, priority }) => {
                                     }
                                 }}
                             />
-                        </Box>
+                        </Box> */}
 
                         {/* Author */}
                         <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
@@ -264,49 +264,41 @@ export default function Reviews() {
             text: "My experience as a tutor was very valuable and beneficial. It allowed me to gain strong communication skills, learn to be more patient, and how to adapt my teaching style to better suit the student I worked with. Additionally, watching the student make progress and become more confident was extremely fulfilling. Given the personal growth and positive impact, I would definitely participate again.",
             author: "Tiffany",
             priority: "large", // Detailed, impact-focused
-            category: "tutor"
         },
         {
             text: "As the Volunteer Coordinator of Enlighten Learning, I became more organized and efficient in managing schedules and resources. Being apart of the Enlighten Learning team taught me how to finish tasks effectively and collaborate with diverse stakeholders. Seeing the program run smoothly due to these efforts was incredibly rewarding. Would I participate again? Absolutely. The experience was fulfilling, and I'd love to contribute to help scale the program's impact.",
             author: "Eileen",
             priority: "large", // Comprehensive, leadership perspective
-            category: "coordinator"
         },
         {
             text: "My kid loves Tiffany's teaching very much. She knows how to teach kids and how to make them be very interested to learn knowledge. Anna always be very happy after tutoring and cannot wait for next lesson. She also has patient and acts as Anna's friend too. Easy communicate with me. I believe she definitely improved her English. Overall highly recommended.",
             author: "Eugena",
             priority: "large", // Parent perspective with specific outcomes
-            category: "parent"
         },
         {
             text: "Kingsley has been tutoring with Tiffany for about 12 weeks. I totally understand it is not a long period of time, but I still do see improvements from it. His reading comprehension and answering multiple choices are much better than before. I appreciated Tiffany and Brianna who are very responsive and addressed Kingsley's reading problems. I am very satisfied with the pairing process and will definitely consider coming back. I would also recommend others to this program.",
             author: "Iris",
             priority: "medium", // Specific progress mentioned
-            category: "parent"
         },
         {
             text: "I had a great experience being a tutor. I really learned a lot about responsibility, time management, patience etc. These skills are very useful not only in the tutoring environment but also school, later work, and life. I would love to tutor again.",
             author: "Anna",
             priority: "medium", // Good detail about personal growth
-            category: "tutor"
         },
         {
             text: "I enjoyed being a board member and felt that my contributions were really helping Enlighten Learning grow. I gained the skills to develop events and ideas with the help of others, and actually act on those ideas.",
             author: "Aarini",
             priority: "medium", // Leadership perspective
-            category: "board"
         },
         {
             text: "The experience helped me develop patience and communication skills, also helping me find new ways to present different concepts to children.",
             author: "Alison",
             priority: "medium", // Skill development focus
-            category: "tutor"
         },
         {
             text: "It was a good experience. I got to work with a lot of good people. I earned leadership skills and also learned how to collaborate with my team for a united goal.",
             author: "Veronica",
             priority: "small", // Brief but positive
-            category: "volunteer"
         },
         {
             text: "I loved being able to teach other people the basics on how to play volleyball! it was a fun experience, and was a great way to be active and helpful!",

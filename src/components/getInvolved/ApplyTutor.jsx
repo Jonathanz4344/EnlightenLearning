@@ -54,7 +54,7 @@ const subjectAreas = [
         icon: RegentsIcon,
         color: "#2196f3",
         category: "Test Preparation",
-        grades: ["9th", "10th", "11th", "12th"],
+        grades: ["8th","9th", "10th", "11th", "12th"],
         commitment: "Intensive review sessions"
     },
     {

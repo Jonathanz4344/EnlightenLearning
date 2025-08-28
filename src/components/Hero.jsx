@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import {
   Box,
@@ -9,17 +9,20 @@ import {
   Divider,
   Card,
   CardContent,
+  Grid,
 } from "@mui/material";
 import { useMode } from "./Layout";
 import { useNavigate } from "react-router-dom";
 import {
   ArrowForward as ArrowForwardIcon,
   Instagram as InstagramIcon,
+  Facebook as FacebookIcon,
   Favorite as FavoriteIcon,
   VolunteerActivism as VolunteerIcon,
   School as LearnIcon,
   Public as WorldIcon,
   AutoAwesome as SparkleIcon,
+  ExpandMore as ExpandMoreIcon,
 } from "@mui/icons-material";
 
 // Instagram Embed Component
@@ -49,10 +52,45 @@ const InstagramEmbed = ({ url, isLatest = false }) => {
   );
 };
 
+// Facebook Embed Component
+const FacebookEmbed = ({ src }) => {
+  return (
+    <Fade in timeout={1400}>
+      <Box sx={{
+        position: 'relative',
+        display: 'flex',
+        justifyContent: 'center',
+        mb: 4
+      }}>
+        <iframe
+          src={src}
+          width="500"
+          height="645"
+          style={{
+            border: 'none',
+            overflow: 'hidden',
+            borderRadius: '12px',
+            boxShadow: '0 10px 40px rgba(0,0,0,0.1)',
+            transition: 'all 0.3s ease',
+          }}
+          scrolling="no"
+          frameBorder="0"
+          allowFullScreen={true}
+          allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"
+        />
+      </Box>
+    </Fade>
+  );
+};
+
 export default function Hero() {
   const navigate = useNavigate();
   const { mode = 'light' } = useMode() || {};
   const isDarkMode = mode === "dark";
+
+  // State for controlling visibility of posts
+  const [showAllInstagram, setShowAllInstagram] = useState(false);
+  const [showAllFacebook, setShowAllFacebook] = useState(false);
 
   // Instagram post URLs - Easy to manage!
   const instagramPosts = [
@@ -69,6 +107,19 @@ export default function Hero() {
       isLatest: false
     },
   ];
+
+  // Facebook post URLs - Easy to manage!
+  const facebookPosts = [
+    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500",
+    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid07khjTjiz5Y4GyyQQ7Hn5D3q623f6PdheSzqwMWaQ6fqkNsCaskCowXiLi6MbazAql%26id%3D61576772816131&show_text=true&width=500",
+    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02JriNPeVoEyBE795J3JKhFhcHnscUeWvT74PZHyGNEHxJdKTMgN7tFPUJJ5v3bEYpl%26id%3D61576772816131&show_text=true&width=500"
+
+  ];
+
+
+  // Get visible posts based on state
+  const visibleInstagramPosts = showAllInstagram ? instagramPosts : instagramPosts.slice(0, 3);
+  const visibleFacebookPosts = showAllFacebook ? facebookPosts : facebookPosts.slice(0, 3);
 
   // Load Instagram embed script
   useEffect(() => {
@@ -265,108 +316,266 @@ export default function Hero() {
               : 'linear-gradient(90deg, transparent, rgba(0,0,0,0.2), transparent)'
           }} />
 
-          {/* Instagram Posts Section */}
+          {/* Social Media Section Header */}
           <Fade in timeout={1200}>
-            <Box sx={{ textAlign: 'center' }}>
-              {/* Section Header */}
-              <Box sx={{ mb: 6 }}>
-                <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mb: 3 }}>
-                  <InstagramIcon sx={{
-                    fontSize: { xs: 40, md: 50 },
-                    color: '#E4405F',
-                    filter: 'drop-shadow(0 4px 8px rgba(228, 64, 95, 0.3))'
-                  }} />
-                  <Typography
-                    variant="h3"
-                    component="h2"
-                    sx={{
-                      fontWeight: 800,
-                      color: '#E4405F',
-                      fontSize: { xs: '2rem', sm: '2.5rem', md: '3rem' }
-                    }}
-                  >
-                    Follow Our Journey
-                  </Typography>
-                </Box>
-                <Typography
-                  variant="h6"
-                  color="text.secondary"
-                  sx={{
-                    maxWidth: '600px',
-                    mx: 'auto',
-                    lineHeight: 1.6,
-                    mb: 4
-                  }}
-                >
-                  Stay connected with our latest updates, events, and community impact stories on Instagram!
-                </Typography>
-              </Box>
-
-              {/* Instagram Embeds */}
-              <Box sx={{
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 6,
-                maxWidth: '600px',
-                mx: 'auto',
-                '& .instagram-media': {
-                  margin: '0 auto !important',
-                  borderRadius: '12px !important',
-                  overflow: 'hidden',
-                  boxShadow: isDarkMode
-                    ? '0 20px 60px rgba(228, 64, 95, 0.2)'
-                    : '0 10px 40px rgba(0,0,0,0.1)',
-                  transition: 'all 0.3s ease',
-                  '&:hover': {
-                    transform: 'translateY(-5px)',
-                    boxShadow: isDarkMode
-                      ? '0 30px 80px rgba(228, 64, 95, 0.3)'
-                      : '0 20px 60px rgba(0,0,0,0.15)',
-                  }
-                }
-              }}>
-                {/* Render Instagram Posts */}
-                {instagramPosts.map((post, index) => (
-                  <InstagramEmbed
-                    key={index}
-                    url={post.url}
-                    isLatest={post.isLatest}
-                  />
-                ))}
-              </Box>
-
-              {/* Follow Button */}
-              <Box sx={{ mt: 6 }}>
-                <Button
-                  variant="contained"
-                  size="large"
-                  startIcon={<InstagramIcon />}
-                  href="https://www.instagram.com/enlighten_learning/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  sx={{
-                    py: 2,
-                    px: 4,
-                    fontSize: '1.1rem',
-                    fontWeight: 600,
-                    borderRadius: 3,
-                    background: 'linear-gradient(45deg, #E4405F 30%, #F56040 90%)',
-                    boxShadow: '0 8px 32px rgba(228, 64, 95, 0.3)',
-                    '&:hover': {
-                      background: 'linear-gradient(45deg, #C13584 30%, #E4405F 90%)',
-                      transform: 'translateY(-2px)',
-                      boxShadow: '0 12px 40px rgba(228, 64, 95, 0.4)',
-                    },
-                    transition: 'all 0.3s ease'
-                  }}
-                >
-                  Follow @enlighten_learning
-                </Button>
-              </Box>
+            <Box sx={{ textAlign: 'center', mb: { xs: 6, md: 8 } }}>
+              <Typography
+                variant="h2"
+                component="h2"
+                sx={{
+                  fontWeight: 800,
+                  fontSize: { xs: '2.5rem', sm: '3rem', md: '3.5rem' },
+                  background: 'linear-gradient(45deg, #E4405F, #1877F2)',
+                  backgroundClip: 'text',
+                  WebkitBackgroundClip: 'text',
+                  WebkitTextFillColor: 'transparent',
+                  mb: 3
+                }}
+              >
+                Follow Our Journey
+              </Typography>
+              <Typography
+                variant="h6"
+                color="text.secondary"
+                sx={{
+                  maxWidth: '700px',
+                  mx: 'auto',
+                  lineHeight: 1.6,
+                }}
+              >
+                Stay connected with our latest updates, events, and community impact stories across our social media platforms!
+              </Typography>
             </Box>
+          </Fade>
+
+          {/* Side-by-Side Social Media Posts */}
+          <Fade in timeout={1400}>
+            <Grid container spacing={4}>
+              {/* Instagram Column */}
+              <Grid item xs={12} lg={6}>
+                <Box sx={{ textAlign: 'center' }}>
+                  {/* Instagram Header */}
+                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mb: 4 }}>
+                    <InstagramIcon sx={{
+                      fontSize: { xs: 35, md: 45 },
+                      color: '#E4405F',
+                      filter: 'drop-shadow(0 4px 8px rgba(228, 64, 95, 0.3))'
+                    }} />
+                    <Typography
+                      variant="h4"
+                      component="h3"
+                      sx={{
+                        fontWeight: 700,
+                        color: '#E4405F',
+                        fontSize: { xs: '1.8rem', md: '2.2rem' }
+                      }}
+                    >
+                      Instagram
+                    </Typography>
+                  </Box>
+
+                  {/* Instagram Posts */}
+                  <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 4,
+                    maxWidth: '550px',
+                    mx: 'auto',
+                    '& .instagram-media': {
+                      margin: '0 auto !important',
+                      borderRadius: '12px !important',
+                      overflow: 'hidden',
+                      boxShadow: isDarkMode
+                        ? '0 20px 60px rgba(228, 64, 95, 0.2)'
+                        : '0 10px 40px rgba(0,0,0,0.1)',
+                      transition: 'all 0.3s ease',
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: isDarkMode
+                          ? '0 30px 80px rgba(228, 64, 95, 0.3)'
+                          : '0 20px 60px rgba(0,0,0,0.15)',
+                      }
+                    }
+                  }}>
+                    {visibleInstagramPosts.map((post, index) => (
+                      <InstagramEmbed
+                        key={index}
+                        url={post.url}
+                        isLatest={post.isLatest}
+                      />
+                    ))}
+                  </Box>
+
+                  {/* See More Button for Instagram */}
+                  {!showAllInstagram && instagramPosts.length > 3 && (
+                    <Box sx={{ mt: 4 }}>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        startIcon={<ExpandMoreIcon />}
+                        onClick={() => setShowAllInstagram(true)}
+                        sx={{
+                          py: 1.5,
+                          px: 3,
+                          fontSize: '1rem',
+                          fontWeight: 600,
+                          borderRadius: 3,
+                          borderColor: '#E4405F',
+                          color: '#E4405F',
+                          '&:hover': {
+                            borderColor: '#C13584',
+                            backgroundColor: 'rgba(228, 64, 95, 0.05)',
+                            transform: 'translateY(-2px)',
+                          },
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        See More Posts
+                      </Button>
+                    </Box>
+                  )}
+
+                  {/* Follow Button for Instagram */}
+                  <Box sx={{ mt: 4 }}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<InstagramIcon />}
+                      href="https://www.instagram.com/enlighten_learning/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        py: 2,
+                        px: 4,
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        borderRadius: 3,
+                        background: 'linear-gradient(45deg, #E4405F 30%, #F56040 90%)',
+                        boxShadow: '0 8px 32px rgba(228, 64, 95, 0.3)',
+                        '&:hover': {
+                          background: 'linear-gradient(45deg, #C13584 30%, #E4405F 90%)',
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 12px 40px rgba(228, 64, 95, 0.4)',
+                        },
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      Follow @enlighten_learning
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+
+              {/* Facebook Column */}
+              <Grid item xs={12} lg={6}>
+                <Box sx={{ textAlign: 'center' }}>
+                  {/* Facebook Header */}
+                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 2, mb: 4 }}>
+                    <FacebookIcon sx={{
+                      fontSize: { xs: 35, md: 45 },
+                      color: '#1877F2',
+                      filter: 'drop-shadow(0 4px 8px rgba(24, 119, 242, 0.3))'
+                    }} />
+                    <Typography
+                      variant="h4"
+                      component="h3"
+                      sx={{
+                        fontWeight: 700,
+                        color: '#1877F2',
+                        fontSize: { xs: '1.8rem', md: '2.2rem' }
+                      }}
+                    >
+                      Facebook
+                    </Typography>
+                  </Box>
+
+                  {/* Facebook Posts */}
+                  <Box sx={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 4,
+                    maxWidth: '550px',
+                    mx: 'auto',
+                    '& iframe': {
+                      '&:hover': {
+                        transform: 'translateY(-5px)',
+                        boxShadow: isDarkMode
+                          ? '0 30px 80px rgba(24, 119, 242, 0.3) !important'
+                          : '0 20px 60px rgba(0,0,0,0.15) !important',
+                      }
+                    }
+                  }}>
+                    {visibleFacebookPosts.map((src, index) => (
+                      <FacebookEmbed
+                        key={index}
+                        src={src}
+                      />
+                    ))}
+                  </Box>
+
+                  {/* See More Button for Facebook */}
+                  {!showAllFacebook && facebookPosts.length > 3 && (
+                    <Box sx={{ mt: 4 }}>
+                      <Button
+                        variant="outlined"
+                        size="large"
+                        startIcon={<ExpandMoreIcon />}
+                        onClick={() => setShowAllFacebook(true)}
+                        sx={{
+                          py: 1.5,
+                          px: 3,
+                          fontSize: '1rem',
+                          fontWeight: 600,
+                          borderRadius: 3,
+                          borderColor: '#1877F2',
+                          color: '#1877F2',
+                          '&:hover': {
+                            borderColor: '#166FE5',
+                            backgroundColor: 'rgba(24, 119, 242, 0.05)',
+                            transform: 'translateY(-2px)',
+                          },
+                          transition: 'all 0.3s ease'
+                        }}
+                      >
+                        See More Posts
+                      </Button>
+                    </Box>
+                  )}
+
+                  {/* Follow Button for Facebook */}
+                  <Box sx={{ mt: 4 }}>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      startIcon={<FacebookIcon />}
+                      href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      sx={{
+                        py: 2,
+                        px: 4,
+                        fontSize: '1.1rem',
+                        fontWeight: 600,
+                        borderRadius: 3,
+                        background: 'linear-gradient(45deg, #1877F2 30%, #42A5F5 90%)',
+                        boxShadow: '0 8px 32px rgba(24, 119, 242, 0.3)',
+                        '&:hover': {
+                          background: 'linear-gradient(45deg, #166FE5 30%, #1877F2 90%)',
+                          transform: 'translateY(-2px)',
+                          boxShadow: '0 12px 40px rgba(24, 119, 242, 0.4)',
+                        },
+                        transition: 'all 0.3s ease'
+                      }}
+                    >
+                      Follow @Enlighten Learning
+                    </Button>
+                  </Box>
+                </Box>
+              </Grid>
+            </Grid>
           </Fade>
         </Container>
       </Box>
     </React.Fragment>
   );
-} 
+}

@@ -37,8 +37,7 @@ const execPositions = [
     {
         id: 1,
         title: "President",
-        status: "closed", // open, closed, filled
-        multiple: false,
+        maxPositions: 1, // NEW: Number of available positions
         description: "Serves as the chief leader of the organization, overseeing all departments and ensuring smooth coordination between board members. Provides guidance to Heads, Directors, and Coordinators to help them achieve their goals, while maintaining the overall vision and mission of the organization. Represents the organization in official capacities and fosters partnerships to further its growth and impact.",
         icon: TeamIcon,
         responsibilities: [
@@ -54,8 +53,7 @@ const execPositions = [
     {
         id: 2,
         title: "Head of Academics",
-        status: "closed", // open, closed, filled
-        multiple: true,
+        maxPositions: 2, // NEW: Multiple positions available
         description: "Creates and maintains the tutoring curriculum, organizes and manages resources for tutors to use for students. Additionally, plans and conducts workshops to provide guidance and tips for other tutors.",
         icon: AcademicsIcon,
         responsibilities: [
@@ -70,8 +68,7 @@ const execPositions = [
     {
         id: 3,
         title: "Head of Design",
-        status: "closed",
-        multiple: false,
+        maxPositions: 2, // NEW: Multiple positions available
         description: "Oversees PR officers and in charge of all aspects related to design and social media. Including, creating social media content and posting it to our socials. As well as sending out our posts and communicating with other organizations.",
         icon: DesignIcon,
         responsibilities: [
@@ -81,15 +78,14 @@ const execPositions = [
             "Inter-organizational communication"
         ],
         currentMembers: [
-            { name: "Tiffany Qi", avatar: "TQ" }
+            { name: "Tiffany Qi", avatar: "TQ" }, { name: "Veronica Chung", avatar: "VC" }
         ],
-        category: "Creative"
+        category: "Marketing"
     },
     {
         id: 4,
         title: "Public Relations Officer",
-        status: "open",
-        multiple: true,
+        maxPositions: 2, // NEW: 2 positions available, currently 0 filled
         description: "Assist the Head of Design in creating social media content and posting it to our socials, managing social media accounts in general and communicating with other organizations.",
         icon: PRIcon,
         responsibilities: [
@@ -99,15 +95,14 @@ const execPositions = [
             "Inter-organizational communication"
         ],
         currentMembers: [
-            { name: "Veronica Chung", avatar: "VC" }
+            // Empty - all 3 positions are open
         ],
         category: "Creative"
     },
     {
         id: 5,
         title: "Director of Finance",
-        status: "closed",
-        multiple: false,
+        maxPositions: 1, // NEW: Single position
         description: "Oversees all financial operations, which includes discussing pricing quota with parents, recording organizational expenses, managing charity donations, and ensuring accurate financial records.",
         icon: FinanceIcon,
         responsibilities: [
@@ -124,8 +119,7 @@ const execPositions = [
     {
         id: 6,
         title: "Programs Director",
-        status: "open",
-        multiple: false,
+        maxPositions: 1, // NEW: Single position, currently open
         description: "Plans and executes special events; including agenda development, collaboration with relevant board members or other organizations and communicating with facilities to rent their space to host the event.",
         icon: ProgramsIcon,
         responsibilities: [
@@ -140,8 +134,7 @@ const execPositions = [
     {
         id: 7,
         title: "Outreach Coordinator",
-        status: "open",
-        multiple: true,
+        maxPositions: 3, // NEW: 3 positions available, 1 filled
         description: "In charge of recruitment of both students and tutors within your area. As well as expansion of the organization and spreading our mission. Essentially the individual responsible for overseeing and promoting our tutoring program in that area.",
         icon: OutreachIcon,
         responsibilities: [
@@ -158,8 +151,7 @@ const execPositions = [
     {
         id: 8,
         title: "Volunteer Coordinator",
-        status: "closed",
-        multiple: false,
+        maxPositions: 1, // NEW: Single position
         description: "In charge of volunteer-related tasks (hours tracking, board attendance, etc.). Responsible for daily volunteer recruitment, including communicating with public facilities and utilizing promotional materials to facilitate community engagement.",
         icon: VolunteerIcon,
         responsibilities: [
@@ -176,8 +168,7 @@ const execPositions = [
     {
         id: 9,
         title: "Secretary",
-        status: "closed",
-        multiple: false,
+        maxPositions: 1, // NEW: Single position
         description: "Take meeting notes for board meetings and help with general organization and management of board members (assignments, coordination, etc.). Additionally, update members on what happened at each meeting, their tasks for the week, and assist with outreach efforts to support organizational goals.",
         icon: SecretaryIcon,
         responsibilities: [
@@ -191,9 +182,24 @@ const execPositions = [
         ],
         category: "Operations"
     },
-
-
 ];
+
+// NEW: Function to automatically determine position status
+const getPositionStatus = (position) => {
+    const currentMembersCount = position.currentMembers.length;
+    const maxPositions = position.maxPositions;
+
+    if (currentMembersCount >= maxPositions) {
+        return 'closed'; // Position is filled
+    } else {
+        return 'open'; // Position has openings
+    }
+};
+
+// NEW: Function to check if position has multiple openings
+const hasMultipleOpenings = (position) => {
+    return position.maxPositions > 1;
+};
 
 // Helper function to get status configuration
 const getStatusConfig = (status) => {
@@ -251,11 +257,25 @@ const getTotalActiveMembers = (positions) => {
     return uniqueMembers.size;
 };
 
+// NEW: Helper function to calculate total open positions
+const getTotalOpenPositions = (positions) => {
+    return positions.reduce((total, position) => {
+        const openings = position.maxPositions - position.currentMembers.length;
+        return total + Math.max(0, openings);
+    }, 0);
+};
+
 const PositionCard = ({ position }) => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
     const theme = useTheme();
-    const statusConfig = getStatusConfig(position.status);
+
+    // NEW: Automatically determine status
+    const status = getPositionStatus(position);
+    const multiple = hasMultipleOpenings(position);
+    const openings = position.maxPositions - position.currentMembers.length;
+
+    const statusConfig = getStatusConfig(status);
     const categoryColor = getCategoryColor(position.category);
     const IconComponent = position.icon;
 
@@ -302,7 +322,7 @@ const PositionCard = ({ position }) => {
             </Box>
 
             {/* Multiple Positions Badge */}
-            {position.multiple && position.status === 'open' && (
+            {multiple && status === 'open' && (
                 <Box
                     sx={{
                         position: 'absolute',
@@ -319,7 +339,7 @@ const PositionCard = ({ position }) => {
                         boxShadow: theme.shadows[4]
                     }}
                 >
-                    MULTIPLE POSITIONS
+                    {openings} OPENINGS
                 </Box>
             )}
 
@@ -352,13 +372,13 @@ const PositionCard = ({ position }) => {
                             }}
                             size="small"
                         />
-                        {position.multiple && (
+                        {/* {multiple && (
                             <Chip
-                                label="Multiple Openings"
-                                color="warning"
+                                label={status === 'open' ? `${openings} Openings` : `${position.maxPositions} Total Positions`}
+                                color={status === 'open' ? "warning" : "default"}
                                 size="small"
                             />
-                        )}
+                        )} */}
                     </Box>
                 </Box>
 
@@ -404,7 +424,7 @@ const PositionCard = ({ position }) => {
                 {/* Team Section - Fixed positioning at bottom */}
                 <Box sx={{
                     mt: 'auto',
-                    minHeight: position.status === 'open' ? '180px' : '120px', // More space for open positions
+                    minHeight: status === 'open' ? '180px' : '120px', // More space for open positions
                     display: 'flex',
                     flexDirection: 'column',
                     justifyContent: 'flex-end',
@@ -449,7 +469,7 @@ const PositionCard = ({ position }) => {
                     )}
 
                     {/* "This Could Be You" section for OPEN positions only */}
-                    {position.status === 'open' && (
+                    {status === 'open' && (
                         <Box sx={{
                             backgroundColor: statusConfig.bgColor,
                             borderRadius: 2,
@@ -485,7 +505,10 @@ const PositionCard = ({ position }) => {
                                 This Could Be You!
                             </Typography>
                             <Typography variant="body2" color="text.secondary" sx={{ fontSize: '0.85rem' }}>
-                                Join our team and make a difference
+                                {openings === 1
+                                    ? "Join our team and make a difference"
+                                    : `${openings} positions available - join our team!`
+                                }
                             </Typography>
                         </Box>
                     )}
@@ -691,12 +714,19 @@ export default function ExecTeam() {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
 
-    // Categorize positions
-    const openPositions = execPositions.filter(pos => pos.status === 'open');
-    const filledPositions = execPositions.filter(pos => pos.status === 'closed' || pos.status === 'filled');
+    // NEW: Automatically categorize positions based on their current status
+    const positionsWithStatus = execPositions.map(position => ({
+        ...position,
+        status: getPositionStatus(position),
+        multiple: hasMultipleOpenings(position)
+    }));
 
-    // Calculate total active members dynamically
+    const openPositions = positionsWithStatus.filter(pos => pos.status === 'open');
+    const filledPositions = positionsWithStatus.filter(pos => pos.status === 'closed' || pos.status === 'filled');
+
+    // Calculate total active members and open positions dynamically
     const totalActiveMembers = getTotalActiveMembers(execPositions);
+    const totalOpenPositions = getTotalOpenPositions(execPositions);
 
     return (
         <Box
@@ -766,7 +796,7 @@ export default function ExecTeam() {
                     }}>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#4caf50' }} fontWeight="bold">
-                                {openPositions.length}
+                                {totalOpenPositions}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Open Positions
@@ -816,127 +846,152 @@ export default function ExecTeam() {
                 {/* Why Join Section */}
                 <Box sx={{
                     mt: { xs: 6, sm: 8, md: 10 },
-                    p: { xs: 4, sm: 6 },
-                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
+                    textAlign: 'center',
+                    backgroundColor: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(25, 118, 210, 0.05)',
                     borderRadius: 4,
-                    boxShadow: theme => theme.shadows[8],
-                    border: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`
+                    p: { xs: 4, sm: 6, md: 8 },
+                    border: `1px solid ${isDarkMode ? 'rgba(255, 255, 255, 0.1)' : 'rgba(25, 118, 210, 0.1)'}`,
                 }}>
-                    <Box sx={{ textAlign: 'center', mb: 5 }}>
-                        <Typography
-                            variant="h4"
-                            component="h2"
-                            sx={{
-                                fontWeight: 700,
-                                mb: 2,
-                                background: 'linear-gradient(45deg, #4caf50, #2196f3, #ff9800)',
-                                backgroundClip: 'text',
-                                WebkitBackgroundClip: 'text',
-                                WebkitTextFillColor: 'transparent'
-                            }}
-                        >
-                            Why Join Our Executive Board?
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            color="text.secondary"
-                            sx={{ maxWidth: '600px', mx: 'auto', lineHeight: 1.6 }}
-                        >
-                            Become part of a team that's making real change in education and community outreach
-                        </Typography>
-                    </Box>
+                    <Typography
+                        variant="h3"
+                        sx={{
+                            fontWeight: 800,
+                            mb: 4,
+                            color: 'primary.main',
+                            fontSize: { xs: '1.8rem', sm: '2.2rem', md: '2.5rem' }
+                        }}
+                    >
+                        Why Join Our Executive Board?
+                    </Typography>
 
-                    <Grid container spacing={4}>
+                    <Grid container spacing={4} sx={{ mt: 2 }}>
                         <Grid item xs={12} md={4}>
-                            <Paper sx={{
-                                p: 3,
-                                textAlign: 'center',
-                                height: '100%',
-                                backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
-                                border: `2px solid ${isDarkMode ? '#4caf50' : '#e8f5e8'}`
-                            }}>
-                                <AcademicsIcon sx={{ fontSize: 50, color: '#4caf50', mb: 2 }} />
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    p: 3,
+                                    height: '100%',
+                                    backgroundColor: 'transparent',
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Box sx={{
+                                    width: 80,
+                                    height: 80,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#4caf50',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    mx: 'auto',
+                                    mb: 2
+                                }}>
+                                    <Typography variant="h4" sx={{ color: 'white' }}>💡</Typography>
+                                </Box>
                                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
                                     Leadership Development
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Gain valuable leadership experience while making a direct impact on your peers and community members.
+                                    Gain valuable leadership experience while making a direct impact on the community and those in need.
                                 </Typography>
                             </Paper>
                         </Grid>
+
                         <Grid item xs={12} md={4}>
-                            <Paper sx={{
-                                p: 3,
-                                textAlign: 'center',
-                                height: '100%',
-                                backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
-                                border: `2px solid ${isDarkMode ? '#2196f3' : '#e3f2fd'}`
-                            }}>
-                                <TeamIcon sx={{ fontSize: 50, color: '#2196f3', mb: 2 }} />
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    p: 3,
+                                    height: '100%',
+                                    backgroundColor: 'transparent',
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Box sx={{
+                                    width: 80,
+                                    height: 80,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#2196f3',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    mx: 'auto',
+                                    mb: 2
+                                }}>
+                                    <Typography variant="h4" sx={{ color: 'white' }}>🤝</Typography>
+                                </Box>
                                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
-                                    Collaborative Environment
+                                    Collaborative
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Work alongside passionate, like-minded individuals who share your commitment to educational excellence.
+                                    Work alongside passionate, like-minded individuals who share your commitment to giving back.
                                 </Typography>
                             </Paper>
                         </Grid>
+
                         <Grid item xs={12} md={4}>
-                            <Paper sx={{
-                                p: 3,
-                                textAlign: 'center',
-                                height: '100%',
-                                backgroundColor: isDarkMode ? '#2a2a2a' : '#f8f9fa',
-                                border: `2px solid ${isDarkMode ? '#ff9800' : '#fff3e0'}`
-                            }}>
-                                <VolunteerIcon sx={{ fontSize: 50, color: '#ff9800', mb: 2 }} />
+                            <Paper
+                                elevation={0}
+                                sx={{
+                                    p: 3,
+                                    height: '100%',
+                                    backgroundColor: 'transparent',
+                                    textAlign: 'center'
+                                }}
+                            >
+                                <Box sx={{
+                                    width: 80,
+                                    height: 80,
+                                    borderRadius: '50%',
+                                    backgroundColor: '#ff9800',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    mx: 'auto',
+                                    mb: 2
+                                }}>
+                                    <Typography variant="h4" sx={{ color: 'white' }}>🎯</Typography>
+                                </Box>
                                 <Typography variant="h6" sx={{ fontWeight: 600, mb: 2 }}>
                                     Community Impact
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
-                                    Make a tangible difference in your community by helping students achieve their academic goals.
+                                    Make a tangible difference in your community by raising money for charities that provide hope, care and support to those in need.
                                 </Typography>
                             </Paper>
                         </Grid>
                     </Grid>
-                </Box>
 
-                {/* Final Call to Action */}
-                <Box sx={{
-                    textAlign: 'center',
-                    mt: { xs: 6, sm: 8, md: 10 },
-                    p: { xs: 4, sm: 6 },
-                    background: isDarkMode
-                        ? 'linear-gradient(135deg, #1a1a1a, #2d2d2d)'
-                        : 'linear-gradient(135deg, #f8f9fa, #e9ecef)',
-                    borderRadius: 4,
-                    border: `2px solid ${isDarkMode ? '#333' : '#dee2e6'}`
-                }}>
-                    <Typography
-                        variant="h4"
-                        component="h2"
-                        sx={{
-                            fontWeight: 700,
-                            mb: 2,
-                            color: 'primary.main'
-                        }}
-                    >
-                        Ready to Lead with Purpose?
-                    </Typography>
-                    <Typography
-                        variant="body1"
-                        color="text.secondary"
-                        sx={{
-                            mb: 4,
-                            maxWidth: '600px',
-                            mx: 'auto',
-                            lineHeight: 1.6
-                        }}
-                    >
-                        Whether you're interested in academics, design, finance, or community outreach,
-                        there's a place for you on our executive board. Join us in building a brighter
-                        future through education.
-                    </Typography>
+                    <Box sx={{ mt: 6 }}>
+                        <Button
+                            variant="contained"
+                            size="large"
+                            onClick={() => window.open("https://forms.gle/JVqaueQjwRexzNjz8", '_blank')}
+                            endIcon={<LaunchIcon />}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1.1rem',
+                                fontWeight: 600,
+                                background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+                                '&:hover': {
+                                    background: 'linear-gradient(45deg, #1565c0, #1976d2)',
+                                    transform: 'translateY(-2px)',
+                                    boxShadow: '0 8px 25px rgba(25, 118, 210, 0.3)'
+                                },
+                                transition: 'all 0.3s ease'
+                            }}
+                        >
+                            Apply Now
+                        </Button>
+                        <Typography
+                            variant="body2"
+                            color="text.secondary"
+                            sx={{ mt: 2, fontSize: '0.9rem' }}
+                        >
+                            Applications are reviewed on a rolling basis
+                        </Typography>
+                    </Box>
                 </Box>
             </Container>
         </Box>

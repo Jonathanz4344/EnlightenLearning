@@ -79,21 +79,21 @@ const eventsData = [
         registrationStartDate: "2025-07-01",
         expirationDate: "2025-07-21", // Past event
     },
-    {
-        id: 4,
-        title: "Sweet Literature event",
-        date: "",
-        time: "",
-        location: "",
-        description: "",
-        formUrl: "",
-        category: "Literature",
-        totalParticipants: 20,
-        duration: "",
-        coordinator: "Enlighten Learning",
-        registrationStartDate: "2325-07-01",
-        expirationDate: "",
-    },
+    // {
+    //     id: 4,
+    //     title: "Sweet Literature event",
+    //     date: "",
+    //     time: "",
+    //     location: "",
+    //     description: "",
+    //     formUrl: "",
+    //     category: "Literature",
+    //     totalParticipants: 20,
+    //     duration: "",
+    //     coordinator: "Enlighten Learning",
+    //     registrationStartDate: "2325-07-01",
+    //     expirationDate: "",
+    // },
 ];
 
 // Helper function to get today's date without time
@@ -813,14 +813,14 @@ export default function EventsProgram() {
                                 Upcoming Events
                             </Typography>
                         </Box>
-                        <Box sx={{ textAlign: 'center' }}>
+                        {/* <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="primary.main" fontWeight="bold">
                                 130
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Sessions Taught
                             </Typography>
-                        </Box>
+                        </Box> */}
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
                                 100+
@@ -908,7 +908,7 @@ export default function EventsProgram() {
                             }}>
                                 <PeopleIcon sx={{ fontSize: 50, color: '#4caf50', mb: 2 }} />
                                 <Typography variant="h4" sx={{ color: '#4caf50', fontWeight: 'bold', mb: 1 }}>
-                                    500+
+                                    100+
                                 </Typography>
                                 <Typography variant="body2" color="text.secondary">
                                     Community Members Engaged

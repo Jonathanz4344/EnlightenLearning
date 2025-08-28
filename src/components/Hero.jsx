@@ -95,17 +95,14 @@ export default function Hero() {
   // Instagram post URLs - Easy to manage!
   const instagramPosts = [
     {
-      url: "https://www.instagram.com/p/DNY6nGsvjRr",
-      isLatest: true
-    },
-    {
       url: "https://www.instagram.com/p/DIugjbzvqa0",
-      isLatest: false
+      isLatest: true
     },
     {
       url: "https://www.instagram.com/p/DEvT6yEvrEh",
       isLatest: false
     },
+
   ];
 
   // Facebook post URLs - Easy to manage!
@@ -272,7 +269,7 @@ export default function Hero() {
               }}>
                 {[
                   { icon: LearnIcon, title: 'Learn with Joy', color: '#4CAF50', desc: 'Discover knowledge that inspires' },
-                  { icon: FavoriteIcon, title: 'Give with Passion', color: '#E91E63', desc: 'Share your heart with others' },
+                  { icon: FavoriteIcon, title: 'Give with Passion', color: '#E91E63', desc: 'Help those in need' },
                   { icon: WorldIcon, title: 'Change the World', color: '#2196F3', desc: 'Create lasting positive impact' }
                 ].map((pillar, index) => (
                   <Card key={index} sx={{

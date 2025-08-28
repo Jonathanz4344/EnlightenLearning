@@ -103,7 +103,7 @@ const teamMembers = [
 const teamStats = [
     { icon: GroupIcon, value: "130", label: "Sessions Taught", color: "#4caf50" },
     { icon: SchoolIcon, value: "60+", label: "Students Helped", color: "#2196f3" },
-    { icon: VolunteerIcon, value: "20+", label: "Active Volunteers", color: "#e91e63" },
+    { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
 ];
 
@@ -366,7 +366,7 @@ export default function OurTeam() {
                                     mb: 6
                                 }}
                             >
-                                Our diverse team of dedicated high school students brings together unique talents, perspectives, and unwavering commitment to making quality education accessible to all. Each member plays a vital role in our mission to learn with joy, give with passion, and change the world.
+                                Our diverse team of dedicated high school students bring together unique talents, perspectives, and unwavering commitment to giving back to those in need and providing quality education to the community. Each member plays a vital role in our mission to learn with joy, give with passion, and change the world.
                             </Typography>
                         </Box>
                     </Fade>

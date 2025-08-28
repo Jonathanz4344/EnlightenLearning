@@ -28,7 +28,8 @@ import {
     Favorite as HeartIcon,
     CheckCircle as SuccessIcon,
     Error as ErrorIcon,
-    AccessTime as TimeIcon,
+    Instagram as InstagramIcon,
+    Facebook as FacebookIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
@@ -460,6 +461,14 @@ export default function ContactUs() {
         window.location.href = 'mailto:enlightenandlearning@gmail.com';
     };
 
+    const handleInstagramClick = () => {
+        window.open('https://www.instagram.com/enlighten_learning/', '_blank');
+    };
+
+    const handleFacebookClick = () => {
+        window.open('https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/', '_blank');
+    };
+
     return (
         <Box
             component="section"
@@ -555,16 +564,19 @@ export default function ContactUs() {
                                 />
 
                                 <ContactInfoCard
-                                    icon={HeartIcon}
-                                    title="Response Time"
-                                    content="We typically respond within 24 - 48 hours"
-                                    color="#4caf50"
+                                    icon={InstagramIcon}
+                                    title="Follow us on Instagram"
+                                    content="@enlighten_learning"
+                                    color="#E4405F"
+                                    action={handleInstagramClick}
                                 />
+                                
                                 <ContactInfoCard
-                                    icon={TimeIcon}
-                                    title="Availability"
-                                    content="Flexible scheduling to fit your family's needs"
-                                    color="#ff9800"
+                                    icon={FacebookIcon}
+                                    title="Follow us on Facebook"
+                                    content="@Enlighten Learning"
+                                    color="#1877F2"
+                                    action={handleFacebookClick}
                                 />
                             </Box>
                         </Fade>

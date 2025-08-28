@@ -202,12 +202,12 @@ const SubjectCard = ({ subject }) => {
                             }}
                             size="small"
                         />
-                        <Chip
+                        {/* <Chip
                             label={subject.commitment}
                             color="primary"
                             size="small"
                             variant="outlined"
-                        />
+                        /> */}
                     </Box>
                 </Box>
 
@@ -570,10 +570,18 @@ export default function ApplyTutor() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
-                                10+
+                                15+
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Dedicated Tutors
+                            </Typography>
+                        </Box>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
+                                130+
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Tutoring Sessions
                             </Typography>
                         </Box>
                     </Box>
@@ -724,7 +732,7 @@ export default function ApplyTutor() {
                                             fontSize: '1.4rem'
                                         }}
                                     >
-                                        Make a Difference
+                                        Rewarding Experience
                                     </Typography>
                                     <Typography
                                         variant="body1"
@@ -734,7 +742,7 @@ export default function ApplyTutor() {
                                             fontSize: '1rem'
                                         }}
                                     >
-                                        Help students achieve their academic goals and build lasting confidence in their abilities.
+                                        Not only will you experience the joy of helping students succeed academically and build confidence, you'll also know your efforts directly support those in need.
                                     </Typography>
                                 </Paper>
                             </Grid>
@@ -790,7 +798,7 @@ export default function ApplyTutor() {
                                             fontSize: '1.4rem'
                                         }}
                                     >
-                                        Rewarding Experience
+                                        Earn Service Hours
                                     </Typography>
                                     <Typography
                                         variant="body1"
@@ -800,7 +808,7 @@ export default function ApplyTutor() {
                                             fontSize: '1rem'
                                         }}
                                     >
-                                        Experience the joy of teaching and watch your students grow academically and personally.
+                                        Earn valuable service hours while making a meaningful impact. Every hour you dedicate helps a student succeed and supports our charitable mission.
                                     </Typography>
                                 </Paper>
                             </Grid>

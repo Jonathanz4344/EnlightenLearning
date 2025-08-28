@@ -45,7 +45,7 @@ const subjectAreas = [
         color: "#4caf50",
         category: "Test Preparation",
         grades: ["3rd", "4th", "5th", "6th", "7th", "8th"],
-        commitment: "Flexible scheduling"
+        // commitment: ""
     },
     {
         id: 2,
@@ -203,12 +203,12 @@ const SubjectCard = ({ subject }) => {
                             }}
                             size="small"
                         />
-                        <Chip
+                        {/* <Chip
                             label={subject.commitment}
                             color="primary"
                             size="small"
                             variant="outlined"
-                        />
+                        /> */}
                     </Box>
                 </Box>
 
@@ -548,7 +548,7 @@ export default function TutoringServices() {
                             mb: 4
                         }}
                     >
-                        Expert tutoring services designed to help students excel academically and build lasting confidence in their studies.
+                        Expert tutoring services designed to help students excel academically and build lasting confidence in their studies. Excel in your studies and make a difference. Our expert tutoring services are designed to help students achieve their academic goals and build confidence. And with every lesson, you're helping us fundraise for charities that provide hope, care, and support to those in need.
                     </Typography>
 
                     {/* Quick Stats */}
@@ -577,10 +577,18 @@ export default function TutoringServices() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
-                                10+
+                                15+
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Dedicated Tutors
+                            </Typography>
+                        </Box>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
+                                130+
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Tutoring Sessions
                             </Typography>
                         </Box>
                     </Box>

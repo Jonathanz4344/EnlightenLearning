@@ -722,7 +722,7 @@ export default function DonateNow() {
                 </Box>
 
                 {/* Impact Section */}
-                <Box sx={{ mb: 8 }}>
+                {/* <Box sx={{ mb: 8 }}>
                     <Typography
                         variant="h4"
                         component="h2"
@@ -830,7 +830,7 @@ export default function DonateNow() {
                             </Paper>
                         </Grid>
                     </Grid>
-                </Box>
+                </Box> */}
 
                 {/* Thank You Message */}
                 <Box sx={{ textAlign: 'center', mb: 6 }}>
@@ -864,7 +864,7 @@ export default function DonateNow() {
                                 mb: 3
                             }}
                         >
-                            Every donation, no matter the size, makes a meaningful difference in our students' lives. Your generosity helps us continue our mission of providing quality education and support to those who need it most.
+                            Every donation, no matter the size, makes a meaningful difference as we strive to raise our fundraising goal. Your generosity helps us raise funds for a variety of charities that provide hope, care and support to those in need. We couldn't do this without you, thank you for helping us make a lasting impact in many lives!
                         </Typography>
                         <Typography
                             variant="body1"

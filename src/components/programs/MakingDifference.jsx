@@ -495,7 +495,7 @@ export default function Reviews() {
                         <StatsCard
                             icon={PeopleIcon}
                             title="Active Volunteers"
-                            value="20+"
+                            value="30+"
                             color="#ff9800"
                         />
                     </Box>
@@ -572,7 +572,7 @@ export default function Reviews() {
                                     }
                                 }}
                             >
-                                {isLoading ? 'Loading More Reviews...' : `See More Reviews `}
+                                {isLoading ? 'Loading More Reviews...' : `More from the Community `}
                             </Button>
 
                             {/* Progress indicator */}
@@ -625,8 +625,7 @@ export default function Reviews() {
                                 mb: 3
                             }}
                         >
-                            Ready to be part of something special? Whether you're looking for tutoring,
-                            want to volunteer, or support our mission, we'd love to hear from you.
+                            Ready to be part of something special? Whether you're a student, parent, volunteer, or executive member, our mission is made possible because of people like you. We'd love to hear your story
                         </Typography>
 
                         {/* Additional Review Button in CTA */}
@@ -653,7 +652,7 @@ export default function Reviews() {
                                 }
                             }}
                         >
-                            Leave a Review
+                            Share Your Experience
                         </Button>
                     </Box>
                 </Fade>

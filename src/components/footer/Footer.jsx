@@ -291,6 +291,12 @@ export default function Footer() {
               >
                 Meet Our Team
               </FooterLink>
+              <FooterLink
+                to={PathConstants.MAKING_DIFF}
+                aria-label="Making a Difference"
+              >
+                Making a Difference
+              </FooterLink>
             </Box>
 
             {/* Programs Links */}
@@ -409,7 +415,7 @@ export default function Footer() {
               color="inherit"
               component="a"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="instagram"
             >
               <InstagramIcon />
             </IconButton>
@@ -419,7 +425,7 @@ export default function Footer() {
               color="inherit"
               component="a"
               target="_blank"
-              rel="noopener noreferrer"
+              rel="facebook"
             >
               <FacebookIcon />
             </IconButton>

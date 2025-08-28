@@ -319,6 +319,11 @@ export default function Reviews() {
             text: "I had lots of fun with this clinic.",
             author: "Juhee",
             priority: "small", // Brief positive
+        },
+        {
+            text: "Through Enlighten Learning I’ve developed my planning and organizational skills by helping plan our events. I’ll continue to develop these skills and gain new experiences as a board member of this organization.",
+            author: "Lauren",
+            priority: "small", // Brief positive
         }
     ];
 

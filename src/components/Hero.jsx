@@ -269,7 +269,7 @@ export default function Hero() {
               }}>
                 {[
                   { icon: LearnIcon, title: 'Learn with Joy', color: '#4CAF50', desc: 'Discover knowledge that inspires' },
-                  { icon: FavoriteIcon, title: 'Give with Passion', color: '#E91E63', desc: 'Help those in need' },
+                  { icon: FavoriteIcon, title: 'Give with Passion', color: '#E91E63', desc: 'Support our charitable mission' },
                   { icon: WorldIcon, title: 'Change the World', color: '#2196F3', desc: 'Create lasting positive impact' }
                 ].map((pillar, index) => (
                   <Card key={index} sx={{

@@ -782,8 +782,7 @@ export default function ExecTeam() {
                             mb: 4
                         }}
                     >
-                        Join our passionate team of student leaders dedicated to making education accessible
-                        and impactful for everyone in our community.
+                        Ready to make a real difference? Join our passionate team of student leaders. Together, we're dedicated to raising funds for charities that provide hope, care, and support, impacting as many lives as we can.
                     </Typography>
 
                     {/* Quick Stats */}

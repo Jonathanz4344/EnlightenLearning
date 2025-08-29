@@ -19,6 +19,8 @@ import {
     Star as StarIcon,
     People as PeopleIcon,
     RateReview as RateReviewIcon,
+    FamilyRestroom as ParentIcon,
+    VolunteerActivism as VolunteerIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
@@ -278,12 +280,12 @@ export default function Reviews() {
         {
             text: "Kingsley has been tutoring with Tiffany for about 12 weeks. I totally understand it is not a long period of time, but I still do see improvements from it. His reading comprehension and answering multiple choices are much better than before. I appreciated Tiffany and Brianna who are very responsive and addressed Kingsley's reading problems. I am very satisfied with the pairing process and will definitely consider coming back. I would also recommend others to this program.",
             author: "Iris",
-            priority: "medium", // Specific progress mentioned
+            priority: "large", // Specific progress mentioned
         },
         {
             text: "I had a great experience being a tutor. I really learned a lot about responsibility, time management, patience etc. These skills are very useful not only in the tutoring environment but also school, later work, and life. I would love to tutor again.",
             author: "Anna",
-            priority: "medium", // Good detail about personal growth
+            priority: "large", // Good detail about personal growth
         },
         {
             text: "I enjoyed being a board member and felt that my contributions were really helping Enlighten Learning grow. I gained the skills to develop events and ideas with the help of others, and actually act on those ideas.",
@@ -298,17 +300,17 @@ export default function Reviews() {
         {
             text: "It was a good experience. I got to work with a lot of good people. I earned leadership skills and also learned how to collaborate with my team for a united goal.",
             author: "Veronica",
-            priority: "small", // Brief but positive
+            priority: "medium", // Brief but positive
         },
         {
             text: "I loved being able to teach other people the basics on how to play volleyball! it was a fun experience, and was a great way to be active and helpful!",
             author: "Sonali",
-            priority: "small", // Enthusiastic but brief
+            priority: "medium", // Enthusiastic but brief
         },
         {
             text: "Very fun and enjoyable to be able to share my expertise and help younger kids practice and play volleyball.",
             author: "Abigail",
-            priority: "small", // Brief sports review
+            priority: "medium", // Brief sports review
         },
         {
             text: "This was a great program and I love how it was set up!",
@@ -321,9 +323,9 @@ export default function Reviews() {
             priority: "small", // Brief positive
         },
         {
-            text: "Through Enlighten Learning I’ve developed my planning and organizational skills by helping plan our events. I’ll continue to develop these skills and gain new experiences as a board member of this organization.",
+            text: "Through Enlighten Learning I've developed my planning and organizational skills by helping plan our events. I'll continue to develop these skills and gain new experiences as a board member of this organization.",
             author: "Lauren",
-            priority: "small", // Brief positive
+            priority: "medium", // Brief positive
         }
     ];
 
@@ -346,8 +348,12 @@ export default function Reviews() {
         }, 500);
     };
 
-    const handleReviewClick = () => {
+    const handleParentReviewClick = () => {
         window.open('https://forms.gle/V8LRoe4RJm3iUaXu5', '_blank');
+    };
+
+    const handleTutorVolunteerReviewClick = () => {
+        window.open('https://forms.gle/V4ocU3f6RMxsDLM16', '_blank');
     };
 
     // Custom masonry layout function
@@ -438,31 +444,67 @@ export default function Reviews() {
                             Real stories from real people who have experienced the impact of our programs
                         </Typography>
 
-                        {/* Review Button */}
-                        <Button
-                            variant="contained"
-                            size="large"
-                            onClick={handleReviewClick}
-                            startIcon={<RateReviewIcon />}
-                            sx={{
-                                mt: 2,
-                                px: 4,
-                                py: 1.5,
-                                fontSize: '1.1rem',
-                                fontWeight: 600,
-                                borderRadius: 3,
-                                background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
-                                boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
-                                transition: 'all 0.3s ease',
-                                '&:hover': {
-                                    transform: 'translateY(-2px)',
-                                    boxShadow: '0 12px 32px rgba(25, 118, 210, 0.4)',
-                                    background: 'linear-gradient(45deg, #1565c0, #1976d2)',
-                                }
+                        {/* Review Buttons */}
+                        <Box 
+                            sx={{ 
+                                display: 'flex', 
+                                gap: 3, 
+                                justifyContent: 'center',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                alignItems: 'center',
+                                mt: 2
                             }}
                         >
-                            Share Your Experience
-                        </Button>
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handleParentReviewClick}
+                                startIcon={<ParentIcon />}
+                                sx={{
+                                    px: 4,
+                                    py: 1.5,
+                                    fontSize: '1.1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+                                    boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
+                                    transition: 'all 0.3s ease',
+                                    minWidth: { xs: '250px', sm: '200px' },
+                                    '&:hover': {
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: '0 12px 32px rgba(25, 118, 210, 0.4)',
+                                        background: 'linear-gradient(45deg, #1565c0, #1976d2)',
+                                    }
+                                }}
+                            >
+                                Parent Review
+                            </Button>
+                            
+                            <Button
+                                variant="contained"
+                                size="large"
+                                onClick={handleTutorVolunteerReviewClick}
+                                startIcon={<VolunteerIcon />}
+                                sx={{
+                                    px: 4,
+                                    py: 1.5,
+                                    fontSize: '1.1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    background: 'linear-gradient(45deg, #9c27b0, #ba68c8)',
+                                    boxShadow: '0 8px 24px rgba(156, 39, 176, 0.3)',
+                                    transition: 'all 0.3s ease',
+                                    minWidth: { xs: '250px', sm: '200px' },
+                                    '&:hover': {
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: '0 12px 32px rgba(156, 39, 176, 0.4)',
+                                        background: 'linear-gradient(45deg, #7b1fa2, #9c27b0)',
+                                    }
+                                }}
+                            >
+                                Tutor/Volunteer Review
+                            </Button>
+                        </Box>
                     </Box>
                 </Fade>
 
@@ -476,8 +518,8 @@ export default function Reviews() {
                     }}>
                         <StatsCard
                             icon={PeopleIcon}
-                            title="Students Helped"
-                            value="60+"
+                            title="Lives Impacted"
+                            value="100+"
                             color="#9c27b0"
                         />
                         <StatsCard
@@ -622,38 +664,76 @@ export default function Reviews() {
                                 mx: 'auto',
                                 lineHeight: 1.6,
                                 fontSize: '1.1rem',
-                                mb: 3
+                                mb: 4
                             }}
                         >
                             Ready to be part of something special? Whether you're a student, parent, volunteer, or executive member, our mission is made possible because of people like you. We'd love to hear your story
                         </Typography>
 
-                        {/* Additional Review Button in CTA */}
-                        <Button
-                            variant="outlined"
-                            size="large"
-                            onClick={handleReviewClick}
-                            startIcon={<RateReviewIcon />}
-                            sx={{
-                                px: 3,
-                                py: 1.5,
-                                fontSize: '1rem',
-                                fontWeight: 600,
-                                borderRadius: 3,
-                                borderColor: '#1976d2',
-                                color: '#1976d2',
-                                transition: 'all 0.3s ease',
-                                '&:hover': {
-                                    borderColor: '#1976d2',
-                                    backgroundColor: '#1976d2',
-                                    color: 'white',
-                                    transform: 'translateY(-2px)',
-                                    boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
-                                }
+                        {/* Additional Review Buttons in CTA */}
+                        <Box 
+                            sx={{ 
+                                display: 'flex', 
+                                gap: 3, 
+                                justifyContent: 'center',
+                                flexDirection: { xs: 'column', sm: 'row' },
+                                alignItems: 'center'
                             }}
                         >
-                            Share Your Experience
-                        </Button>
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                onClick={handleParentReviewClick}
+                                startIcon={<ParentIcon />}
+                                sx={{
+                                    px: 3,
+                                    py: 1.5,
+                                    fontSize: '1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    borderColor: '#1976d2',
+                                    color: '#1976d2',
+                                    transition: 'all 0.3s ease',
+                                    minWidth: { xs: '200px', sm: '160px' },
+                                    '&:hover': {
+                                        borderColor: '#1976d2',
+                                        backgroundColor: '#1976d2',
+                                        color: 'white',
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: '0 8px 24px rgba(25, 118, 210, 0.3)',
+                                    }
+                                }}
+                            >
+                                Parent Review
+                            </Button>
+
+                            <Button
+                                variant="outlined"
+                                size="large"
+                                onClick={handleTutorVolunteerReviewClick}
+                                startIcon={<VolunteerIcon />}
+                                sx={{
+                                    px: 3,
+                                    py: 1.5,
+                                    fontSize: '1rem',
+                                    fontWeight: 600,
+                                    borderRadius: 3,
+                                    borderColor: '#9c27b0',
+                                    color: '#9c27b0',
+                                    transition: 'all 0.3s ease',
+                                    minWidth: { xs: '200px', sm: '160px' },
+                                    '&:hover': {
+                                        borderColor: '#9c27b0',
+                                        backgroundColor: '#9c27b0',
+                                        color: 'white',
+                                        transform: 'translateY(-2px)',
+                                        boxShadow: '0 8px 24px rgba(156, 39, 176, 0.3)',
+                                    }
+                                }}
+                            >
+                                Tutor/Volunteer
+                            </Button>
+                        </Box>
                     </Box>
                 </Fade>
             </Container>

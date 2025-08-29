@@ -103,8 +103,8 @@ const missionPillars = [
 
 // Impact metrics data
 const impactMetrics = [
-    { icon: EducationIcon, value: "60+", label: "Children Impacted", color: "#4caf50" },
-    { icon: CommunityIcon, value: "20+", label: "Active Volunteers", color: "#2196f3" },
+    { icon: EducationIcon, value: "100+", label: "Lives Impacted", color: "#4caf50" },
+    { icon: CommunityIcon, value: "30+", label: "Active Volunteers", color: "#2196f3" },
     { icon: EventIcon, value: "130", label: "Sessions Taught", color: "#e91e63" },
     { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" }
 ];

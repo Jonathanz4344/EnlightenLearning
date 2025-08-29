@@ -52,7 +52,7 @@ const teamMembers = [
     {
         id: 3,
         name: "Veronica Chung",
-        roles: ["Public Relations"],
+        roles: ["Head of Design"],
         icon: PublicIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
@@ -102,7 +102,7 @@ const teamMembers = [
 // Team stats
 const teamStats = [
     { icon: GroupIcon, value: "130", label: "Sessions Taught", color: "#4caf50" },
-    { icon: SchoolIcon, value: "60+", label: "Students Helped", color: "#2196f3" },
+    { icon: SchoolIcon, value: "100+", label: "Lives Impacted", color: "#2196f3" },
     { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
 ];

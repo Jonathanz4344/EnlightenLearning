@@ -37,6 +37,7 @@ import Eileen from "/images/ourTeam/Eileen.png"
 import Lauren from "/images/ourTeam/Lauren.PNG"
 import TiffanyZ from "/images/ourTeam/TiffanyZ.png"
 import Veronica from "/images/ourTeam/Veronica.png"
+import TiffanyQ from "/images/ourTeam/TiffanyQ.jpeg"
 
 // Team members data
 const teamMembers = [
@@ -56,7 +57,7 @@ const teamMembers = [
         icon: DesignIcon,
         color: '#9c27b0',
         bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
-        image: null, // No TiffanyQ image found in imports
+        image: TiffanyQ, // No TiffanyQ image found in imports
     },
     {
         id: 3,

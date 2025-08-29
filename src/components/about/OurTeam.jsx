@@ -30,6 +30,13 @@ import {
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 import PathConstants from "../../routes/pathConstants";
+import Aarini from "/images/ourTeam/Aarini.jpg"
+import Anna from "/images/ourTeam/Anna.JPG"
+import Brianna from "/images/ourTeam/Brianna.jpg"
+import Eileen from "/images/ourTeam/Eileen.png"
+import Lauren from "/images/ourTeam/Lauren.PNG"
+import TiffanyZ from "/images/ourTeam/TiffanyZ.png"
+import Veronica from "/images/ourTeam/Veronica.png"
 
 // Team members data
 const teamMembers = [
@@ -40,6 +47,7 @@ const teamMembers = [
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
+        image: Brianna,
     },
     {
         id: 2,
@@ -48,6 +56,7 @@ const teamMembers = [
         icon: DesignIcon,
         color: '#9c27b0',
         bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
+        image: null, // No TiffanyQ image found in imports
     },
     {
         id: 3,
@@ -56,6 +65,7 @@ const teamMembers = [
         icon: PublicIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
+        image: Veronica,
     },
     {
         id: 4,
@@ -64,6 +74,7 @@ const teamMembers = [
         icon: VolunteerIcon,
         color: '#4caf50',
         bgGradient: 'linear-gradient(135deg, #4caf50, #66bb6a)',
+        image: Eileen,
     },
     {
         id: 5,
@@ -72,6 +83,7 @@ const teamMembers = [
         icon: CampaignIcon,
         color: '#ff5722',
         bgGradient: 'linear-gradient(135deg, #ff5722, #ff8a65)',
+        image: TiffanyZ,
     },
     {
         id: 6,
@@ -80,6 +92,7 @@ const teamMembers = [
         icon: SchoolIcon,
         color: '#ff9800',
         bgGradient: 'linear-gradient(135deg, #ff9800, #ffb74d)',
+        image: Anna,
     },
     {
         id: 7,
@@ -88,6 +101,7 @@ const teamMembers = [
         icon: PsychologyIcon,
         color: '#795548',
         bgGradient: 'linear-gradient(135deg, #795548, #a1887f)',
+        image: Aarini,
     },
     {
         id: 8,
@@ -96,6 +110,7 @@ const teamMembers = [
         icon: AssignmentIcon,
         color: '#607d8b',
         bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',
+        image: Lauren,
     }
 ];
 
@@ -156,17 +171,18 @@ const TeamMemberCard = ({ member, index }) => {
                             }}
                         >
                             <Avatar
+                                src={member.image || undefined}
                                 sx={{
                                     width: 120,
                                     height: 120,
-                                    background: member.bgGradient,
+                                    background: member.image ? 'transparent' : member.bgGradient,
                                     fontSize: '3rem',
                                     border: `4px solid ${member.color}30`,
                                     boxShadow: theme.shadows[12]
                                 }}
                             >
-                                <IconComponent sx={{ fontSize: 48, color: 'white' }} />
-                                {/* TODO: Replace with actual member photo */}
+                                {/* Show icon only if no image is available */}
+                                {!member.image && <IconComponent sx={{ fontSize: 48, color: 'white' }} />}
                             </Avatar>
                         </Box>
 

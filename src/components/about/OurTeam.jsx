@@ -57,7 +57,7 @@ const teamMembers = [
         icon: DesignIcon,
         color: '#9c27b0',
         bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
-        image: TiffanyQ, // No TiffanyQ image found in imports
+        image: TiffanyQ, 
     },
     {
         id: 3,

@@ -97,7 +97,7 @@ const execPositions = [
         currentMembers: [
             // Empty - all 3 positions are open
         ],
-        category: "Creative"
+        category: "Marketing"
     },
     {
         id: 5,
@@ -129,7 +129,7 @@ const execPositions = [
             "Facility coordination and rental"
         ],
         currentMembers: [],
-        category: "Programs"
+        category: "Development"
     },
     {
         id: 7,
@@ -146,7 +146,7 @@ const execPositions = [
         currentMembers: [
             { name: "Tiffany Zhou", avatar: "TZ" }
         ],
-        category: "Growth"
+        category: "Development"
     },
     {
         id: 8,

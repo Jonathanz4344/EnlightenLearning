@@ -264,7 +264,7 @@ export default function Reviews() {
     const reviews = [
         {
             text: "My experience as a tutor was very valuable and beneficial. It allowed me to gain strong communication skills, learn to be more patient, and how to adapt my teaching style to better suit the student I worked with. Additionally, watching the student make progress and become more confident was extremely fulfilling. Given the personal growth and positive impact, I would definitely participate again.",
-            author: "Tiffany",
+            author: "Tiffany Z",
             priority: "large", 
         },
         {
@@ -329,7 +329,7 @@ export default function Reviews() {
         },
         {
             text: "Being a tutor at Enlighten Learning has allowed me to experience so many meaningful moments with the kids I work with. One of my students, Kingsley, has especially made the experience memorable. We’ve built such a strong connection that he has chosen to continue tutoring with me again this year, which feels both rewarding and encouraging. Through this opportunity, I’ve gained valuable skills such as learning how to effectively socialize with younger children, developing patience, working independently, and practicing negotiation when challenges arise. Tutoring has truly taught me how impactful small efforts can be in helping others grow. I would gladly participate again, and I’m excited to continue tutoring my student this year and create even more new memories together.",
-            author: "",
+            author: "Tiffany Q",
             priority: "large", 
         }
     ];

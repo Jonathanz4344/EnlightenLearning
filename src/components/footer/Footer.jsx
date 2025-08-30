@@ -159,13 +159,13 @@ export default function Footer() {
             <Box>
               <FooterLink
                 to={PathConstants.HOME}
-                title="Citywide Eye Care Home"
-                aria-label="Go to Citywide Eye Care homepage"
+                title="Enlighten Learning Home"
+                aria-label="Go to Enlighten Learning homepage"
               >
                 <img
                   src={Logo}
                   style={logoStyle}
-                  alt="Citywide Eye Care logo"
+                  alt="Enlighten Learning logo"
                   itemProp="logo"
                 />
               </FooterLink>

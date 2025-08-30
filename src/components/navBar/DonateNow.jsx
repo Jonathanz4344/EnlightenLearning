@@ -502,7 +502,7 @@ export default function DonateNow() {
 
                 <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />
 
-                {/* Simple Donation Buttons */}
+                {/* Simple Donation Buttons - FIXED MOBILE LAYOUT */}
                 <Box sx={{ mb: 8 }}>
                     <Typography
                         variant="h4"
@@ -530,16 +530,36 @@ export default function DonateNow() {
                         Select any amount below to make your donation
                     </Typography>
 
-                    <Grid container spacing={3} justifyContent="center" sx={{ maxWidth: 800, mx: 'auto' }}>
+                    {/* IMPROVED GRID LAYOUT FOR MOBILE */}
+                    <Grid
+                        container
+                        spacing={3}
+                        justifyContent="center"
+                        sx={{
+                            maxWidth: 600,
+                            mx: 'auto',
+                            // Ensure proper centering on all screen sizes
+                            '& .MuiGrid-item': {
+                                display: 'flex',
+                                justifyContent: 'center'
+                            }
+                        }}
+                    >
                         {donationAmounts.map((amount) => (
-                            <Grid item xs={6} sm={4} md={3} key={amount}>
+                            <Grid
+                                item
+                                xs={6}      // 2 columns on mobile (better than 4)
+                                sm={6}      // Still 2 columns on small tablets
+                                md={3}      // 4 columns on desktop
+                                key={amount}
+                            >
                                 <DonationButton amount={amount} />
                             </Grid>
                         ))}
                     </Grid>
                 </Box>
 
-                {/* Zelle Payment Section */}
+                {/* Zelle Payment Section - FIXED EMAIL OVERFLOW */}
                 <Box id="zelle-section" sx={{ mb: 8 }}>
                     <Paper
                         elevation={8}
@@ -630,12 +650,23 @@ export default function DonateNow() {
                                             <Typography variant="subtitle2" color="text.secondary">
                                                 Zelle Email/Phone:
                                             </Typography>
-                                            <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                                            {/* FIXED MOBILE EMAIL LAYOUT */}
+                                            <Box
+                                                sx={{
+                                                    display: 'flex',
+                                                    flexDirection: { xs: 'column', sm: 'row' }, // Stack on mobile
+                                                    alignItems: { xs: 'flex-start', sm: 'center' },
+                                                    gap: 1
+                                                }}
+                                            >
                                                 <Typography
                                                     variant="h6"
                                                     sx={{
                                                         fontWeight: 600,
-                                                        fontFamily: 'monospace'
+                                                        fontFamily: 'monospace',
+                                                        wordBreak: 'break-all', // Allow breaking on mobile
+                                                        fontSize: { xs: '0.9rem', sm: '1.25rem' }, // Smaller on mobile
+                                                        lineHeight: 1.2
                                                     }}
                                                 >
                                                     {zelleEmail}
@@ -643,7 +674,11 @@ export default function DonateNow() {
                                                 <IconButton
                                                     onClick={() => copyToClipboard(zelleEmail)}
                                                     size="small"
-                                                    sx={{ color: '#6f42c1' }}
+                                                    sx={{
+                                                        color: '#6f42c1',
+                                                        alignSelf: { xs: 'flex-start', sm: 'center' },
+                                                        mt: { xs: 0.5, sm: 0 }
+                                                    }}
                                                 >
                                                     {copiedZelle ? <CheckIcon /> : <CopyIcon />}
                                                 </IconButton>
@@ -686,14 +721,15 @@ export default function DonateNow() {
                                         Scan QR Code to Pay
                                     </Typography>
 
-                                    {/* QR Code Placeholder */}
+                                    {/* QR Code */}
                                     <Card
                                         sx={{
                                             p: 4,
                                             backgroundColor: isDarkMode ? '#2a2a2a' : '#ffffff',
                                             border: '2px dashed #6f42c1',
                                             borderRadius: 3,
-                                            display: 'inline-block'
+                                            display: 'inline-block',
+                                            maxWidth: '100%' // Prevent overflow on mobile
                                         }}
                                     >
                                         <img
@@ -720,117 +756,6 @@ export default function DonateNow() {
                         </Grid>
                     </Paper>
                 </Box>
-
-                {/* Impact Section */}
-                {/* <Box sx={{ mb: 8 }}>
-                    <Typography
-                        variant="h4"
-                        component="h2"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 700,
-                            mb: 6,
-                            color: isDarkMode ? '#fff' : '#333'
-                        }}
-                    >
-                        Your Impact
-                    </Typography>
-
-                    <Grid container spacing={4} justifyContent="center">
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Paper
-                                elevation={6}
-                                sx={{
-                                    p: 4,
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                                    borderRadius: 3,
-                                    border: '3px solid #4caf50',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: '0 20px 40px rgba(76, 175, 80, 0.2)'
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                <SchoolIcon sx={{ fontSize: 60, color: '#4caf50', mb: 2 }} />
-                                <Typography
-                                    variant="h6"
-                                    fontWeight="700"
-                                    sx={{ mb: 2, color: '#4caf50' }}
-                                >
-                                    Student Success
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Your donations help us provide tutoring services to students who need academic support.
-                                </Typography>
-                            </Paper>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Paper
-                                elevation={6}
-                                sx={{
-                                    p: 4,
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                                    borderRadius: 3,
-                                    border: '3px solid #2196f3',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: '0 20px 40px rgba(33, 150, 243, 0.2)'
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                <GroupsIcon sx={{ fontSize: 60, color: '#2196f3', mb: 2 }} />
-                                <Typography
-                                    variant="h6"
-                                    fontWeight="700"
-                                    sx={{ mb: 2, color: '#2196f3' }}
-                                >
-                                    Community Growth
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Help us expand our reach and serve more students in our local community.
-                                </Typography>
-                            </Paper>
-                        </Grid>
-
-                        <Grid item xs={12} sm={6} md={4}>
-                            <Paper
-                                elevation={6}
-                                sx={{
-                                    p: 4,
-                                    textAlign: 'center',
-                                    height: '100%',
-                                    backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
-                                    borderRadius: 3,
-                                    border: '3px solid #ff9800',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: '0 20px 40px rgba(255, 152, 0, 0.2)'
-                                    },
-                                    transition: 'all 0.3s ease'
-                                }}
-                            >
-                                <LightbulbIcon sx={{ fontSize: 60, color: '#ff9800', mb: 2 }} />
-                                <Typography
-                                    variant="h6"
-                                    fontWeight="700"
-                                    sx={{ mb: 2, color: '#ff9800' }}
-                                >
-                                    Innovation & Resources
-                                </Typography>
-                                <Typography variant="body1" color="text.secondary">
-                                    Fund new educational materials, technology, and innovative learning approaches.
-                                </Typography>
-                            </Paper>
-                        </Grid>
-                    </Grid>
-                </Box> */}
 
                 {/* Thank You Message */}
                 <Box sx={{ textAlign: 'center', mb: 6 }}>
@@ -913,18 +838,25 @@ export default function DonateNow() {
                             sx={{
                                 px: 2,
                                 py: 1,
-                                fontSize: '1rem',
+                                fontSize: { xs: '0.8rem', sm: '1rem' }, // Smaller on mobile
                                 borderColor: '#2196f3',
                                 color: '#2196f3',
                                 cursor: 'pointer',
+                                maxWidth: { xs: '100%', sm: 'none' }, // Full width on mobile if needed
                                 '&:hover': {
                                     backgroundColor: 'rgba(33, 150, 243, 0.1)',
                                     borderColor: '#1976d2',
                                     color: '#1976d2'
+                                },
+                                // Handle text overflow on mobile
+                                '& .MuiChip-label': {
+                                    fontSize: { xs: '0.75rem', sm: '0.875rem' },
+                                    whiteSpace: 'nowrap',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis'
                                 }
                             }}
                         />
-
                     </Stack>
                 </Box>
             </Container>

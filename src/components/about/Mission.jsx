@@ -30,6 +30,7 @@ import {
     Handshake as HandshakeIcon,
     LocalHospital as CareIcon,
     FamilyRestroom as FamilyIcon,
+    Favorite as FavoriteIcon, // Add this line
     Stars as StarsIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
@@ -140,33 +141,6 @@ const coreValues = [
     }
 ];
 
-// New charitable commitment data
-// const charitableCommitments = [
-//     {
-//         icon: FamilyIcon,
-//         title: "Supporting Families",
-//         description: "We provide direct support to families facing hardship, ensuring children have access to basic needs and opportunities.",
-//         color: "#4caf50"
-//     },
-//     {
-//         icon: CareIcon,
-//         title: "Healthcare & Wellness",
-//         description: "Supporting medical charities that provide essential healthcare services to underserved communities.",
-//         color: "#e91e63"
-//     },
-//     {
-//         icon: EducationIcon,
-//         title: "Educational Access",
-//         description: "Funding educational programs and resources for children who lack access to quality learning opportunities.",
-//         color: "#2196f3"
-//     },
-//     {
-//         icon: HandshakeIcon,
-//         title: "Hope & Opportunity",
-//         description: "Creating pathways to success by supporting organizations that provide hope and opportunities to those in need.",
-//         color: "#ff9800"
-//     }
-// ];
 
 const MissionPillarCard = ({ pillar, index }) => {
     const { mode = "light" } = useMode() || {};
@@ -740,58 +714,219 @@ export default function Mission() {
                 <Divider sx={{ my: { xs: 6, sm: 8, md: 10 }, opacity: 0.3 }} />
 
                 {/* Charitable Commitment Section */}
-                <Box sx={{ mb: { xs: 8, sm: 10, md: 12 } }}>
-                    <Typography
-                        variant="h3"
-                        component="h2"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 800,
-                            mb: 3,
-                            background: 'linear-gradient(45deg, #e91e63, #ff9800)',
-                            backgroundClip: 'text',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                        }}
-                    >
-                        Our Charitable Commitment
-                    </Typography>
+                {/* Enhanced Charitable Commitment Section */}
+                <Box sx={{
+                    mb: { xs: 8, sm: 10, md: 12 },
+                    position: 'relative',
+                    overflow: 'hidden'
+                }}>
+                    {/* Background enhancement */}
+                    <Box sx={{
+                        position: 'absolute',
+                        top: -50,
+                        left: -50,
+                        right: -50,
+                        bottom: -50,
+                        background: isDarkMode
+                            ? 'radial-gradient(ellipse at center, rgba(233, 30, 99, 0.1) 0%, rgba(255, 152, 0, 0.05) 50%, transparent 100%)'
+                            : 'radial-gradient(ellipse at center, rgba(233, 30, 99, 0.05) 0%, rgba(255, 152, 0, 0.03) 50%, transparent 100%)',
+                        zIndex: 0
+                    }} />
 
-                    <Typography
-                        variant="h6"
-                        color="text.secondary"
-                        sx={{
-                            textAlign: 'center',
-                            maxWidth: '800px',
-                            mx: 'auto',
-                            mb: 3,
-                            lineHeight: 1.6
-                        }}
-                    >
-                        We're on a mission to raise as much as we can for as many institutions as possible. Enlighten Learning proudly supports charities that provide hope, support and care to those in need.
-                    </Typography>
+                    {/* Main content container */}
+                    <Card sx={{
+                        position: 'relative',
+                        zIndex: 1,
+                        p: { xs: 4, sm: 6, md: 8 },
+                        background: isDarkMode
+                            ? 'linear-gradient(135deg, rgba(30, 30, 30, 0.95), rgba(40, 40, 40, 0.95))'
+                            : 'linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 250, 0.95))',
+                        backdropFilter: 'blur(20px)',
+                        border: `3px solid`,
+                        borderImage: 'linear-gradient(45deg, #e91e63, #ff9800, #e91e63) 1',
+                        borderRadius: 6,
+                        boxShadow: isDarkMode
+                            ? '0 20px 60px rgba(233, 30, 99, 0.2), 0 8px 32px rgba(255, 152, 0, 0.1)'
+                            : '0 20px 60px rgba(233, 30, 99, 0.15), 0 8px 32px rgba(0, 0, 0, 0.08)',
+                        transition: 'all 0.3s ease',
+                        '&:hover': {
+                            transform: 'translateY(-8px)',
+                            boxShadow: isDarkMode
+                                ? '0 30px 80px rgba(233, 30, 99, 0.3), 0 12px 40px rgba(255, 152, 0, 0.15)'
+                                : '0 30px 80px rgba(233, 30, 99, 0.2), 0 12px 40px rgba(0, 0, 0, 0.12)',
+                        }
+                    }}>
+                        {/* Decorative icon cluster */}
+                        <Box sx={{
+                            display: 'flex',
+                            justifyContent: 'center',
+                            mb: 4,
+                            gap: 2
+                        }}>
+                            <FavoriteIcon sx={{
+                                fontSize: { xs: 48, md: 64 },
+                                color: '#e91e63',
+                                animation: 'heartbeat 2s infinite',
+                                '@keyframes heartbeat': {
+                                    '0%, 100%': { transform: 'scale(1)' },
+                                    '50%': { transform: 'scale(1.1)' }
+                                }
+                            }} />
+                            <HandshakeIcon sx={{
+                                fontSize: { xs: 48, md: 64 },
+                                color: '#ff9800',
+                                animation: 'shake 3s infinite',
+                                '@keyframes shake': {
+                                    '0%, 100%': { transform: 'rotate(0deg)' },
+                                    '25%': { transform: 'rotate(5deg)' },
+                                    '75%': { transform: 'rotate(-5deg)' }
+                                }
+                            }} />
+                            <CareIcon sx={{
+                                fontSize: { xs: 48, md: 64 },
+                                color: '#4caf50',
+                                animation: 'pulse 2.5s infinite',
+                                '@keyframes pulse': {
+                                    '0%, 100%': { opacity: 1 },
+                                    '50%': { opacity: 0.7 }
+                                }
+                            }} />
+                        </Box>
 
-                    <Typography
-                        variant="body1"
-                        color="primary.main"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 600,
-                            fontSize: '1.2rem',
+                        <Typography
+                            variant="h2" // Increased from h3
+                            component="h2"
+                            sx={{
+                                textAlign: 'center',
+                                fontWeight: 900, // Increased from 800
+                                mb: 4, // Increased from 3
+                                fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem' }, // Much larger
+                                background: 'linear-gradient(45deg, #e91e63, #ff9800, #e91e63)',
+                                backgroundSize: '200% 200%',
+                                backgroundClip: 'text',
+                                WebkitBackgroundClip: 'text',
+                                WebkitTextFillColor: 'transparent',
+                                animation: 'gradientShift 3s ease infinite',
+                                '@keyframes gradientShift': {
+                                    '0%': { backgroundPosition: '0% 50%' },
+                                    '50%': { backgroundPosition: '100% 50%' },
+                                    '100%': { backgroundPosition: '0% 50%' }
+                                },
+                                textShadow: 'none',
+                                letterSpacing: '-0.02em',
+                                lineHeight: 1.1
+                            }}
+                        >
+                            💝 Our Charitable Commitment 💝
+                        </Typography>
+
+                        <Typography
+                            variant="h4" // Increased from h6
+                            color="text.secondary"
+                            sx={{
+                                textAlign: 'center',
+                                maxWidth: '900px', // Increased from 800px
+                                mx: 'auto',
+                                mb: 4, // Increased from 3
+                                lineHeight: 1.7, // Increased from 1.6
+                                fontSize: { xs: '1.3rem', sm: '1.5rem', md: '1.8rem' }, // Much larger
+                                fontWeight: 500
+                            }}
+                        >
+                            We're on a mission to raise as much as we can for as many institutions as possible. Enlighten Learning proudly supports charities that provide hope, support and care to those in need.
+                        </Typography>
+
+                        {/* Featured callout box */}
+                        <Card sx={{
+                            p: { xs: 3, md: 4 },
                             mb: 6,
-                            fontStyle: 'italic'
-                        }}
-                    >
-                        When you learn with us, you're also helping children and families in need. Together, we can change lives, and make a positive impact on as many lives as possible.
-                    </Typography>
+                            background: 'linear-gradient(135deg, rgba(233, 30, 99, 0.1), rgba(255, 152, 0, 0.1))',
+                            border: '2px solid',
+                            borderImage: 'linear-gradient(45deg, #e91e63, #ff9800) 1',
+                            borderRadius: 4,
+                            textAlign: 'center'
+                        }}>
+                            <Typography
+                                variant="h3" // Increased from body1
+                                color="primary.main"
+                                sx={{
+                                    fontWeight: 700, // Increased from 600
+                                    fontSize: { xs: '1.5rem', sm: '2rem', md: '2.5rem' }, // Much larger
+                                    mb: 2,
+                                    fontStyle: 'italic',
+                                    background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
+                                    backgroundClip: 'text',
+                                    WebkitBackgroundClip: 'text',
+                                    WebkitTextFillColor: 'transparent',
+                                }}
+                            >
+                                🌟 When you learn with us, you're also helping children and families in need 🌟
+                            </Typography>
 
-                    {/* <Grid container spacing={4}>
-                        {charitableCommitments.map((commitment, index) => (
-                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                <CharitableCommitmentCard commitment={commitment} index={index} />
-                            </Grid>
-                        ))}
-                    </Grid> */}
+                            <Typography
+                                variant="h5" // Added additional emphasis text
+                                sx={{
+                                    fontWeight: 600,
+                                    color: '#e91e63',
+                                    fontSize: { xs: '1.2rem', sm: '1.4rem', md: '1.6rem' }
+                                }}
+                            >
+                                Together, we can change lives and make a positive impact on as many lives as possible.
+                            </Typography>
+                        </Card>
+
+                        {/* Impact statistics showcase */}
+                        <Box sx={{
+                            display: 'flex',
+                            flexDirection: { xs: 'column', sm: 'row' },
+                            gap: 4,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            mt: 6
+                        }}>
+                            <Card sx={{
+                                p: 3,
+                                textAlign: 'center',
+                                background: 'linear-gradient(135deg, #e91e63, #f06292)',
+                                color: 'white',
+                                borderRadius: 3,
+                                minWidth: { xs: '100%', sm: '200px' },
+                                transform: 'rotate(-2deg)',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    transform: 'rotate(0deg) scale(1.05)',
+                                }
+                            }}>
+                                <Typography variant="h3" sx={{ fontWeight: 900, mb: 1 }}>
+                                    $2K+
+                                </Typography>
+                                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                                    Raised for Charity
+                                </Typography>
+                            </Card>
+
+                            <Card sx={{
+                                p: 3,
+                                textAlign: 'center',
+                                background: 'linear-gradient(135deg, #ff9800, #ffb74d)',
+                                color: 'white',
+                                borderRadius: 3,
+                                minWidth: { xs: '100%', sm: '200px' },
+                                transform: 'rotate(2deg)',
+                                transition: 'all 0.3s ease',
+                                '&:hover': {
+                                    transform: 'rotate(0deg) scale(1.05)',
+                                }
+                            }}>
+                                <Typography variant="h3" sx={{ fontWeight: 900, mb: 1 }}>
+                                    100+
+                                </Typography>
+                                <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                                    Lives Impacted
+                                </Typography>
+                            </Card>
+                        </Box>
+                    </Card>
                 </Box>
 
                 <Divider sx={{ my: { xs: 6, sm: 8, md: 10 }, opacity: 0.3 }} />

@@ -194,28 +194,62 @@ export default function Hero() {
               gap: { xs: 4, md: 6 }
             }}>
 
-              {/* Floating badge */}
+              {/* Enhanced Floating badge - Make this bigger and more prominent */}
               <Card sx={{
                 background: isDarkMode
-                  ? 'linear-gradient(135deg, rgba(255, 183, 77, 0.15), rgba(255, 193, 7, 0.15))'
-                  : 'linear-gradient(135deg, rgba(255, 193, 7, 0.1), rgba(255, 152, 0, 0.1))',
-                backdropFilter: 'blur(10px)',
-                border: isDarkMode ? '1px solid rgba(255, 183, 77, 0.2)' : '1px solid rgba(255, 193, 7, 0.2)',
-                borderRadius: 8,
+                  ? 'linear-gradient(135deg, rgba(255, 183, 77, 0.25), rgba(255, 193, 7, 0.25))'
+                  : 'linear-gradient(135deg, rgba(255, 193, 7, 0.2), rgba(255, 152, 0, 0.2))',
+                backdropFilter: 'blur(15px)',
+                border: isDarkMode ? '2px solid rgba(255, 183, 77, 0.4)' : '2px solid rgba(255, 193, 7, 0.4)',
+                borderRadius: 16, // Increased from 8
                 boxShadow: isDarkMode
-                  ? '0 8px 32px rgba(255, 183, 77, 0.1)'
-                  : '0 8px 32px rgba(255, 193, 7, 0.1)',
+                  ? '0 16px 48px rgba(255, 183, 77, 0.2), 0 4px 16px rgba(255, 183, 77, 0.1)'
+                  : '0 16px 48px rgba(255, 193, 7, 0.2), 0 4px 16px rgba(255, 193, 7, 0.1)',
+                transform: 'scale(1)', // Add hover effect
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  transform: 'scale(1.05) translateY(-2px)',
+                  boxShadow: isDarkMode
+                    ? '0 20px 60px rgba(255, 183, 77, 0.3), 0 8px 24px rgba(255, 183, 77, 0.15)'
+                    : '0 20px 60px rgba(255, 193, 7, 0.3), 0 8px 24px rgba(255, 193, 7, 0.15)',
+                }
               }}>
-                <CardContent sx={{ py: 2, px: 4, display: 'flex', alignItems: 'center', gap: 2 }}>
-                  <SparkleIcon sx={{ color: '#FFB74D', fontSize: 24 }} />
+                <CardContent sx={{
+                  py: 3, // Increased from 2
+                  px: 6, // Increased from 4
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 3 // Increased from 2
+                }}>
+                  <SparkleIcon sx={{
+                    color: '#FFB74D',
+                    fontSize: 32, // Increased from 24
+                    animation: 'pulse 2s infinite',
+                    '@keyframes pulse': {
+                      '0%': { transform: 'scale(1)' },
+                      '50%': { transform: 'scale(1.1)' },
+                      '100%': { transform: 'scale(1)' }
+                    }
+                  }} />
                   <Typography sx={{
-                    fontWeight: 600,
+                    fontWeight: 700, // Increased from 600
                     color: isDarkMode ? '#FFB74D' : '#F57C00',
-                    fontSize: '1.1rem'
+                    fontSize: '1.4rem', // Increased from '1.1rem'
+                    textShadow: '0 2px 4px rgba(0,0,0,0.1)',
+                    letterSpacing: '0.5px'
                   }}>
                     Fundraising for a Good Cause
                   </Typography>
-                  <SparkleIcon sx={{ color: '#FFB74D', fontSize: 24 }} />
+                  <SparkleIcon sx={{
+                    color: '#FFB74D',
+                    fontSize: 32, // Increased from 24
+                    animation: 'pulse 2s infinite 0.5s', // Slight delay for alternating effect
+                    '@keyframes pulse': {
+                      '0%': { transform: 'scale(1)' },
+                      '50%': { transform: 'scale(1.1)' },
+                      '100%': { transform: 'scale(1)' }
+                    }
+                  }} />
                 </CardContent>
               </Card>
 

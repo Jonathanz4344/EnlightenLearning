@@ -44,7 +44,7 @@ const teamMembers = [
     {
         id: 1,
         name: "Brianna Tam",
-        roles: ["President", "Director of Finance"],
+        roles: ["Founder & President", "Director of Finance"],
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',

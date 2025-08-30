@@ -80,7 +80,7 @@ const teamMembers = [
     {
         id: 5,
         name: "Tiffany Zhou",
-        roles: ["Outreach Ambassador"],
+        roles: ["Outreach Coordinator"],
         icon: CampaignIcon,
         color: '#ff5722',
         bgGradient: 'linear-gradient(135deg, #ff5722, #ff8a65)',

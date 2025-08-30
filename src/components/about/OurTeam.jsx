@@ -44,7 +44,7 @@ const teamMembers = [
     {
         id: 1,
         name: "Brianna Tam",
-        roles: ["Founder & President", "Director of Finance"],
+        roles: ["Founder & President",],
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
@@ -57,7 +57,7 @@ const teamMembers = [
         icon: DesignIcon,
         color: '#9c27b0',
         bgGradient: 'linear-gradient(135deg, #9c27b0, #ba68c8)',
-        image: TiffanyQ, 
+        image: TiffanyQ,
     },
     {
         id: 3,

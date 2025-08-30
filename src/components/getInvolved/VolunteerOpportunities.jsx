@@ -95,7 +95,7 @@ const volunteerData = [
         totalParticipants: 30,
         duration: "",
         coordinator: "Enlighten Learning",
-        registrationStartDate: "2325-07-01",
+        registrationStartDate: "22023-07-01",
         expirationDate: "",
     },
 
@@ -790,97 +790,56 @@ const VolunteerOpportunities = () => {
                             mb: 3,
                             fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4rem' },
                             background: 'linear-gradient(45deg, #1976d2, #42a5f5)',
-                            backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
+                            letterSpacing: '-0.5px',
                         }}
                     >
                         Volunteer Opportunities
                     </Typography>
                     <Typography
-                        variant="h5"
+                        variant="h6"
                         color="text.secondary"
                         sx={{
                             maxWidth: '700px',
                             mx: 'auto',
                             lineHeight: 1.6,
-                            fontSize: { xs: '1.1rem', sm: '1.3rem' },
-                            mb: 4
+                            fontSize: { xs: '1rem', sm: '1.2rem' }
                         }}
                     >
-                        Make a meaningful impact in your community. Join us in creating positive change through volunteering!
+                        Join us in making a difference! Explore current, upcoming, and past volunteer
+                        opportunities to get involved and contribute to your community.
                     </Typography>
-
-                    {/* Stats Section */}
-                    <Box sx={{
-                        display: 'flex',
-                        justifyContent: 'center',
-                        flexWrap: 'wrap',
-                        gap: 4,
-                        mt: 4
-                    }}>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{
-                                color: '#4caf50',
-                                fontWeight: 'bold'
-                            }}>
-                                {categorizedData.open.length}
-                            </Typography>
-                            <Typography variant="body1" color="text.secondary">
-                                Open Opportunities
-                            </Typography>
-                        </Box>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{
-                                color: '#ff9800',
-                                fontWeight: 'bold'
-                            }}>
-                                {categorizedData.upcoming.length}
-                            </Typography>
-                            <Typography variant="body1" color="text.secondary">
-                                Upcoming Events
-                            </Typography>
-                        </Box>
-                        <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" sx={{
-                                color: '#2196f3',
-                                fontWeight: 'bold'
-                            }}>
-                                {categorizedData.past.length}
-                            </Typography>
-                            <Typography variant="body1" color="text.secondary">
-                                Completed Events
-                            </Typography>
-                        </Box>
-                    </Box>
                 </Box>
 
-                <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />
-
-                {/* Open Opportunities Section */}
+                {/* Open Opportunities */}
                 <VolunteerCarousel
                     volunteers={categorizedData.open}
                     section="open"
-                    title="Open for Registration"
-                    subtitle="These volunteer opportunities are currently accepting applications. Sign up now to secure your spot and make a difference!"
+                    title="Open Opportunities"
+                    subtitle="These events are currently open for registration. Sign up today to reserve your spot and make an impact!"
                     icon={VolunteerIcon}
                 />
 
-                {/* Upcoming Opportunities Section */}
+                <Divider sx={{ my: { xs: 6, sm: 8, md: 10 } }} />
+
+                {/* Upcoming Opportunities */}
                 <VolunteerCarousel
                     volunteers={categorizedData.upcoming}
                     section="upcoming"
-                    title="Coming Soon"
-                    subtitle="Get ready for these exciting volunteer opportunities! Registration will open soon, so stay tuned for updates."
+                    title="Upcoming Opportunities"
+                    subtitle="Get a sneak peek at the exciting volunteer opportunities coming soon. Mark your calendars and stay ready!"
                     icon={UpcomingIcon}
                 />
 
-                {/* Past Events Section */}
+                <Divider sx={{ my: { xs: 6, sm: 8, md: 10 } }} />
+
+                {/* Past Opportunities */}
                 <VolunteerCarousel
                     volunteers={categorizedData.past}
                     section="past"
-                    title="Our Impact History"
-                    subtitle="Celebrating the amazing volunteer work we've accomplished together. Thank you to all our dedicated volunteers!"
+                    title="Past Events"
+                    subtitle="Take a look back at the amazing events and initiatives we’ve completed together."
                     icon={CompletedIcon}
                 />
             </Container>

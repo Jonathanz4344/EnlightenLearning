@@ -23,7 +23,10 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 import Logo from "/images/logo/Logo.png";
 import { Helmet } from "react-helmet-async";
-import { styled } from "@mui/material/styles";
+import { styled, useTheme } from "@mui/material/styles";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
 
 const logoStyle = {
   width: "40px",
@@ -67,7 +70,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
       : 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
     backdropFilter: 'blur(10px)',
     borderRadius: '0 0 24px 24px',
-    // REMOVED: All border properties
     opacity: 0,
     transition: 'opacity 0.4s ease',
     zIndex: -1,
@@ -83,7 +85,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
       : 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%)',
     backdropFilter: 'blur(20px)',
     borderRadius: '0 0 24px 24px',
-    // REMOVED: All border properties
     boxShadow: theme.palette.mode === 'light'
       ? '0 8px 32px rgba(0, 0, 0, 0.08)'
       : '0 8px 32px rgba(0, 0, 0, 0.3)',
@@ -96,6 +97,20 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
       ? '0 12px 40px rgba(0, 0, 0, 0.12)'
       : '0 12px 40px rgba(0, 0, 0, 0.4)',
   },
+  // Mobile responsive styles
+  [theme.breakpoints.down('md')]: {
+    marginTop: theme.spacing(1),
+    '& .MuiToolbar-root': {
+      minHeight: '60px !important',
+      borderRadius: '999px',
+      margin: '0 8px',
+      padding: '0 16px',
+    },
+    '&.scrolled .MuiToolbar-root': {
+      borderRadius: '999px',
+      margin: '4px 12px 0',
+    },
+  },
 }));
 
 const ModernToolbar = styled(Toolbar)(({ theme }) => ({
@@ -106,7 +121,7 @@ const ModernToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '0 24px',
   position: 'relative',
   [theme.breakpoints.down('md')]: {
-    padding: '0 20px',
+    padding: '0 16px',
     minHeight: '60px !important',
   },
 }));
@@ -199,12 +214,10 @@ const ContactButton = styled(Button)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down('md')]: {
-    padding: '8px 16px',
-    fontSize: '0.85rem',
+    padding: '6px 12px',
+    fontSize: '0.8rem',
   }
 }));
-
-// Replace your existing DonateButton styled component with this:
 
 const DonateButton = styled(Button)(({ theme }) => ({
   background: theme.palette.mode === 'light'
@@ -218,7 +231,7 @@ const DonateButton = styled(Button)(({ theme }) => ({
   fontSize: '0.875rem',
   borderRadius: '16px',
   boxShadow: theme.palette.mode === 'light'
-    ? '0 8px 32px rgba(139, 92, 246, 0.4)' // Updated to match purple theme
+    ? '0 8px 32px rgba(139, 92, 246, 0.4)'
     : '0 8px 32px rgba(167, 139, 250, 0.4)',
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
@@ -238,7 +251,7 @@ const DonateButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-3px) scale(1.05)',
     boxShadow: theme.palette.mode === 'light'
-      ? '0 12px 40px rgba(139, 92, 246, 0.5)' // Updated to match purple theme
+      ? '0 12px 40px rgba(139, 92, 246, 0.5)'
       : '0 12px 40px rgba(167, 139, 250, 0.5)',
     '&::before': {
       transform: 'translateX(100%)',
@@ -256,8 +269,9 @@ const DonateButton = styled(Button)(({ theme }) => ({
     },
   },
   [theme.breakpoints.down('md')]: {
-    padding: '10px 20px',
-    fontSize: '0.85rem',
+    padding: '8px 12px',
+    fontSize: '0.8rem',
+    minWidth: 'auto',
   }
 }));
 
@@ -325,7 +339,7 @@ const DropdownItem = styled(MenuItem)(({ theme }) => ({
 
 const ModernDrawer = styled(Drawer)(({ theme }) => ({
   '& .MuiDrawer-paper': {
-    width: '320px',
+    width: '280px',
     background: theme.palette.mode === 'light'
       ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%)'
       : 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%)',
@@ -537,30 +551,20 @@ MenuLink.propTypes = {
 const Header = ({ mode, toggleColorMode }) => {
   const location = useLocation();
   const [open, setOpen] = useState(null);
-  const [subMenuOpen, setSubMenuOpen] = React.useState(null);
+  const [subMenuOpen, setSubMenuOpen] = useState(null);
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   // Handle scroll effect
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 20);
     };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // Check if mobile on initial render and when window resizes
-  useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 960);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   // Close menus when route changes
@@ -627,18 +631,9 @@ const Header = ({ mode, toggleColorMode }) => {
             items={[
               {
                 links: [
-                  {
-                    text: "Our Mission",
-                    href: PathConstants.MISSION,
-                  },
-                  {
-                    text: "Meet Our Team",
-                    href: PathConstants.OUR_TEAM
-                  },
-                  {
-                    text: "Making a Difference",
-                    href: PathConstants.MAKING_DIFF
-                  },
+                  { text: "Our Mission", href: PathConstants.MISSION },
+                  { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
+                  { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
                 ],
               },
             ]}
@@ -656,7 +651,6 @@ const Header = ({ mode, toggleColorMode }) => {
               {
                 links: [
                   { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES },
-                  // { text: "Success Stories", href: PathConstants.HOME },
                   { text: "Events & Programs", href: PathConstants.EVENTS },
                 ],
               },
@@ -677,8 +671,6 @@ const Header = ({ mode, toggleColorMode }) => {
                   { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES },
                   { text: "Apply as a Tutor", href: PathConstants.TUTOR },
                   { text: "Join the Executive Team", href: PathConstants.EXEC_TEAM },
-
-
                 ],
               },
             ]}
@@ -706,173 +698,100 @@ const Header = ({ mode, toggleColorMode }) => {
           content="nonprofit, tutoring, education, volunteer, community support, fundraising"
         />
         <link rel="canonical" href={window.location.href} />
-        <script type="application/ld+json">
-          {JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "NonprofitType",
-            name: "Miracle's Group",
-            description:
-              "A nonprofit organization dedicated to empowering communities through education and tutoring services.",
-            url: window.location.origin,
-          })}
-        </script>
       </Helmet>
 
-      <StyledAppBar className={isScrolled ? 'scrolled' : ''}>
+      <StyledAppBar className={isScrolled ? "scrolled" : ""}>
         <Container maxWidth="lg">
           <ModernToolbar component="nav" aria-label="Main navigation">
-            {/* Logo Section */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: 1.5,
-                position: 'relative',
-                zIndex: 2,
-              }}
-            >
+            {/* Logo + Mobile Menu Button */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Link to={PathConstants.HOME}>
-                <motion.div
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
-                >
-                  <Box
-                    component="img"
-                    src={Logo}
-                    style={logoStyle}
-                    alt="Miracle's Group Logo"
-                  />
+                <motion.div whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.95 }}>
+                  <Box component="img" src={Logo} style={logoStyle} alt="Miracle's Group Logo" />
                 </motion.div>
               </Link>
-
-              {/* Mobile Menu Button */}
-              <IconButton
-                sx={{
-                  display: { xs: "flex", md: "none" },
-                  color: "text.primary",
-                  borderRadius: "12px",
-                  padding: "8px",
-                  background: (theme) => theme.palette.mode === 'light'
-                    ? 'rgba(255, 255, 255, 0.2)'
-                    : 'rgba(255, 255, 255, 0.1)',
-                  backdropFilter: 'blur(10px)',
-                  border: '1px solid',
-                  borderColor: 'divider',
-                }}
-                edge="start"
-                aria-label="Open navigation menu"
-                onClick={handleDrawerToggle}
-              >
-                <MenuIcon />
-              </IconButton>
-            </Box>
-
-            {/* Desktop Navigation */}
-            <Box
-              sx={{
-                display: { xs: "none", md: "flex" },
-                alignItems: "center",
-                gap: 0.5,
-                flex: 1,
-                justifyContent: "center",
-              }}
-              component="nav"
-              aria-label="Main menu"
-            >
-              {menuItems.map((item) => (
-                <Box
-                  key={item.menu || item.text}
-                  sx={{ position: "relative" }}
-                  onMouseEnter={item.menu ? handleMouseEnter(item.menu) : undefined}
-                  onMouseLeave={item.menu ? handleMouseLeave : undefined}
-                  role="menuitem"
-                  tabIndex={0}
+              {isMobile && (
+                <IconButton
+                  sx={{
+                    color: "text.primary",
+                    borderRadius: "12px",
+                    padding: "8px",
+                    background: (theme) =>
+                      theme.palette.mode === "light"
+                        ? "rgba(255, 255, 255, 0.2)"
+                        : "rgba(255, 255, 255, 0.1)",
+                    backdropFilter: "blur(10px)",
+                    border: "1px solid",
+                    borderColor: "divider",
+                  }}
+                  onClick={handleDrawerToggle}
+                  aria-label="Open navigation menu"
                 >
-                  {item.href ? (
-                    <NavButton component={Link} to={item.href}>
-                      {item.text}
-                    </NavButton>
-                  ) : (
-                    <NavButton
-                      sx={{
-                        display: "flex",
-                        alignItems: "center",
-                        gap: 0.5,
-                      }}
-                    >
-                      {item.text}
-                      <ExpandMoreIcon
-                        fontSize="small"
-                        sx={{
-                          fontSize: "1rem",
-                          transform:
-                            open === item.menu
-                              ? "rotate(180deg)"
-                              : "rotate(0deg)",
-                          transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-                        }}
-                      />
-                    </NavButton>
-                  )}
-
-                  <AnimatePresence>
-                    {open === item.menu && (
-                      <DropdownContainer
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2, ease: "easeOut" }}
-                      >
-                        {renderMenuContent(item.menu)}
-                      </DropdownContainer>
-                    )}
-                  </AnimatePresence>
-                </Box>
-              ))}
+                  <MenuIcon />
+                </IconButton>
+              )}
             </Box>
 
-            {/* Right Side Actions */}
-            <Box
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                gap: { xs: 1, sm: 2 },
-              }}
-            >
-              <ContactButton
-                component={Link}
-                to={PathConstants.CONTACT_US}
-                sx={{ display: { xs: "none", sm: "inline-flex" } }}
-              >
-                Contact Us
-              </ContactButton>
-
-              <DonateButton
-                component={Link}
-                to={PathConstants.DONATE_NOW}
-                startIcon={<FavoriteIcon sx={{ fontSize: "1rem" }} />}
+            {/* Desktop Menu */}
+            {!isMobile && (
+              <Box
                 sx={{
-                  display: { xs: "none", sm: "inline-flex" },
-                  minWidth: "120px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  flex: 1,
+                  justifyContent: "center",
                 }}
               >
+                {menuItems.map((item) => (
+                  <Box
+                    key={item.menu || item.text}
+                    sx={{ position: "relative" }}
+                    onMouseEnter={item.menu ? handleMouseEnter(item.menu) : undefined}
+                    onMouseLeave={item.menu ? handleMouseLeave : undefined}
+                  >
+                    {item.href ? (
+                      <NavButton component={Link} to={item.href}>
+                        {item.text}
+                      </NavButton>
+                    ) : (
+                      <NavButton sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
+                        {item.text}
+                        <ExpandMoreIcon
+                          fontSize="small"
+                          sx={{
+                            fontSize: "1rem",
+                            transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
+                            transition: "transform 0.3s",
+                          }}
+                        />
+                      </NavButton>
+                    )}
+
+                    <AnimatePresence>
+                      {open === item.menu && (
+                        <DropdownContainer
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                        >
+                          {renderMenuContent(item.menu)}
+                        </DropdownContainer>
+                      )}
+                    </AnimatePresence>
+                  </Box>
+                ))}
+              </Box>
+            )}
+
+            {/* Right Actions (Contact, Donate, Dark Mode) */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1, md: 2 } }}>
+              <ContactButton component={Link} to={PathConstants.CONTACT_US}>
+                Contact
+              </ContactButton>
+              <DonateButton component={Link} to={PathConstants.DONATE_NOW}>
                 Donate
               </DonateButton>
-
-              {/* Mobile Donate Button */}
-              <DonateButton
-                component={Link}
-                to={PathConstants.DONATE_NOW}
-                sx={{
-                  display: { xs: "inline-flex", sm: "none" },
-                  minWidth: "auto",
-                  padding: "8px 12px",
-                }}
-              >
-                <VolunteerActivismIcon sx={{ fontSize: "1.1rem" }} />
-              </DonateButton>
-
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>
           </ModernToolbar>
@@ -884,150 +803,65 @@ const Header = ({ mode, toggleColorMode }) => {
         anchor="left"
         open={drawerOpen}
         onClose={handleDrawerClose}
-        ModalProps={{
-          keepMounted: true,
-        }}
+        ModalProps={{ keepMounted: true }}
       >
         <Box
           sx={{
             display: "flex",
-            flexDirection: "column",
-            height: "100%",
-            position: "relative",
+            alignItems: "center",
+            justifyContent: "space-between",
+            p: 2,
           }}
-          role="navigation"
-          aria-label="Mobile navigation menu"
         >
-          {/* Drawer Header */}
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              p: 3,
-              borderBottom: "1px solid",
-              borderColor: "divider",
-            }}
-          >
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Box
-                component="img"
-                src={Logo}
-                style={drawerLogoStyle}
-                alt="Miracle's Group Logo"
-              />
-              <Typography
-                variant="h6"
-                color="text.primary"
-                sx={{ fontWeight: 700 }}
-              >
-                Miracle's Group
-              </Typography>
-            </Box>
-            <IconButton
-              onClick={handleDrawerClose}
-              sx={{
-                color: "text.primary",
-                borderRadius: "12px",
-                background: (theme) => theme.palette.action.hover,
-              }}
-              aria-label="Close navigation menu"
-            >
-              <CloseIcon />
-            </IconButton>
-          </Box>
-
-          {/* Mobile Menu Items */}
-          <List sx={{ flex: 1, p: 2 }}>
-            {menuItems.map((item) => (
-              <ListItem key={item.menu || item.text} disablePadding sx={{ mb: 1 }}>
-                <Box sx={{ width: "100%", position: "relative" }}>
-                  {item.href ? (
-                    <Link
-                      to={item.href}
-                      style={{ textDecoration: "none", display: "block" }}
-                      onClick={handleDrawerClose}
-                    >
-                      <DropdownItem sx={{ width: "100%" }}>
-                        <Typography
-                          variant="body1"
-                          color="text.primary"
-                          sx={{ fontWeight: 600 }}
-                        >
-                          {item.text}
-                        </Typography>
-                      </DropdownItem>
-                    </Link>
-                  ) : (
-                    <>
-                      <DropdownItem
-                        onClick={handleMouseEnter(item.menu)}
-                        sx={{
-                          width: "100%",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "space-between",
-                        }}
-                      >
-                        <Typography
-                          variant="body1"
-                          color="text.primary"
-                          sx={{ fontWeight: 600 }}
-                        >
-                          {item.text}
-                        </Typography>
-                        <ExpandMoreIcon
-                          sx={{
-                            transform:
-                              open === item.menu
-                                ? "rotate(180deg)"
-                                : "rotate(0deg)",
-                            transition: "transform 0.3s ease",
-                          }}
-                        />
-                      </DropdownItem>
-
-                      <AnimatePresence>
-                        {open === item.menu && (
-                          <motion.div
-                            initial={{ opacity: 0, height: 0 }}
-                            animate={{ opacity: 1, height: "auto" }}
-                            exit={{ opacity: 0, height: 0 }}
-                            transition={{ duration: 0.3, ease: "easeOut" }}
-                            style={{ overflow: "hidden" }}
-                          >
-                            <Box sx={{ pl: 2, mt: 1 }}>
-                              {renderMenuContent(item.menu)}
-                            </Box>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </>
-                  )}
-                </Box>
-              </ListItem>
-            ))}
-          </List>
-
-          <Divider />
-
-          {/* Mobile Action Buttons */}
-          <Box sx={{ p: 3, space: 2 }}>
-            <ContactButton
-              component={Link}
-              to={PathConstants.CONTACT_US}
-              fullWidth
-              sx={{ mb: 2 }}
-              onClick={handleDrawerClose}
-            >
-              Contact Us
-            </ContactButton>
-          </Box>
+          <Link to={PathConstants.HOME} onClick={handleDrawerClose}>
+            <Box component="img" src={Logo} style={drawerLogoStyle} alt="Logo" />
+          </Link>
+          <IconButton onClick={handleDrawerClose}>
+            <CloseIcon />
+          </IconButton>
         </Box>
-      </ModernDrawer>
+        <Divider sx={{ my: 1 }} />
+        <List>
+          {menuItems.map((item) => (
+            <Box key={item.menu || item.text}>
+              {item.href ? (
 
-      {/* Spacer to prevent content from being hidden under fixed header */}
-      <Box sx={{ height: { xs: "60px", md: "64px" } }} />
+                <ListItem disablePadding>
+                  <ListItemButton component={Link} to={item.href} onClick={handleDrawerClose}>
+                    <ListItemText primary={item.text} />
+                  </ListItemButton>
+                </ListItem>
+              ) : (
+                <ListItem
+                  button
+                  onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
+                  sx={{ display: "flex", justifyContent: "space-between" }}
+                >
+                  {item.text}
+                  <ExpandMoreIcon
+                    sx={{
+                      transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
+                      transition: "transform 0.3s",
+                    }}
+                  />
+                </ListItem>
+              )}
+
+              <AnimatePresence>
+                {open === item.menu && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    exit={{ opacity: 0, height: 0 }}
+                  >
+                    {renderMenuContent(item.menu)}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </Box>
+          ))}
+        </List>
+      </ModernDrawer>
     </>
   );
 };
@@ -1038,4 +872,3 @@ Header.propTypes = {
 };
 
 export default Header;
-

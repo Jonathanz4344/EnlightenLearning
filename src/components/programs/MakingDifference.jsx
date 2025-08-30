@@ -331,7 +331,32 @@ export default function Reviews() {
             text: "Being a tutor at Enlighten Learning has allowed me to experience so many meaningful moments with the kids I work with. One of my students, Kingsley, has especially made the experience memorable. We’ve built such a strong connection that he has chosen to continue tutoring with me again this year, which feels both rewarding and encouraging. Through this opportunity, I’ve gained valuable skills such as learning how to effectively socialize with younger children, developing patience, working independently, and practicing negotiation when challenges arise. Tutoring has truly taught me how impactful small efforts can be in helping others grow. I would gladly participate again, and I’m excited to continue tutoring my student this year and create even more new memories together.",
             author: "Tiffany Q",
             priority: "large", 
-        }
+        },
+        {
+            text: "My daughter was tutored in Algebra, I would recommend it to others.",
+            author: "Sophie",
+            priority: "medium", 
+        },
+        {
+            text: "The classes were very good!",
+            author: "Emma",
+            priority: "small", 
+        },
+        {
+            text: "Many athletes find that such clinics accelerate their skill development and build confidence.They emphasize skills like spiking, serving, blocking, packed into a short timeframe. Kids loved it .",
+            author: "Harpreet",
+            priority: "large", 
+        },
+        {
+            text: "It was such a great experience. Very welcoming for beginners and kids enjoyed it! Very well run and appreciated that the structure accommodated for water breaks. My kids of different ages felt included and enjoyed it!",
+            author: "Ruby",
+            priority: "large", 
+        },
+        {
+            text: "The clinic was a good environment for beginners.",
+            author: "Himali",
+            priority: "small", 
+        },
     ];
 
     // Sort reviews by priority for better arrangement

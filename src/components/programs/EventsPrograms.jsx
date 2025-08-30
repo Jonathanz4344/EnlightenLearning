@@ -38,13 +38,13 @@ const eventsData = [
         id: 1,
         title: "The Art of Winter Crafts Event",
         date: "2025-01-10",
-        time: "4:00 PM - 6:00 PM",
+        time: "4:00 PM - 5:30 PM",
         location: "Shelter Rock Library",
         description: "Get creative this winter at our fun-filled crafts event! We'll have all the materials you need to make a 3D snowman and snowflakes.",
         formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSf6FGGIfX3Xe7yK-MwdC-Y2wm2ysWjRbzxxIxid-oIF-WWDzw/viewform?usp=dialog",
         category: "Arts and Craft",
         totalParticipants: 30,
-        duration: "2 hours",
+        duration: "1.5 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-01-01",
         expirationDate: "2025-01-10", // Past event
@@ -53,20 +53,20 @@ const eventsData = [
         id: 2,
         title: "Easter Fun Fest",
         date: "2025-04-18",
-        time: "4:00 PM - 6:00 PM",
+        time: "4:00 PM - 5:30 PM",
         location: "Ridder's Pond Park",
-        description: "Come and join us for a day full of surprises! We will have a scavenger hunt, crafts and field game, there will be prizes!",
+        description: "Come and join us for a day full of surprises! We will have an educational scavenger hunt and fun field game, there will be prizes!",
         formUrl: "https://forms.gle/KzTLV8EsQaMccSmdA",
         category: "Scavenger Hunt",
         totalParticipants: 30,
-        duration: "2 hours",
+        duration: "1.5 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-04-01",
         expirationDate: "2025-04-18", // Past event
     },
     {
         id: 3,
-        title: "Summer Volleyball Program",
+        title: "Summer Sports Program",
         date: "2025-07-21 - 2025-08-25",
         time: "1:00 PM - 2:00 PM",
         location: "Park Circle",
@@ -79,21 +79,37 @@ const eventsData = [
         registrationStartDate: "2025-07-01",
         expirationDate: "2025-07-21", // Past event
     },
-    // {
-    //     id: 4,
-    //     title: "Sweet Literature event",
-    //     date: "",
-    //     time: "",
-    //     location: "",
-    //     description: "",
-    //     formUrl: "",
-    //     category: "Literature",
-    //     totalParticipants: 20,
-    //     duration: "",
-    //     coordinator: "Enlighten Learning",
-    //     registrationStartDate: "2325-07-01",
-    //     expirationDate: "",
-    // },
+    {
+        id: 4,
+        title: "Summer Volleyball Clinic",
+        date: "2025-07-21 - 2025-08-25",
+        time: "10:30 AM - 12:00 PM",
+        location: "Park Circle",
+        description: "Looking to stay active this summer? Join our volleyball clinic! Whether you're a beginner or need to brush up on your skills, you'll learn fundamentals and play games in a fun environment.",
+        formUrl: "https://forms.gle/gUzvfJNfhUzqJrxp7",
+        category: "Volleyball",
+        totalParticipants: 20,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-07-01",
+        expirationDate: "2025-07-21", // Past event
+    },
+    {
+        id: 5,
+        title: "Back to School Kickoff Fundraiser",
+        date: "2025-08-22",
+        time: "12:30 PM - 2:30 PM",
+        location: "Park Circle",
+        description: "Kickoff the new school year with fun, food and friends! Support our fundraiser for charity by purchasing food and beverages and enjoy some open court volleyball.",
+        formUrl: "",
+        category: "Fundraiser",
+        totalParticipants: 20,
+        duration: "2 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-07-01",
+        expirationDate: "2025-08-22", // Past event
+    },
+
 ];
 
 // Helper function to get today's date without time
@@ -371,16 +387,6 @@ const EventCard = ({ event, section }) => {
                                 }}
                             >
                                 Registration Closes: {formatDate(event.expirationDate)}
-                            </Typography>
-                        </Box>
-                    )}
-
-                    {/* Completion Date for Past Events */}
-                    {section === 'past' && event.expirationDate && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                            <CompletedIcon fontSize="small" sx={{ color: config.titleColor }} />
-                            <Typography variant="body2" color="text.secondary">
-                                Completed: {formatDate(event.expirationDate)}
                             </Typography>
                         </Box>
                     )}

@@ -40,7 +40,7 @@ const volunteerData = [
         date: "2025-01-10",
         time: "4:00 PM - 6:00 PM",
         location: "Shelter Rock Library",
-        description: "Get creative this winter at our fun-filled crafts event! We'll have all the materials you need to make a 3D snowman and snowflakes.",
+        description: "Assist the children in creating winter crafts to celebrate the season. We will be making a 3D snowman and paper snowflakes.",
         formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSda9fa92M-4Q0x_8q6c1xc5yBhtGfei78FHhauze_CrSkcztQ/viewform?usp=dialog",
         category: "Arts and Craft",
         volunteersNeeded: 10,
@@ -56,7 +56,7 @@ const volunteerData = [
         date: "2025-04-18",
         time: "4:00 PM - 6:00 PM",
         location: "Ridder's Pond Park",
-        description: "Come and join us for a day full of surprises! We will have a scavenger hunt, crafts and field game, there will be prizes!",
+        description: "Guide a scavenger hunt for the community children to celebrate Easter! Volunteers will also help run exciting field games and competitions.",
         formUrl: "https://forms.gle/vAF6viqg8trKTs4Z8",
         category: "Scavenger Hunt",
         volunteersNeeded: 10,
@@ -68,13 +68,13 @@ const volunteerData = [
     },
     {
         id: 3,
-        title: "Summer Volleyball Program",
+        title: "Summer Sports Program",
         date: "2025-07-21 - 2025-08-25",
         time: "1:00 PM - 2:00 PM",
         location: "Park Circle",
         description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
         formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
-        category: "Volleyball",
+        category: "Sports",
         volunteersNeeded: 10,
         totalParticipants: 20,
         duration: "1 hours",
@@ -97,6 +97,22 @@ const volunteerData = [
         coordinator: "Enlighten Learning",
         registrationStartDate: "22023-07-01",
         expirationDate: "",
+    },
+     {
+        id: 5,
+        title: "Summer Volleyball Clinic",
+        date: "2025-07-21 - 2025-08-25",
+        time: "10:30 AM - 12:00 PM",
+        location: "Park Circle",
+        description: "Need an athletic summer schedule? Help coach the community kids at our introductory volleyball clinic.",
+        formUrl: "",
+        category: "Volleyball",
+        volunteersNeeded: 30,
+        totalParticipants: 30,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2025-07-01",
+        expirationDate: "2025-08-25",
     },
 
 
@@ -398,17 +414,7 @@ const VolunteerCard = ({ volunteer, section }) => {
                                 Registration Closes: {formatDate(volunteer.expirationDate)}
                             </Typography>
                         </Box>
-                    )}
-
-                    {/* Completion Date for Past Events */}
-                    {section === 'past' && volunteer.expirationDate && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-                            <CompletedIcon fontSize="small" sx={{ color: config.titleColor }} />
-                            <Typography variant="body2" color="text.secondary">
-                                Completed: {formatDate(volunteer.expirationDate)}
-                            </Typography>
-                        </Box>
-                    )}
+                    )} 
                 </Box>
 
                 {/* Stats */}

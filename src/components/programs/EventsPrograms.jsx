@@ -66,21 +66,6 @@ const eventsData = [
     },
     {
         id: 3,
-        title: "Summer Sports Program",
-        date: "2025-07-21 - 2025-08-25",
-        time: "1:00 PM - 2:00 PM",
-        location: "Park Circle",
-        description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
-        formUrl: "https://forms.gle/gUzvfJNfhUzqJrxp7",
-        category: "Volleyball",
-        totalParticipants: 20,
-        duration: "1 hours",
-        coordinator: "Enlighten Learning",
-        registrationStartDate: "2025-07-01",
-        expirationDate: "2025-07-21", // Past event
-    },
-    {
-        id: 4,
         title: "Summer Volleyball Clinic",
         date: "2025-07-21 - 2025-08-25",
         time: "10:30 AM - 12:00 PM",
@@ -95,7 +80,7 @@ const eventsData = [
         expirationDate: "2025-07-21", // Past event
     },
     {
-        id: 5,
+        id: 4,
         title: "Back to School Kickoff Fundraiser",
         date: "2025-08-22",
         time: "12:30 PM - 2:30 PM",

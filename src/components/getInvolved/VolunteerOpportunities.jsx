@@ -68,22 +68,6 @@ const volunteerData = [
     },
     {
         id: 3,
-        title: "Summer Sports Program",
-        date: "2025-07-21 - 2025-08-25",
-        time: "1:00 PM - 2:00 PM",
-        location: "Park Circle",
-        description: "Need an athletic summer schedule? Help coach beginner sports course to elementary students, and earn hours for it.",
-        formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSe1bsWgjxfdHf3V9JNC-mPobgZkw_p_OUvr_IXg7H2j2Om8nw/viewform?usp=dialog",
-        category: "Sports",
-        volunteersNeeded: 10,
-        totalParticipants: 20,
-        duration: "1 hours",
-        coordinator: "Enlighten Learning",
-        registrationStartDate: "2025-07-01",
-        expirationDate: "2025-07-21", // Past event
-    },
-    {
-        id: 4,
         title: "Veterans Day Card Marking",
         date: "",
         time: "",
@@ -99,7 +83,7 @@ const volunteerData = [
         expirationDate: "",
     },
      {
-        id: 5,
+        id: 4,
         title: "Summer Volleyball Clinic",
         date: "2025-07-21 - 2025-08-25",
         time: "10:30 AM - 12:00 PM",

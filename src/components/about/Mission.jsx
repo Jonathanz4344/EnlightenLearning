@@ -817,7 +817,7 @@ export default function Mission() {
                                 lineHeight: 1.1
                             }}
                         >
-                            💝 Our Charitable Commitment 💝
+                            Our Charitable Commitment
                         </Typography>
 
                         <Typography

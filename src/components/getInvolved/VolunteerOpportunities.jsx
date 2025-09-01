@@ -82,7 +82,7 @@ const volunteerData = [
         registrationStartDate: "22023-07-01",
         expirationDate: "",
     },
-     {
+    {
         id: 4,
         title: "Summer Volleyball Clinic",
         date: "2025-07-21 - 2025-08-25",
@@ -398,7 +398,7 @@ const VolunteerCard = ({ volunteer, section }) => {
                                 Registration Closes: {formatDate(volunteer.expirationDate)}
                             </Typography>
                         </Box>
-                    )} 
+                    )}
                 </Box>
 
                 {/* Stats */}
@@ -800,7 +800,43 @@ const VolunteerOpportunities = () => {
                         Join us in making a difference! Explore current, upcoming, and past volunteer
                         opportunities to get involved and contribute to your community.
                     </Typography>
+                    {/* Stats Section */}
+                    <Box sx={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        flexWrap: 'wrap',
+                        gap: 4,
+                        mt: 4
+                    }}>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="h3" sx={{ color: '#4caf50' }} fontWeight="bold">
+                                {categorizedData.current.length}
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Current Events
+                            </Typography>
+                        </Box>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
+                                {categorizedData.future.length}
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Upcoming Events
+                            </Typography>
+                        </Box>
+                        <Box sx={{ textAlign: 'center' }}>
+                            <Typography variant="h3" color="secondary.main" fontWeight="bold">
+                                100+
+                            </Typography>
+                            <Typography variant="body1" color="text.secondary">
+                                Lives Impacted
+                            </Typography>
+                        </Box>
+                    </Box>
+
                 </Box>
+
+
 
                 {/* Open Opportunities */}
                 <VolunteerCarousel

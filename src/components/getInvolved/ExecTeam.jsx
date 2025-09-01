@@ -782,7 +782,7 @@ export default function ExecTeam() {
                             mb: 4
                         }}
                     >
-                        Ready to make a real difference? Join our passionate team of student leaders. Together, we're dedicated to raising funds for charities that provide hope, care, and support, impacting as many lives as we can.
+                        Ready to make a real difference? Join our passionate team of student leaders. Together, we're dedicated to raising funds for charities that provide hope, care, and support, impacting countless lives.
                     </Typography>
 
                     {/* Quick Stats */}

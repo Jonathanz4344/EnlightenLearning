@@ -55,7 +55,7 @@ const subjectAreas = [
         icon: RegentsIcon,
         color: "#2196f3",
         category: "Test Preparation",
-        grades: ["8th","9th", "10th", "11th", "12th"],
+        grades: ["8th", "9th", "10th", "11th", "12th"],
         commitment: "Intensive review sessions"
     },
     {
@@ -77,7 +77,7 @@ const subjectAreas = [
         icon: MathIcon,
         color: "#ff9800",
         category: "Core Subject",
-        grades: ["Elementary", "Middle School", "Algebra 1/2", "Geometry"],
+        grades: ["Elementary", "Middle School", "High School"],
         commitment: "Regular practice sessions"
     },
     {
@@ -88,7 +88,7 @@ const subjectAreas = [
         icon: ScienceIcon,
         color: "#9c27b0",
         category: "Core Subject",
-        grades: ["Earth Science", "Biology", "Chemistry"],
+        grades: ["Elementary", "Middle School", "High School"],
         commitment: "Lab and theory sessions"
     },
     {
@@ -548,7 +548,7 @@ export default function TutoringServices() {
                             mb: 4
                         }}
                     >
-                        Expert tutoring services designed to help students excel academically and build lasting confidence in their studies. Excel in your studies and make a difference. Our expert tutoring services are designed to help students achieve their academic goals and build confidence. And with every lesson, you're helping us fundraise for charities that provide hope, care, and support to those in need.
+                        Excel in your studies and make a difference. Our expert tutoring services are designed to help students achieve their academic goals and build confidence. And with every lesson, you're helping us fundraise for charities that provide hope, care, and support to those in need.
                     </Typography>
 
                     {/* Quick Stats */}

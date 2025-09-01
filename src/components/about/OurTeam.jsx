@@ -369,7 +369,7 @@ export default function OurTeam() {
                                     lineHeight: 1.3
                                 }}
                             >
-                                Passionate students changing the world through education
+                                Passionate students changing the world
                             </Typography>
 
                             <Typography
@@ -445,7 +445,7 @@ export default function OurTeam() {
                             lineHeight: 1.6
                         }}
                     >
-                        Each team member brings unique skills, passion, and dedication to our educational mission
+                        Each team member brings unique skills, passion, and dedication to our mission
                     </Typography>
 
                     <Grid container spacing={4}>
@@ -608,7 +608,7 @@ export default function OurTeam() {
                             }}
                         >
                             We're always looking for passionate, dedicated students who want to make a difference
-                            in education. Whether you're interested in tutoring, design, outreach, or leadership,
+                            in the world. Whether you're interested in tutoring, design, outreach, or leadership,
                             there's a place for you on our team. Join us in our mission to change the world through education!
                         </Typography>
 

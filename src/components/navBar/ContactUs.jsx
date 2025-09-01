@@ -524,7 +524,7 @@ export default function ContactUs() {
                                 mb: 2
                             }}
                         >
-                            Ready to support education in our community?
+                            Ready to create change in our community?
                         </Typography>
                         <Typography
                             variant="body1"

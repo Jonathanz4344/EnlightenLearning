@@ -43,15 +43,15 @@ const missionPillars = [
         id: 1,
         title: "Learn with Joy",
         subtitle: "Discover the wonder in every lesson",
-        description: "We believe learning should be an adventure filled with excitement and curiosity. Our approach transforms education from a chore into a celebration, where every student discovers the joy in knowledge and develops a lifelong love for learning while contributing to meaningful causes.",
+        description: "We believe learning should be an exciting journey of curiosity and discovery. Our wish is for every student to find the joy in knowledge, cultivate a lifelong passion for learning, and grow into thoughtful individuals who'll make a difference in the world. Every lesson is a step towards our mission of helping those in need.",
         icon: JoyIcon,
         color: '#4caf50',
         bgGradient: 'linear-gradient(135deg, #4caf50, #66bb6a)',
-        stats: { value: "100+", label: "Lives Impacted" },
+        stats: { value: "30+", label: "Active Volunteers" },
         features: [
-            "Interactive learning experiences",
-            "Gamified educational content",
             "Personalized learning paths",
+            "Interactive learning experience",
+            "Mentorship from passionate tutors",
             "Learning that gives back to charity"
         ]
     },
@@ -59,7 +59,7 @@ const missionPillars = [
         id: 2,
         title: "Give with Passion",
         subtitle: "Service from the heart",
-        description: "Our commitment goes beyond teaching - we pour our hearts into every interaction and charitable cause. Every tutor, volunteer, and board member brings genuine passion to their role, creating meaningful connections that inspire both students and educators while making a real difference in the world.",
+        description: "Our commitment goes beyond teaching—we are dedicated to building a brighter future for the next generation. We pour our hearts into every interaction and charitable cause, creating meaningful connections that inspire the children in our community to learn and grow. Together we are making a tangible difference in countless lives.",
         icon: PassionIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
@@ -67,40 +67,40 @@ const missionPillars = [
         features: [
             "Dedicated volunteer tutors",
             "Charitable giving programs",
-            "Community outreach initiatives",
-            "Supporting families in need"
+            "Community events and initiatives",
+            "Giving back to those in need"
         ]
     },
     {
         id: 3,
         title: "Change the World",
         subtitle: "Creating ripples of positive impact",
-        description: "Every student we reach has the potential to create lasting change. By providing quality education and fostering compassion for others, we're not just teaching subjects - we're empowering the next generation of world-changers who understand the importance of giving back.",
+        description: "Every individual we reach has the potential to create lasting change. By providing quality education, and fostering compassion for others, we are empowering the next generation to be world changers. Each step, each individual, all working towards creating a brighter tomorrow. ",
         icon: ChangeIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
-        stats: { value: "30+", label: "Active Volunteers" },
+        stats: { value: "100+", label: "Lives Impacted" },
         features: [
-            "Global educational access",
-            "Leadership development",
-            "Social impact projects",
-            "Compassionate future leaders"
+            "Youth empowerment",
+            "Purpose driven learning",
+            "Fostering community",
+            "Charitable mission"
         ]
     },
     {
         id: 4,
         title: "Fundraising for Good",
         subtitle: "Supporting causes that matter",
-        description: "Our fundraising efforts are at the heart of our mission. We're passionate about raising funds for multiple charities that provide hope, support, and care to children and families in need. When you learn with us, you're directly contributing to life-changing causes.",
+        description: "Our fundraising efforts are at the heart of our mission. We're passionate about raising funds for multiple charities that provide hope, support, and care to children and families in need. When you learn with us or support our mission with a donation, you're directly contributing to life changing causes. ",
         icon: FundraisingIcon,
         color: '#ff9800',
         bgGradient: 'linear-gradient(135deg, #ff9800, #ffb74d)',
         stats: { value: "$2K+", label: "Funds Raised" },
         features: [
             "Multiple charity partnerships",
-            "Children and family support",
-            "Life-changing donations",
-            "Transparent fund allocation"
+            "Supporting families in need ",
+            "Driving meaningful change",
+            "Life changing donations"
         ]
     }
 ];
@@ -974,33 +974,6 @@ export default function Mission() {
 
                 <Divider sx={{ my: { xs: 6, sm: 8, md: 10 }, opacity: 0.3 }} />
 
-                {/* Core Values */}
-                <Box sx={{ mb: { xs: 8, sm: 10, md: 12 } }}>
-                    <Typography
-                        variant="h3"
-                        component="h2"
-                        sx={{
-                            textAlign: 'center',
-                            fontWeight: 800,
-                            mb: 6,
-                            background: 'linear-gradient(45deg, #9c27b0, #3f51b5)',
-                            backgroundClip: 'text',
-                            WebkitBackgroundClip: 'text',
-                            WebkitTextFillColor: 'transparent',
-                        }}
-                    >
-                        Our Core Values
-                    </Typography>
-
-                    <Grid container spacing={3}>
-                        {coreValues.map((value, index) => (
-                            <Grid item xs={12} sm={6} md={3} key={index}>
-                                <ValueCard value={value} index={index} />
-                            </Grid>
-                        ))}
-                    </Grid>
-                </Box>
-
                 {/* Call to Action Section */}
                 <Box
                     sx={{
@@ -1046,7 +1019,7 @@ export default function Mission() {
                             lineHeight: 1.7
                         }}
                     >
-                        Together, we can create a brighter future through education and compassion. Whether you volunteer your time, make a donation, or simply spread the word—every action makes a difference.
+                        Together, we can create a brighter future through education and fundraising. Whether you volunteer your time, make a donation, or simply spread the word—every action makes a difference.
                     </Typography>
 
                     <Box

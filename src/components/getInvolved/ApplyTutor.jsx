@@ -76,7 +76,7 @@ const subjectAreas = [
         icon: MathIcon,
         color: "#ff9800",
         category: "Core Subject",
-        grades: ["Elementary", "Middle School", "Algebra 1/2", "Geometry"],
+        grades: ["Elementary", "Middle School", "High School"],
         commitment: "Regular practice sessions"
     },
     {
@@ -87,7 +87,7 @@ const subjectAreas = [
         icon: ScienceIcon,
         color: "#9c27b0",
         category: "Core Subject",
-        grades: ["Earth Science", "Biology", "Chemistry"],
+        grades: ["Elementary", "Middle School", "High School"],
         commitment: "Lab and theory sessions"
     },
     {
@@ -527,7 +527,7 @@ export default function ApplyTutor() {
                             WebkitTextFillColor: 'transparent',
                         }}
                     >
-                        Become a Tutor with Enlighten Learning
+                        Enlighten Learning Tutoring Team
                     </Typography>
                     <Typography
                         variant="h5"

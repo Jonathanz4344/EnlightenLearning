@@ -776,7 +776,7 @@ export default function EventsProgram() {
                             mb: 4
                         }}
                     >
-                        Join us in making a difference! Explore our current events, upcoming programs,
+                        "Join our community outreach initiatives! Explore our current events, upcoming programs,
                         and see the incredible impact we've made together in our community.
                     </Typography>
 

@@ -810,7 +810,7 @@ const VolunteerOpportunities = () => {
                     }}>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#4caf50' }} fontWeight="bold">
-                                {categorizedData.current.length}
+                                {categorizedData.open.length}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Current Events
@@ -818,7 +818,7 @@ const VolunteerOpportunities = () => {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
-                                {categorizedData.future.length}
+                                {categorizedData.upcoming.length}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Upcoming Events

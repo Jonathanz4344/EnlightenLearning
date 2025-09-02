@@ -804,14 +804,6 @@ export default function EventsProgram() {
                                 Upcoming Events
                             </Typography>
                         </Box>
-                        {/* <Box sx={{ textAlign: 'center' }}>
-                            <Typography variant="h3" color="primary.main" fontWeight="bold">
-                                130
-                            </Typography>
-                            <Typography variant="body1" color="text.secondary">
-                                Sessions Taught
-                            </Typography>
-                        </Box> */}
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
                                 100+
@@ -857,15 +849,15 @@ export default function EventsProgram() {
                 />
 
                 {/* Community Impact Summary */}
-                <Box sx={{
+                {/* <Box sx={{
                     mt: { xs: 6, sm: 8, md: 10 },
                     p: { xs: 4, sm: 6 },
                     backgroundColor: isDarkMode ? '#1e1e1e' : '#ffffff',
                     borderRadius: 4,
                     boxShadow: theme => theme.shadows[8],
                     border: `1px solid ${isDarkMode ? '#333' : '#e0e0e0'}`
-                }}>
-                    <Box sx={{ textAlign: 'center', mb: 5 }}>
+                }}> */}
+                    {/* <Box sx={{ textAlign: 'center', mb: 5 }}>
                         <Typography
                             variant="h4"
                             component="h2"
@@ -957,8 +949,8 @@ export default function EventsProgram() {
                             "The strength of our community lies in the participation of every member.
                             Thank you for being part of our journey towards positive change."
                         </Typography>
-                    </Box>
-                </Box>
+                    </Box> */}
+                {/* </Box> */}
             </Container>
         </Box>
     );

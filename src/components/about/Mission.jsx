@@ -66,7 +66,7 @@ const missionPillars = [
         stats: { value: "130+", label: "Sessions Taught" },
         features: [
             "Dedicated volunteer tutors",
-            "Charitable giving programs",
+            "Charitable tutoring programs",
             "Community events and initiatives",
             "Giving back to those in need"
         ]

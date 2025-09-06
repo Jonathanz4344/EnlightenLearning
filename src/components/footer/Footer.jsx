@@ -17,18 +17,18 @@ import SmsIcon from "@mui/icons-material/Sms";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmailIcon from "@mui/icons-material/Email";
+import MailIcon from "@mui/icons-material/Mail"; // Added mail icon import
 import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
 import { useMode } from "../Layout";
-import { Link } from "react-router-dom"; // Import React Router Link
-import { styled } from "@mui/material/styles"; // Import styled
+import { Link } from "react-router-dom";
+import { styled } from "@mui/material/styles";
 
 const logoStyle = {
   width: "140px",
   height: "auto",
 };
 
-// Styled component for footer links to match header styling
 const FooterLink = styled(Link)(({ theme }) => ({
   color: 'inherit',
   textDecoration: 'none',
@@ -54,7 +54,6 @@ const FooterLink = styled(Link)(({ theme }) => ({
   }
 }));
 
-// Styled external link component
 const ExternalLink = styled('a')(({ theme }) => ({
   color: 'inherit',
   textDecoration: 'none',
@@ -190,6 +189,32 @@ export default function Footer() {
                     enlightenandlearning@gmail.com
                   </ExternalLink>
                 </Box>
+                
+                {/* Instagram Link */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <InstagramIcon fontSize="small" />
+                  <ExternalLink
+                    href="https://www.instagram.com/enlighten_learning/"
+                    target="_blank"
+                    rel="instagram"
+                    aria-label="Follow us on Instagram"
+                  >
+                    @enlighten_learning
+                  </ExternalLink>
+                </Box>
+                
+                {/* Facebook Link */}
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                  <FacebookIcon fontSize="small" />
+                  <ExternalLink
+                    href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/"
+                    target="_blank"
+                    rel="facebook"
+                    aria-label="Like us on Facebook"
+                  >
+                    @enlightenlearning
+                  </ExternalLink>
+                </Box>
               </Box>
             </Box>
 
@@ -239,7 +264,7 @@ export default function Footer() {
             </Box>
           </Box>
 
-          {/* Footer Navigation - Now visible on all screen sizes */}
+          {/* Footer Navigation */}
           <Box
             component="nav"
             aria-label="Footer Navigation"
@@ -273,10 +298,7 @@ export default function Footer() {
               >
                 About Us
               </Typography>
-              <FooterLink
-                to={PathConstants.HOME}
-                aria-label="Go to Home page"
-              >
+              <FooterLink to={PathConstants.HOME} aria-label="Go to Home page">
                 Home
               </FooterLink>
               <FooterLink
@@ -400,7 +422,7 @@ export default function Footer() {
             <Copyright />
           </Box>
 
-          {/* Social Media Links */}
+          {/* Social Media Links with Mail Icon */}
           <Stack
             direction="row"
             spacing={1}
@@ -409,6 +431,14 @@ export default function Footer() {
               mt: { xs: 2, sm: 0 },
             }}
           >
+            <IconButton
+              href="mailto:enlightenandlearning@gmail.com"
+              aria-label="Send us an email"
+              color="inherit"
+              component="a"
+            >
+              <MailIcon />
+            </IconButton>
             <IconButton
               href="https://www.instagram.com/enlighten_learning/"
               aria-label="Follow us on Instagram"

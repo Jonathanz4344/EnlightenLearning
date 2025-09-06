@@ -609,7 +609,7 @@ export default function OurTeam() {
                         >
                             We're always looking for passionate, dedicated students who want to make a difference
                             in the world. Whether you're interested in tutoring, design, outreach, or leadership,
-                            there's a place for you on our team. Join us in our mission to change the world through education!
+                            there's a place for you on our team. Join us in our mission to create a brighter tomorrow!
                         </Typography>
 
                         <Box sx={{ display: 'flex', justifyContent: 'center', flexWrap: 'wrap', gap: 3 }}>

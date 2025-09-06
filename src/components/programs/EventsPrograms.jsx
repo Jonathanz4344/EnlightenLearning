@@ -777,7 +777,7 @@ export default function EventsProgram() {
                         }}
                     >
                         "Join our community outreach initiatives! Explore our current events, upcoming programs,
-                        and see the incredible impact we've made together in our community.
+                        and see the incredible impact we've made together in our community."
                     </Typography>
 
                     {/* Stats Section */}
@@ -847,7 +847,7 @@ export default function EventsProgram() {
                     subtitle="Celebrate the amazing work we've accomplished together! See the positive change we've created in our community."
                     icon={CompletedIcon}
                 />
-
+                                                                
                 {/* Community Impact Summary */}
                 {/* <Box sx={{
                     mt: { xs: 6, sm: 8, md: 10 },

@@ -38,14 +38,14 @@ const volunteerData = [
         id: 1,
         title: "The Art of Winter Crafts Event",
         date: "2025-01-10",
-        time: "4:00 PM - 6:00 PM",
+        time: "4:00 PM - 5:30 PM",
         location: "Shelter Rock Library",
         description: "Assist the children in creating winter crafts to celebrate the season. We will be making a 3D snowman and paper snowflakes.",
         formUrl: "https://docs.google.com/forms/d/e/1FAIpQLSda9fa92M-4Q0x_8q6c1xc5yBhtGfei78FHhauze_CrSkcztQ/viewform?usp=dialog",
         category: "Arts and Craft",
         volunteersNeeded: 10,
         totalParticipants: 30,
-        duration: "2 hours",
+        duration: "1.5 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-01-01",
         expirationDate: "2025-01-10", // Past event
@@ -54,14 +54,14 @@ const volunteerData = [
         id: 2,
         title: "Easter Fun Fest",
         date: "2025-04-18",
-        time: "4:00 PM - 6:00 PM",
+        time: "4:00 PM - 5:30 PM",
         location: "Ridder's Pond Park",
         description: "Guide a scavenger hunt for the community children to celebrate Easter! Volunteers will also help run exciting field games and competitions.",
         formUrl: "https://forms.gle/vAF6viqg8trKTs4Z8",
         category: "Scavenger Hunt",
         volunteersNeeded: 10,
         totalParticipants: 30,
-        duration: "2 hours",
+        duration: "1.5 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2025-04-01",
         expirationDate: "2025-04-18", // Past event
@@ -788,10 +788,10 @@ const VolunteerOpportunities = () => {
                         Volunteer Opportunities
                     </Typography>
                     <Typography
-                        variant="h6"
+                        variant="h5"
                         color="text.secondary"
                         sx={{
-                            maxWidth: '700px',
+                            maxWidth: '800px',
                             mx: 'auto',
                             lineHeight: 1.6,
                             fontSize: { xs: '1rem', sm: '1.2rem' }

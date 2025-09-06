@@ -212,7 +212,7 @@ export default function Footer() {
                     rel="facebook"
                     aria-label="Like us on Facebook"
                   >
-                    @enlightenlearning
+                    @Enlighten Learning
                   </ExternalLink>
                 </Box>
               </Box>

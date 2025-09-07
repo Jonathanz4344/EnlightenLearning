@@ -17,12 +17,17 @@ import SmsIcon from "@mui/icons-material/Sms";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmailIcon from "@mui/icons-material/Email";
-import MailIcon from "@mui/icons-material/Mail"; // Added mail icon import
+import MailIcon from "@mui/icons-material/Mail";
 import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
 import { useMode } from "../Layout";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+
+// Base URL for local dev vs production
+const API_BASE = import.meta.env.DEV
+  ? "https://enlightenlearning.vercel.app" // replace with your deployed Vercel URL
+  : "";
 
 const logoStyle = {
   width: "140px",
@@ -30,53 +35,53 @@ const logoStyle = {
 };
 
 const FooterLink = styled(Link)(({ theme }) => ({
-  color: 'inherit',
-  textDecoration: 'none',
-  transition: 'all 0.3s ease',
-  position: 'relative',
-  display: 'inline-block',
-  '&:hover': {
+  color: "inherit",
+  textDecoration: "none",
+  transition: "all 0.3s ease",
+  position: "relative",
+  display: "inline-block",
+  "&:hover": {
     color: theme.palette.primary.main,
-    transform: 'translateX(4px)',
+    transform: "translateX(4px)",
   },
-  '&::after': {
+  "&::after": {
     content: '""',
-    position: 'absolute',
-    bottom: '-2px',
+    position: "absolute",
+    bottom: "-2px",
     left: 0,
     width: 0,
-    height: '2px',
+    height: "2px",
     background: theme.palette.primary.main,
-    transition: 'width 0.3s ease',
+    transition: "width 0.3s ease",
   },
-  '&:hover::after': {
-    width: '100%',
-  }
+  "&:hover::after": {
+    width: "100%",
+  },
 }));
 
-const ExternalLink = styled('a')(({ theme }) => ({
-  color: 'inherit',
-  textDecoration: 'none',
-  transition: 'all 0.3s ease',
-  position: 'relative',
-  display: 'inline-block',
-  '&:hover': {
+const ExternalLink = styled("a")(({ theme }) => ({
+  color: "inherit",
+  textDecoration: "none",
+  transition: "all 0.3s ease",
+  position: "relative",
+  display: "inline-block",
+  "&:hover": {
     color: theme.palette.primary.main,
-    transform: 'translateX(4px)',
+    transform: "translateX(4px)",
   },
-  '&::after': {
+  "&::after": {
     content: '""',
-    position: 'absolute',
-    bottom: '-2px',
+    position: "absolute",
+    bottom: "-2px",
     left: 0,
     width: 0,
-    height: '2px',
+    height: "2px",
     background: theme.palette.primary.main,
-    transition: 'width 0.3s ease',
+    transition: "width 0.3s ease",
   },
-  '&:hover::after': {
-    width: '100%',
-  }
+  "&:hover::after": {
+    width: "100%",
+  },
 }));
 
 function Copyright() {
@@ -92,21 +97,46 @@ export default function Footer() {
   const { mode = "light" } = useMode() || {};
   const isDarkMode = mode === "dark";
   const [email, setEmail] = React.useState("");
-  const [successMessage, setSuccessMessage] = React.useState("");
+  const [message, setMessage] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
-  const handleSubscribe = () => {
+  // --- Handle newsletter subscription ---
+  const handleSubscribe = async (e) => {
+    e.preventDefault();
+    console.log("Submitting email:", email); // debug log
+
+    // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (emailRegex.test(email)) {
-      setEmail("");
-      setSuccessMessage("Successfully Subscribed!");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
-    } else {
-      setSuccessMessage("Please enter a valid email.");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
+    if (!emailRegex.test(email)) {
+      setMessage("❌ Please enter a valid email address.");
+      setTimeout(() => setMessage(""), 3000);
+      return;
+    }
+
+    setIsLoading(true);
+    setMessage("Submitting...");
+
+    try {
+      const response = await fetch(`${API_BASE}/api/subscribe`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (result.result === "success") {
+        setMessage("✅ Thanks for subscribing!");
+        setEmail("");
+      } else {
+        setMessage("❌ Error: " + (result.message || "Something went wrong"));
+      }
+    } catch (err) {
+      console.error("Newsletter subscription error:", err);
+      setMessage("❌ Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setMessage(""), 5000);
     }
   };
 
@@ -132,7 +162,7 @@ export default function Footer() {
           textAlign: { sm: "center", md: "left" },
         }}
       >
-        {/* Main Footer Content */}
+        {/* --- Main Footer Content --- */}
         <Box
           sx={{
             display: "flex",
@@ -143,7 +173,7 @@ export default function Footer() {
             flexWrap: { sm: "wrap", md: "nowrap" },
           }}
         >
-          {/* Logo and Business Info */}
+          {/* --- Logo and Contact --- */}
           <Box
             component="article"
             itemScope
@@ -155,110 +185,55 @@ export default function Footer() {
               minWidth: { xs: "100%", sm: "40%", md: "30%" },
             }}
           >
-            <Box>
-              <FooterLink
-                to={PathConstants.HOME}
-                title="Enlighten Learning Home"
-                aria-label="Go to Enlighten Learning homepage"
-              >
-                <img
-                  src={Logo}
-                  style={logoStyle}
-                  alt="Enlighten Learning logo"
-                  itemProp="logo"
-                />
-              </FooterLink>
+            <FooterLink to={PathConstants.HOME} aria-label="Go to homepage">
+              <img src={Logo} style={logoStyle} alt="Logo" />
+            </FooterLink>
 
-              {/* Business Address and Contact */}
-              <Box
-                component="address"
-                sx={{
-                  fontStyle: "normal",
-                  mt: 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 1,
-                }}
-              >
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <EmailIcon fontSize="small" />
-                  <ExternalLink
-                    href="mailto:enlightenandlearning@gmail.com"
-                    itemProp="email"
-                  >
-                    enlightenandlearning@gmail.com
-                  </ExternalLink>
-                </Box>
-                
-                {/* Instagram Link */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <InstagramIcon fontSize="small" />
-                  <ExternalLink
-                    href="https://www.instagram.com/enlighten_learning/"
-                    target="_blank"
-                    rel="instagram"
-                    aria-label="Follow us on Instagram"
-                  >
-                    @enlighten_learning
-                  </ExternalLink>
-                </Box>
-                
-                {/* Facebook Link */}
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <FacebookIcon fontSize="small" />
-                  <ExternalLink
-                    href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/"
-                    target="_blank"
-                    rel="facebook"
-                    aria-label="Like us on Facebook"
-                  >
-                    @Enlighten Learning
-                  </ExternalLink>
-                </Box>
+            {/* Business Contact */}
+            <Box component="address" sx={{ fontStyle: "normal", mt: 2, display: "flex", flexDirection: "column", gap: 1 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <EmailIcon fontSize="small" />
+                <ExternalLink href="mailto:enlightenandlearning@gmail.com">enlightenandlearning@gmail.com</ExternalLink>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <InstagramIcon fontSize="small" />
+                <ExternalLink href="https://www.instagram.com/enlighten_learning/" target="_blank" rel="noopener">@enlighten_learning</ExternalLink>
+              </Box>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                <FacebookIcon fontSize="small" />
+                <ExternalLink href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/" target="_blank" rel="noopener">@Enlighten Learning</ExternalLink>
               </Box>
             </Box>
 
-            {/* Newsletter Subscription */}
+            {/* --- Newsletter Form --- */}
             <Box sx={{ mt: 2 }}>
-              <Typography variant="h6" component="h3" gutterBottom>
-                Newsletter
-              </Typography>
+              <Typography variant="h6" gutterBottom>Newsletter</Typography>
               <Typography variant="body2" color="inherit" mb={2}>
                 Subscribe to our newsletter for updates and events.
               </Typography>
-              <Stack direction="row" spacing={1} useFlexGap>
-                <TextField
-                  id="footer-email-input"
-                  hiddenLabel
-                  size="small"
-                  variant="outlined"
-                  fullWidth
-                  placeholder="Your email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  inputProps={{
-                    autoComplete: "email",
-                    "aria-label": "Enter your email address",
-                  }}
-                />
-                <Button
-                  variant="contained"
-                  color="primary"
-                  sx={{ flexShrink: 0 }}
-                  onClick={handleSubscribe}
-                  aria-label="Subscribe to newsletter"
-                >
-                  Subscribe
-                </Button>
-              </Stack>
-              {successMessage && (
-                <Typography
-                  variant="body2"
-                  color="success.main"
-                  sx={{ mt: 2, fontWeight: "bold" }}
-                  role="alert"
-                >
-                  {successMessage}
+
+              <form onSubmit={handleSubscribe}>
+                <Stack direction="row" spacing={1} useFlexGap>
+                  <TextField
+                    id="footer-email-input"
+                    hiddenLabel
+                    size="small"
+                    variant="outlined"
+                    fullWidth
+                    placeholder="Your email address"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <Button type="submit" variant="contained" color="primary" sx={{ flexShrink: 0 }}>
+                    {isLoading ? "Submitting..." : "Subscribe"}
+                  </Button>
+                </Stack>
+              </form>
+
+              {message && (
+                <Typography variant="body2" color={message.includes("✅") ? "success.main" : "error.main"} sx={{ mt: 2, fontWeight: "bold" }} role="alert">
+                  {message}
                 </Typography>
               )}
             </Box>

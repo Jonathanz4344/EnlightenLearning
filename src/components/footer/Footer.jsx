@@ -24,10 +24,6 @@ import { useMode } from "../Layout";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
-const API_BASE = import.meta.env.DEV
-  ? "http://localhost:3000" // vercel dev server
-  : "https://enlightenlearning.vercel.app"; // production
-
 const logoStyle = {
   width: "140px",
   height: "auto",
@@ -102,32 +98,6 @@ export default function Footer() {
   // --- Handle newsletter subscription ---
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
-    setMessage("Submitting...");
-
-    try {
-      const res = await fetch("/api/subscribe", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
-      const result = await res.json();
-
-      if (res.ok && result.result === "success") {
-        setMessage("✅ Thanks for subscribing!");
-        setEmail("");
-      } else {
-        setMessage("❌ Error: " + (result.error || result.message || "Something went wrong"));
-      }
-    } catch (err) {
-      console.error(err);
-      setMessage("❌ Something went wrong. Please try again.");
-    } finally {
-      setIsLoading(false);
-      setTimeout(() => setMessage(""), 5000);
-    }
-
-
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -141,7 +111,11 @@ export default function Footer() {
     setMessage("Submitting...");
 
     try {
-      const response = await fetch(`${API_BASE}/api/subscribe`, {
+      // Determine the correct API URL
+      const isDev = process.env.NODE_ENV === 'development';
+      const apiUrl = isDev ? 'http://localhost:3000/api/subscribe' : '/api/subscribe';
+
+      const response = await fetch(apiUrl, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
@@ -149,11 +123,11 @@ export default function Footer() {
 
       const result = await response.json();
 
-      if (result.result === "success") {
+      if (response.ok && (result.result === "success" || result.success)) {
         setMessage("✅ Thanks for subscribing!");
         setEmail("");
       } else {
-        setMessage("❌ Error: " + (result.message || "Something went wrong"));
+        setMessage("❌ Error: " + (result.error || result.message || "Something went wrong"));
       }
     } catch (err) {
       console.error("Newsletter subscription error:", err);
@@ -248,15 +222,27 @@ export default function Footer() {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     required
+                    disabled={isLoading}
                   />
-                  <Button type="submit" variant="contained" color="primary" sx={{ flexShrink: 0 }}>
+                  <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    sx={{ flexShrink: 0 }}
+                    disabled={isLoading}
+                  >
                     {isLoading ? "Submitting..." : "Subscribe"}
                   </Button>
                 </Stack>
               </form>
 
               {message && (
-                <Typography variant="body2" color={message.includes("✅") ? "success.main" : "error.main"} sx={{ mt: 2, fontWeight: "bold" }} role="alert">
+                <Typography
+                  variant="body2"
+                  color={message.includes("✅") ? "success.main" : "error.main"}
+                  sx={{ mt: 2, fontWeight: "bold" }}
+                  role="alert"
+                >
                   {message}
                 </Typography>
               )}

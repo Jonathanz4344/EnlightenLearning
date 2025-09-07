@@ -24,10 +24,9 @@ import { useMode } from "../Layout";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
-// Base URL for local dev vs production
 const API_BASE = import.meta.env.DEV
-  ? "https://enlightenlearning.vercel.app" // replace with your deployed Vercel URL
-  : "";
+  ? "http://localhost:3000" // vercel dev server
+  : "https://enlightenlearning.vercel.app"; // production
 
 const logoStyle = {
   width: "140px",
@@ -103,7 +102,32 @@ export default function Footer() {
   // --- Handle newsletter subscription ---
   const handleSubscribe = async (e) => {
     e.preventDefault();
-    console.log("Submitting email:", email); // debug log
+    setIsLoading(true);
+    setMessage("Submitting...");
+
+    try {
+      const res = await fetch("/api/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const result = await res.json();
+
+      if (res.ok && result.result === "success") {
+        setMessage("✅ Thanks for subscribing!");
+        setEmail("");
+      } else {
+        setMessage("❌ Error: " + (result.error || result.message || "Something went wrong"));
+      }
+    } catch (err) {
+      console.error(err);
+      setMessage("❌ Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
+      setTimeout(() => setMessage(""), 5000);
+    }
+
+
 
     // Basic email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

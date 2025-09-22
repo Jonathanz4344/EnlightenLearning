@@ -59,6 +59,17 @@ const subjectAreas = [
         commitment: "Intensive review sessions"
     },
     {
+        id: 6,
+        title: "World Languages",
+        subtitle: "Spanish, Mandarin, French",
+        description: "Develop language proficiency through conversation practice, grammar instruction, and cultural immersion activities.",
+        icon: LanguageIcon,
+        color: "#00bcd4",
+        category: "Language",
+        grades: ["Spanish", "Mandarin Chinese", "French"],
+        commitment: "Conversational sessions"
+    },
+    {
         id: 3,
         title: "English",
         subtitle: "Elementary, Middle & High School",
@@ -66,6 +77,17 @@ const subjectAreas = [
         icon: EnglishIcon,
         color: "#e91e63",
         category: "Core Subject",
+        grades: ["Elementary", "Middle School", "High School"],
+        commitment: "Weekly sessions"
+    },
+    {
+        id: 7,
+        title: "Music",
+        subtitle: "Elementary, Middle & High School",
+        description: "Learn to read music, develop instrumental or vocal skills, and explore music theory and performance techniques tailored to each student’s level and interests. *Instrument dependent availability.",
+        icon: EnglishIcon,
+        color: "#e91e63",
+        category: "Fine Arts",
         grades: ["Elementary", "Middle School", "High School"],
         commitment: "Weekly sessions"
     },
@@ -91,17 +113,6 @@ const subjectAreas = [
         grades: ["Elementary", "Middle School", "High School"],
         commitment: "Lab and theory sessions"
     },
-    {
-        id: 6,
-        title: "World Languages",
-        subtitle: "Spanish, Mandarin, French",
-        description: "Develop language proficiency through conversation practice, grammar instruction, and cultural immersion activities with native and fluent speakers.",
-        icon: LanguageIcon,
-        color: "#00bcd4",
-        category: "Language",
-        grades: ["Spanish", "Mandarin Chinese", "French"],
-        commitment: "Conversational sessions"
-    }
 ];
 
 // Helper function to get category color

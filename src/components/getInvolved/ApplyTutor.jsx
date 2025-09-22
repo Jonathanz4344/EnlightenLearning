@@ -57,6 +57,28 @@ const subjectAreas = [
         grades: ["8th","9th", "10th", "11th", "12th"],
         commitment: "Intensive review sessions"
     },
+        {
+        id: 6,
+        title: "World Languages",
+        subtitle: "Spanish, Mandarin, French",
+        description: "Assist students in developing language proficiency through conversation practice, grammar instruction, and cultural immersion activities.",
+        icon: LanguageIcon,
+        color: "#00bcd4",
+        category: "Language",
+        grades: ["Spanish", "Mandarin Chinese", "French"],
+        commitment: "Conversational sessions"
+    },
+         {
+        id: 7,
+        title: "Music",
+        subtitle: "Elementary, Middle & High School",
+        description: "Provide personalized music instruction, including reading music, developing instrumental or vocal skills, and exploring music theory and performance techniques. Lessons are tailored to each student’s goals and level.",
+        icon: EnglishIcon,
+        color: "#e91e63",
+        category: "Fine Arts",
+        grades: ["Elementary", "Middle School", "High School"],
+        commitment: "Weekly sessions"
+    },
     {
         id: 3,
         title: "English",
@@ -90,17 +112,6 @@ const subjectAreas = [
         grades: ["Elementary", "Middle School", "High School"],
         commitment: "Lab and theory sessions"
     },
-    {
-        id: 6,
-        title: "World Languages",
-        subtitle: "Spanish, Mandarin, French",
-        description: "Assist students in developing language proficiency through conversation practice, grammar instruction, and cultural immersion activities.",
-        icon: LanguageIcon,
-        color: "#00bcd4",
-        category: "Language",
-        grades: ["Spanish", "Mandarin Chinese", "French"],
-        commitment: "Conversational sessions"
-    }
 ];
 
 // Helper function to get category color

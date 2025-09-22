@@ -46,6 +46,7 @@ const subjectAreas = [
         grades: ["3rd", "4th", "5th", "6th", "7th", "8th"],
         commitment: "Flexible scheduling"
     },
+
     {
         id: 2,
         title: "Regents Prep",
@@ -54,10 +55,10 @@ const subjectAreas = [
         icon: RegentsIcon,
         color: "#2196f3",
         category: "Test Preparation",
-        grades: ["8th","9th", "10th", "11th", "12th"],
+        grades: ["8th", "9th", "10th", "11th", "12th"],
         commitment: "Intensive review sessions"
     },
-        {
+    {
         id: 6,
         title: "World Languages",
         subtitle: "Spanish, Mandarin, French",
@@ -68,7 +69,8 @@ const subjectAreas = [
         grades: ["Spanish", "Mandarin Chinese", "French"],
         commitment: "Conversational sessions"
     },
-         {
+    // updated
+    {
         id: 7,
         title: "Music",
         subtitle: "Elementary, Middle & High School",

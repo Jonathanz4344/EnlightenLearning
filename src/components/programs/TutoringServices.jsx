@@ -70,17 +70,6 @@ const subjectAreas = [
         commitment: "Conversational sessions"
     },
     {
-        id: 3,
-        title: "English",
-        subtitle: "Elementary, Middle & High School",
-        description: "Expert guidance in reading comprehension, writing skills, grammar, literature analysis, and essay composition across all grade levels.",
-        icon: EnglishIcon,
-        color: "#e91e63",
-        category: "Core Subject",
-        grades: ["Elementary", "Middle School", "High School"],
-        commitment: "Weekly sessions"
-    },
-    {
         id: 7,
         title: "Music",
         subtitle: "Elementary, Middle & High School",
@@ -88,6 +77,17 @@ const subjectAreas = [
         icon: EnglishIcon,
         color: "#e91e63",
         category: "Fine Arts",
+        grades: ["Elementary", "Middle School", "High School"],
+        commitment: "Weekly sessions"
+    },
+    {
+        id: 3,
+        title: "English",
+        subtitle: "Elementary, Middle & High School",
+        description: "Expert guidance in reading comprehension, writing skills, grammar, literature analysis, and essay composition across all grade levels.",
+        icon: EnglishIcon,
+        color: "#e91e63",
+        category: "Core Subject",
         grades: ["Elementary", "Middle School", "High School"],
         commitment: "Weekly sessions"
     },

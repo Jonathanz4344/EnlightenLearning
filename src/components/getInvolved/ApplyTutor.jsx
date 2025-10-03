@@ -69,7 +69,6 @@ const subjectAreas = [
         grades: ["Spanish", "Mandarin Chinese", "French"],
         commitment: "Conversational sessions"
     },
-    // updated
     {
         id: 3,
         title: "English",

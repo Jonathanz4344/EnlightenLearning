@@ -30,6 +30,7 @@ import {
     Schedule as ScheduleIcon,
     Favorite as HeartIcon,
     EmojiEvents as AwardIcon,
+    MusicNote as MusicIcon
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
@@ -68,6 +69,17 @@ const subjectAreas = [
         category: "Language",
         grades: ["Spanish", "Mandarin Chinese", "French"],
         commitment: "Conversational sessions"
+    },
+     {
+        id: 7,
+        title: "Music",
+        subtitle: "Elementary, Middle & High School",
+        description: "Provide personalized music instruction, including reading music, developing instrumental or vocal skills, and exploring music theory and performance techniques. Lessons are tailored to each student’s goals and level.",
+        icon: MusicIcon,
+        color: "#9c27b0",
+        category: "Fine Arts",
+        grades: ["Elementary", "Middle School", "High School"],
+        commitment: "Weekly sessions"
     },
     {
         id: 3,

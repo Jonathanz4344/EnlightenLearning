@@ -31,6 +31,7 @@ import {
     Favorite as HeartIcon,
     EmojiEvents as AwardIcon,
     Groups as GroupsIcon,
+    MusicNote as MusicIcon,
 } from "@mui/icons-material";
 import { useMode } from "../Layout";
 
@@ -74,8 +75,8 @@ const subjectAreas = [
         title: "Music",
         subtitle: "Elementary, Middle & High School",
         description: "Whether you're just learning to read music or preparing for high-level concerts and competitions, our lessons are tailored to your level and interests.",
-        icon: EnglishIcon,
-        color: "#e91e63",
+        icon: MusicIcon,
+        color: "#9c27b0",
         category: "Fine Arts",
         grades: ["Elementary", "Middle School", "High School"],
         commitment: "Weekly sessions",

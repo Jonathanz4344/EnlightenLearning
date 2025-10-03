@@ -73,12 +73,13 @@ const subjectAreas = [
         id: 7,
         title: "Music",
         subtitle: "Elementary, Middle & High School",
-        description: "Learn to read music, develop instrumental or vocal skills, and explore music theory and performance techniques tailored to each student’s level and interests. *Instrument dependent availability.",
+        description: "Whether you're just learning to read music or preparing for high-level concerts and competitions, our lessons are tailored to your level and interests.",
         icon: EnglishIcon,
         color: "#e91e63",
         category: "Fine Arts",
         grades: ["Elementary", "Middle School", "High School"],
-        commitment: "Weekly sessions"
+        commitment: "Weekly sessions",
+        specialNote: "*Instrument-dependent availability."
     },
     {
         id: 3,
@@ -95,7 +96,7 @@ const subjectAreas = [
         id: 4,
         title: "Mathematics",
         subtitle: "Elementary through Geometry",
-        description: "Build strong mathematical foundations and problem-solving skills with support in fundamental math concepts, algebra, and geometry.",
+        description: "Build strong mathematical foundations and problem-solving skills with support ranging from fundamental math concepts at the elementary level, to high school level courses like Algebra 1/2, and Geometry.",
         icon: MathIcon,
         color: "#ff9800",
         category: "Core Subject",
@@ -106,7 +107,7 @@ const subjectAreas = [
         id: 5,
         title: "Science",
         subtitle: "Earth Science, Biology, Chemistry",
-        description: "Develop understanding of scientific concepts, conduct experiments, and build critical thinking skills across various science disciplines.",
+        description: "Develop understanding of scientific concepts, course specific content, and build critical thinking skills across various science disciplines from elementary level sciences to Earth Science, Biology and Chemistry. ",
         icon: ScienceIcon,
         color: "#9c27b0",
         category: "Core Subject",
@@ -259,6 +260,20 @@ const SubjectCard = ({ subject }) => {
                             />
                         ))}
                     </Box>
+                    {subject.specialNote && (
+                        <Typography
+                            variant="caption"
+                            sx={{
+                                display: 'block',
+                                mt: 1,
+                                fontStyle: 'italic',
+                                color: 'text.secondary',
+                                fontSize: '0.75rem'
+                            }}
+                        >
+                            {subject.specialNote}
+                        </Typography>
+                    )}
                 </Box>
 
                 {/* Book Session Section */}

@@ -69,18 +69,6 @@ const subjectAreas = [
         grades: ["Spanish", "Mandarin Chinese", "French"],
         commitment: "Conversational sessions"
     },
-    // updated2
-    {
-        id: 7,
-        title: "Music",
-        subtitle: "Elementary, Middle & High School",
-        description: "Provide personalized music instruction, including reading music, developing instrumental or vocal skills, and exploring music theory and performance techniques. Lessons are tailored to each student’s goals and level.",
-        icon: EnglishIcon,
-        color: "#e91e63",
-        category: "Fine Arts",
-        grades: ["Elementary", "Middle School", "High School"],
-        commitment: "Weekly sessions"
-    },
     {
         id: 3,
         title: "English",

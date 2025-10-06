@@ -35,6 +35,22 @@ import { useMode } from "../Layout";
 // Sample events data with expiration dates and registration start dates
 const eventsData = [
     {
+        id: 5,
+        title: "Snowy Literature",
+        date: "2025-12-12 ",
+        time: "4:00 PM - 5:30 PM",
+        location: "Shelter Rock Library",
+        description: "Calling all young storytellers! Join us at our cozy winter literature workshop to learn the components of a story and turn your ideas into stories worth saving.",
+        formUrl: "https://forms.gle/xr8DBYPEGybZbYxN7",
+        category: "Literature",
+        volunteersNeeded: 30,
+        totalParticipants: 30,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "22023-07-01",
+        expirationDate: "",
+    },
+    {
         id: 1,
         title: "The Art of Winter Crafts Event",
         date: "2025-01-10",

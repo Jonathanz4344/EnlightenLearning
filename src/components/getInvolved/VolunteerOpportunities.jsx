@@ -35,6 +35,22 @@ import { useMode } from "../Layout";
 // Simplified volunteer data - single array with all opportunities
 const volunteerData = [
     {
+        id: 5,
+        title: "Snowy Literature",
+        date: "2025-12-12 ",
+        time: "4:00 PM - 5:30 PM",
+        location: "Shelter Rock Library",
+        description: "Want to help guide students on their journey in storytelling? This is a great opportunity for those who want to engage with students to guide them in expressing their creativity.",
+        formUrl: "https://forms.gle/UjB7PafvMfFvBocj9",
+        category: "Literature",
+        volunteersNeeded: 30,
+        totalParticipants: 30,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "22023-07-01",
+        expirationDate: "",
+    },
+    {
         id: 1,
         title: "The Art of Winter Crafts Event",
         date: "2025-01-10",

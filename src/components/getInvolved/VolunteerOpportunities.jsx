@@ -43,7 +43,7 @@ const volunteerData = [
         description: "Want to help guide students on their journey in storytelling? This is a great opportunity for those who want to engage with students to guide them in expressing their creativity.",
         formUrl: "https://forms.gle/UjB7PafvMfFvBocj9",
         category: "Literature",
-        volunteersNeeded: 30,
+        volunteersNeeded: 10,
         totalParticipants: 30,
         duration: "1.5 hours",
         coordinator: "Enlighten Learning",

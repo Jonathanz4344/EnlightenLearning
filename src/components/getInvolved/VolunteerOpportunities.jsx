@@ -47,8 +47,8 @@ const volunteerData = [
         totalParticipants: 30,
         duration: "1.5 hours",
         coordinator: "Enlighten Learning",
-        registrationStartDate: "22023-07-01",
-        expirationDate: "",
+        registrationStartDate: "2025-12-05",
+        expirationDate: "2025-12-12",
     },
     {
         id: 1,

@@ -10,6 +10,7 @@ import MakingDiff from "../components/programs/MakingDifference";
 import TutoringServices from "../components/programs/TutoringServices";
 import ContactUs from "../components/navBar/ContactUs";
 import DonateNow from "../components/navBar/DonateNow";
+import Charities from "../components/charities/Charities";
 
 const Home = React.lazy(() => import("../components/Home"));
 
@@ -25,10 +26,7 @@ const routes = [
   { path: PathConstants.EXEC_TEAM, element: <ExecTeam /> },
   { path: PathConstants.CONTACT_US, element: <ContactUs /> },
   { path: PathConstants.DONATE_NOW, element: <DonateNow /> },
-
-
-
-
+  { path: PathConstants.CHARITIES, element: <Charities /> },
 ];
 
 export default routes;

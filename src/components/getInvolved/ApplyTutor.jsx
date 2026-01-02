@@ -591,7 +591,7 @@ export default function ApplyTutor() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
-                                130+
+                                180+
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Tutoring Sessions

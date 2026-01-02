@@ -550,13 +550,13 @@ export default function Reviews() {
                         <StatsCard
                             icon={PeopleIcon}
                             title="Lives Impacted"
-                            value="100+"
+                            value="200+"
                             color="#9c27b0"
                         />
                         <StatsCard
                             icon={PeopleIcon}
                             title="Tutoring Sessions"
-                            value="130+"
+                            value="180+"
                             color="#4caf50"
                         />
                         <StatsCard

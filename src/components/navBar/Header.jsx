@@ -634,6 +634,7 @@ const Header = ({ mode, toggleColorMode }) => {
                   { text: "Our Mission", href: PathConstants.MISSION },
                   { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
                   { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
+                  { text: "Our Charities", href: PathConstants.CHARITIES },
                 ],
               },
             ]}
@@ -832,18 +833,19 @@ const Header = ({ mode, toggleColorMode }) => {
                   </ListItemButton>
                 </ListItem>
               ) : (
-                <ListItem
-                  button
-                  onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
-                  sx={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  {item.text}
-                  <ExpandMoreIcon
-                    sx={{
-                      transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
-                      transition: "transform 0.3s",
-                    }}
-                  />
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <ListItemText primary={item.text} />
+                    <ExpandMoreIcon
+                      sx={{
+                        transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.3s",
+                      }}
+                    />
+                  </ListItemButton>
                 </ListItem>
               )}
 

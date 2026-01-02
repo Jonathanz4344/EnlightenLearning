@@ -54,13 +54,13 @@ const execPositions = [
         id: 2,
         title: "Head of Academics",
         maxPositions: 2, // NEW: Multiple positions available
-        description: "Creates and maintains the tutoring curriculum, organizes and manages resources for tutors to use for students. Additionally, plans and conducts workshops to provide guidance and tips for other tutors.",
+        description: "Coordinates the quality and effectiveness of the tutoring program by guiding and training tutors, organizing academic resources, and ensuring consistent academic standards. Additionally, plan and conduct educational workshops to support student learning.",
         icon: AcademicsIcon,
         responsibilities: [
-            "Curriculum development and maintenance",
+            "Tutor guidance and training",
             "Resource organization for tutors",
-            "Workshop planning and execution",
-            "Tutor guidance and training"
+            "Oversight of academic quality across tutoring program",
+            "Educational workshop planning and execution"
         ],
         currentMembers: [{ name: "Anna Zou", avatar: "AZ" }, { name: "Aarini Chakraborty", avatar: "AC" }],
         category: "Academic"
@@ -144,7 +144,8 @@ const execPositions = [
             "Local program support and engagement"
         ],
         currentMembers: [
-            { name: "Tiffany Zhou", avatar: "TZ" }
+            { name: "Tiffany Zhou", avatar: "TZ" },
+            { name: "Lauren Chen", avatar: "LC" }
         ],
         category: "Development"
     },

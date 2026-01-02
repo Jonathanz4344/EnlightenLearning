@@ -10,7 +10,6 @@ const PathConstants = {
   EXEC_TEAM: "/Get-Involved/Join-Exec-Team",
   CONTACT_US: "/Contact-Us",
   DONATE_NOW: "/Donate-Now",
-
-
+  CHARITIES: "/Charities",
 };
 export default PathConstants;

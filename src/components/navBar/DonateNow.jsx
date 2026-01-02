@@ -54,10 +54,10 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
 
     // Balloon rises from bottom (0%) to top (100%)
     const riseAmount = percentage; // 0-100
-    
+
     // Balloon inflates from 60% to 100% size
     const balloonScale = 0.6 + (percentage / 100) * 0.4;
-    
+
     // Base balloon size
     const balloonSize = isMobile ? 120 : 160;
 
@@ -70,7 +70,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                 mb: 4,
                 p: { xs: 3, sm: 5 },
                 borderRadius: 5,
-                background: isDarkMode 
+                background: isDarkMode
                     ? 'linear-gradient(180deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%)'
                     : 'linear-gradient(180deg, #e3f2fd 0%, #bbdefb 30%, #90caf9 100%)',
                 border: 'none',
@@ -91,11 +91,11 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         width: { xs: 60, sm: 100 },
                         height: { xs: 25, sm: 40 },
                         borderRadius: '50px',
-                        background: isDarkMode 
-                            ? 'rgba(255,255,255,0.05)' 
+                        background: isDarkMode
+                            ? 'rgba(255,255,255,0.05)'
                             : 'rgba(255,255,255,0.7)',
-                        boxShadow: isDarkMode 
-                            ? 'none' 
+                        boxShadow: isDarkMode
+                            ? 'none'
                             : '0 4px 20px rgba(255,255,255,0.5)',
                         animation: `cloudFloat${i} ${15 + i * 5}s ease-in-out infinite`,
                         [`@keyframes cloudFloat${i}`]: {
@@ -134,7 +134,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     left: 0,
                     right: 0,
                     height: 60,
-                    background: isDarkMode 
+                    background: isDarkMode
                         ? 'linear-gradient(180deg, #1b5e20 0%, #2e7d32 100%)'
                         : 'linear-gradient(180deg, #66bb6a 0%, #43a047 100%)',
                     borderRadius: '100% 100% 0 0 / 30px 30px 0 0',
@@ -195,8 +195,8 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                             bottom: 40,
                             transform: 'translateX(-50%)',
                             width: 4,
-                            background: isDarkMode 
-                                ? 'rgba(255,255,255,0.1)' 
+                            background: isDarkMode
+                                ? 'rgba(255,255,255,0.1)'
                                 : 'rgba(255,255,255,0.5)',
                             borderRadius: 2,
                         }}
@@ -221,7 +221,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                 sx={{
                                     position: 'absolute',
                                     right: 30,
-                                    color: percentage >= milestone 
+                                    color: percentage >= milestone
                                         ? (isDarkMode ? '#81c784' : '#2e7d32')
                                         : (isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)'),
                                     fontWeight: percentage >= milestone ? 700 : 400,
@@ -236,16 +236,16 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     width: 12,
                                     height: 12,
                                     borderRadius: '50%',
-                                    backgroundColor: percentage >= milestone 
-                                        ? '#4caf50' 
+                                    backgroundColor: percentage >= milestone
+                                        ? '#4caf50'
                                         : (isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.8)'),
                                     border: '2px solid',
-                                    borderColor: percentage >= milestone 
-                                        ? '#2e7d32' 
+                                    borderColor: percentage >= milestone
+                                        ? '#2e7d32'
                                         : (isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'),
                                     transition: 'all 0.5s ease',
-                                    boxShadow: percentage >= milestone 
-                                        ? '0 0 10px rgba(76, 175, 80, 0.5)' 
+                                    boxShadow: percentage >= milestone
+                                        ? '0 0 10px rgba(76, 175, 80, 0.5)'
                                         : 'none',
                                 }}
                             />
@@ -408,8 +408,8 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         textAlign: 'center',
                         p: 3,
                         borderRadius: 4,
-                        background: isDarkMode 
-                            ? 'rgba(0,0,0,0.3)' 
+                        background: isDarkMode
+                            ? 'rgba(0,0,0,0.3)'
                             : 'rgba(255,255,255,0.9)',
                         backdropFilter: 'blur(10px)',
                         boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
@@ -434,7 +434,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
                         raised of <strong>${goalAmount.toLocaleString()}</strong> goal
                     </Typography>
-                    
+
                     {/* Mini Progress Bar */}
                     <Box
                         sx={{
@@ -454,7 +454,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                             }}
                         />
                     </Box>
-                    
+
                     {/* Stats Row */}
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                         <Grid item xs={4}>
@@ -489,13 +489,13 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         fontStyle: 'italic',
                     }}
                 >
-                    {percentage >= 100 
+                    {percentage >= 100
                         ? "🎈 The balloon has reached the sky! Thank you!"
-                        : percentage >= 75 
+                        : percentage >= 75
                             ? "🎈 Almost at the clouds! One more push!"
-                            : percentage >= 50 
+                            : percentage >= 50
                                 ? "🎈 Rising higher! Keep it going!"
-                                : percentage >= 25 
+                                : percentage >= 25
                                     ? "🎈 Lifting off! Help us soar!"
                                     : "🎈 Help inflate and launch our balloon!"}
                 </Typography>
@@ -567,7 +567,7 @@ export default function DonateNow() {
     const [copiedZelle, setCopiedZelle] = React.useState(false);
 
     // Fundraising data
-    const currentAmount = 5000;
+    const currentAmount = 2000;
     const goalAmount = 10000;
     const zelleEmail = "Enlightenlearningfinance@gmail.com";
 
@@ -660,6 +660,41 @@ export default function DonateNow() {
                     >
                         Every dollar helps us make a bigger impact in our community! We're getting closer to our goal every day.
                     </Typography>
+                    {/* See Our Impact Button */}
+                    <Box sx={{ mt: 4, textAlign: 'center' }}>
+                        <Button
+                            component={Link}
+                            to={PathConstants.CHARITIES}
+                            variant="outlined"
+                            size="large"
+                            endIcon={<ArrowForwardIcon />}
+                            startIcon={<VolunteerIcon />}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1rem',
+                                fontWeight: 600,
+                                borderRadius: 3,
+                                borderWidth: 2,
+                                borderColor: isDarkMode ? '#667eea' : '#764ba2',
+                                color: isDarkMode ? '#667eea' : '#764ba2',
+                                background: isDarkMode
+                                    ? 'rgba(102, 126, 234, 0.1)'
+                                    : 'rgba(118, 75, 162, 0.05)',
+                                '&:hover': {
+                                    borderWidth: 2,
+                                    borderColor: isDarkMode ? '#764ba2' : '#667eea',
+                                    background: isDarkMode
+                                        ? 'rgba(102, 126, 234, 0.2)'
+                                        : 'rgba(118, 75, 162, 0.1)',
+                                    transform: 'translateY(-2px)',
+                                },
+                                transition: 'all 0.3s ease',
+                            }}
+                        >
+                            See Our Impact & Charities
+                        </Button>
+                    </Box>
                 </Box>
 
                 <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />

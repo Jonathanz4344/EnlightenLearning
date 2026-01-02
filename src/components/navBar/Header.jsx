@@ -833,18 +833,19 @@ const Header = ({ mode, toggleColorMode }) => {
                   </ListItemButton>
                 </ListItem>
               ) : (
-                <ListItem
-                  button
-                  onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
-                  sx={{ display: "flex", justifyContent: "space-between" }}
-                >
-                  {item.text}
-                  <ExpandMoreIcon
-                    sx={{
-                      transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
-                      transition: "transform 0.3s",
-                    }}
-                  />
+                <ListItem disablePadding>
+                  <ListItemButton
+                    onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
+                    sx={{ display: "flex", justifyContent: "space-between" }}
+                  >
+                    <ListItemText primary={item.text} />
+                    <ExpandMoreIcon
+                      sx={{
+                        transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
+                        transition: "transform 0.3s",
+                      }}
+                    />
+                  </ListItemButton>
                 </ListItem>
               )}
 

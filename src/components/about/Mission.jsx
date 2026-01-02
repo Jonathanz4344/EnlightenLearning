@@ -63,7 +63,7 @@ const missionPillars = [
         icon: PassionIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
-        stats: { value: "130+", label: "Sessions Taught" },
+        stats: { value: "180+", label: "Sessions Taught" },
         features: [
             "Dedicated volunteer tutors",
             "Charitable tutoring programs",
@@ -79,7 +79,7 @@ const missionPillars = [
         icon: ChangeIcon,
         color: '#2196f3',
         bgGradient: 'linear-gradient(135deg, #2196f3, #42a5f5)',
-        stats: { value: "100+", label: "Lives Impacted" },
+        stats: { value: "200+", label: "Lives Impacted" },
         features: [
             "Youth empowerment",
             "Purpose driven learning",
@@ -107,9 +107,9 @@ const missionPillars = [
 
 // Impact metrics data
 const impactMetrics = [
-    { icon: EducationIcon, value: "100+", label: "Lives Impacted", color: "#4caf50" },
+    { icon: EducationIcon, value: "200+", label: "Lives Impacted", color: "#4caf50" },
     { icon: CommunityIcon, value: "30+", label: "Active Volunteers", color: "#2196f3" },
-    { icon: EventIcon, value: "130", label: "Sessions Taught", color: "#e91e63" },
+    { icon: EventIcon, value: "180", label: "Sessions Taught", color: "#e91e63" },
     { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" }
 ];
 
@@ -919,7 +919,7 @@ export default function Mission() {
                                 }
                             }}>
                                 <Typography variant="h3" sx={{ fontWeight: 900, mb: 1 }}>
-                                    100+
+                                    200+
                                 </Typography>
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                                     Lives Impacted

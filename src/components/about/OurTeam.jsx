@@ -44,7 +44,7 @@ const teamMembers = [
     {
         id: 1,
         name: "Brianna Tam",
-        roles: ["Founder & President",],
+        roles: ["Founder & President"," Head of Tutoring Services"],
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
@@ -107,7 +107,7 @@ const teamMembers = [
     {
         id: 8,
         name: "Lauren Chen",
-        roles: ["Secretary"],
+        roles: ["Secretary", "Outreach Coordinator"],
         icon: AssignmentIcon,
         color: '#607d8b',
         bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',
@@ -117,8 +117,8 @@ const teamMembers = [
 
 // Team stats
 const teamStats = [
-    { icon: GroupIcon, value: "130", label: "Sessions Taught", color: "#4caf50" },
-    { icon: SchoolIcon, value: "100+", label: "Lives Impacted", color: "#2196f3" },
+    { icon: GroupIcon, value: "180", label: "Sessions Taught", color: "#4caf50" },
+    { icon: SchoolIcon, value: "200+", label: "Lives Impacted", color: "#2196f3" },
     { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
 ];

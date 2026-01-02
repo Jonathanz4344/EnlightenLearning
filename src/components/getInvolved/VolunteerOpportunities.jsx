@@ -842,7 +842,7 @@ const VolunteerOpportunities = () => {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" color="secondary.main" fontWeight="bold">
-                                100+
+                                200+
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Lives Impacted

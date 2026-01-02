@@ -26,7 +26,7 @@ import {
 } from "@mui/icons-material";
 
 // Instagram Embed Component
-const InstagramEmbed = ({ url, isLatest = false }) => {
+const InstagramEmbed = ({ url }) => {
   return (
     <Fade in timeout={1400}>
       <Box sx={{ position: 'relative' }}>
@@ -92,25 +92,16 @@ export default function Hero() {
   const [showAllInstagram, setShowAllInstagram] = useState(false);
   const [showAllFacebook, setShowAllFacebook] = useState(false);
 
-  // Instagram post URLs - Easy to manage!
+  // Instagram post URLs - Easy to manage! (first one shows first)
   const instagramPosts = [
-    {
-      url: "https://www.instagram.com/p/DIugjbzvqa0",
-      isLatest: true
-    },
-    {
-      url: "https://www.instagram.com/p/DEvT6yEvrEh",
-      isLatest: false
-    },
-
+    "https://www.instagram.com/reel/DST6NLvDvD1",
+    "https://www.instagram.com/p/DEvT6yEvrEh",
   ];
 
-  // Facebook post URLs - Easy to manage!
+  // Facebook post URLs - Easy to manage! (first one shows first)
   const facebookPosts = [
+    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500",
     "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500",
-    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid07khjTjiz5Y4GyyQQ7Hn5D3q623f6PdheSzqwMWaQ6fqkNsCaskCowXiLi6MbazAql%26id%3D61576772816131&show_text=true&width=500",
-    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02JriNPeVoEyBE795J3JKhFhcHnscUeWvT74PZHyGNEHxJdKTMgN7tFPUJJ5v3bEYpl%26id%3D61576772816131&show_text=true&width=500"
-
   ];
 
 
@@ -140,7 +131,7 @@ export default function Hero() {
         document.body.removeChild(existingScript);
       }
     };
-  }, []);
+  }, [instagramPosts.length]);
 
   return (
     <React.Fragment>
@@ -428,11 +419,10 @@ export default function Hero() {
                       }
                     }
                   }}>
-                    {visibleInstagramPosts.map((post, index) => (
+                    {visibleInstagramPosts.map((url) => (
                       <InstagramEmbed
-                        key={index}
-                        url={post.url}
-                        isLatest={post.isLatest}
+                        key={url}
+                        url={url}
                       />
                     ))}
                   </Box>

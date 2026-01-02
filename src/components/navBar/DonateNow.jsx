@@ -32,10 +32,14 @@ import {
     Lightbulb as LightbulbIcon,
     Support as SupportIcon,
     LocalLibrary as LibraryIcon,
+    ArrowForward as ArrowForwardIcon,
+    VolunteerActivism as VolunteerIcon,
 } from "@mui/icons-material";
+import { Link } from "react-router-dom";
 import { useMode } from "../Layout";
 import Logo from "/images/logo/Logo.png";
 import ZelleQr from "/images/donate/Zelle.jpg"
+import PathConstants from "../../routes/pathConstants";
 
 // Simple donation amounts
 const donationAmounts = [25, 50, 100, 250];
@@ -619,6 +623,42 @@ export default function DonateNow() {
                     >
                         Every dollar helps us make a bigger impact in our community! We're getting closer to our goal every day.
                     </Typography>
+
+                    {/* See Our Impact Button */}
+                    <Box sx={{ mt: 4, textAlign: 'center' }}>
+                        <Button
+                            component={Link}
+                            to={PathConstants.CHARITIES}
+                            variant="outlined"
+                            size="large"
+                            endIcon={<ArrowForwardIcon />}
+                            startIcon={<VolunteerIcon />}
+                            sx={{
+                                px: 4,
+                                py: 1.5,
+                                fontSize: '1rem',
+                                fontWeight: 600,
+                                borderRadius: 3,
+                                borderWidth: 2,
+                                borderColor: isDarkMode ? '#667eea' : '#764ba2',
+                                color: isDarkMode ? '#667eea' : '#764ba2',
+                                background: isDarkMode 
+                                    ? 'rgba(102, 126, 234, 0.1)' 
+                                    : 'rgba(118, 75, 162, 0.05)',
+                                '&:hover': {
+                                    borderWidth: 2,
+                                    borderColor: isDarkMode ? '#764ba2' : '#667eea',
+                                    background: isDarkMode 
+                                        ? 'rgba(102, 126, 234, 0.2)' 
+                                        : 'rgba(118, 75, 162, 0.1)',
+                                    transform: 'translateY(-2px)',
+                                },
+                                transition: 'all 0.3s ease',
+                            }}
+                        >
+                            See Our Impact & Charities
+                        </Button>
+                    </Box>
                 </Box>
 
                 <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />

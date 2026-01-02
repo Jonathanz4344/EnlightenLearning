@@ -634,7 +634,7 @@ const Header = ({ mode, toggleColorMode }) => {
                   { text: "Our Mission", href: PathConstants.MISSION },
                   { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
                   { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
-                  { text: "Our Charities", href: PathConstants.CHARITIES },
+                  // { text: "Our Charities", href: PathConstants.CHARITIES },
                 ],
               },
             ]}

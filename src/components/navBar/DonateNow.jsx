@@ -44,7 +44,7 @@ import PathConstants from "../../routes/pathConstants";
 // Simple donation amounts
 const donationAmounts = [25, 50, 100, 250];
 
-// Updated Fundraising Progress component with modern design
+// Logo Balloon Fundraising Progress - The logo IS the balloon!
 const FundraisingProgress = ({ currentAmount, goalAmount }) => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
@@ -52,415 +52,452 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
-    // Milestone data with icons and labels
-    const milestones = [
-        { percent: 25, label: 'Getting Started', icon: '🌱' },
-        { percent: 50, label: 'Halfway There!', icon: '🔥' },
-        { percent: 75, label: 'Almost There!', icon: '⭐' },
-        { percent: 100, label: 'Goal Reached!', icon: '🎉' },
-    ];
+    // Balloon rises from bottom (0%) to top (100%)
+    const riseAmount = percentage; // 0-100
+    
+    // Balloon inflates from 60% to 100% size
+    const balloonScale = 0.6 + (percentage / 100) * 0.4;
+    
+    // Base balloon size
+    const balloonSize = isMobile ? 120 : 160;
 
     return (
         <Paper
             elevation={0}
             sx={{
-                maxWidth: 700,
+                maxWidth: 800,
                 mx: 'auto',
                 mb: 4,
-                p: { xs: 3, sm: 4 },
-                borderRadius: 4,
+                p: { xs: 3, sm: 5 },
+                borderRadius: 5,
                 background: isDarkMode 
-                    ? 'linear-gradient(145deg, rgba(30, 30, 30, 0.9), rgba(45, 45, 45, 0.9))'
-                    : 'linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(248, 250, 252, 0.95))',
-                border: isDarkMode 
-                    ? '1px solid rgba(76, 175, 80, 0.3)' 
-                    : '1px solid rgba(76, 175, 80, 0.2)',
+                    ? 'linear-gradient(180deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%)'
+                    : 'linear-gradient(180deg, #e3f2fd 0%, #bbdefb 30%, #90caf9 100%)',
+                border: 'none',
                 position: 'relative',
                 overflow: 'hidden',
-                '&::before': {
-                    content: '""',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                    right: 0,
-                    height: 4,
-                    background: 'linear-gradient(90deg, #4caf50, #81c784, #4caf50)',
-                    backgroundSize: '200% 100%',
-                    animation: 'shimmer 2s infinite linear',
-                },
-                '@keyframes shimmer': {
-                    '0%': { backgroundPosition: '200% 0' },
-                    '100%': { backgroundPosition: '-200% 0' },
-                },
+                minHeight: { xs: 500, sm: 550 },
             }}
         >
-            {/* Header Section */}
-            <Box sx={{ textAlign: 'center', mb: 4 }}>
+            {/* Sky Background Elements */}
+            {/* Clouds */}
+            {[...Array(3)].map((_, i) => (
                 <Box
+                    key={`cloud-${i}`}
                     sx={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        width: 64,
-                        height: 64,
-                        borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #4caf50 0%, #66bb6a 100%)',
-                        mb: 2,
-                        boxShadow: '0 8px 32px rgba(76, 175, 80, 0.3)',
+                        position: 'absolute',
+                        top: `${15 + i * 25}%`,
+                        left: i % 2 === 0 ? '5%' : '70%',
+                        width: { xs: 60, sm: 100 },
+                        height: { xs: 25, sm: 40 },
+                        borderRadius: '50px',
+                        background: isDarkMode 
+                            ? 'rgba(255,255,255,0.05)' 
+                            : 'rgba(255,255,255,0.7)',
+                        boxShadow: isDarkMode 
+                            ? 'none' 
+                            : '0 4px 20px rgba(255,255,255,0.5)',
+                        animation: `cloudFloat${i} ${15 + i * 5}s ease-in-out infinite`,
+                        [`@keyframes cloudFloat${i}`]: {
+                            '0%, 100%': { transform: 'translateX(0)' },
+                            '50%': { transform: `translateX(${i % 2 === 0 ? '20px' : '-20px'})` },
+                        },
+                        '&::before': {
+                            content: '""',
+                            position: 'absolute',
+                            top: '-50%',
+                            left: '20%',
+                            width: '40%',
+                            height: '100%',
+                            borderRadius: '50%',
+                            background: 'inherit',
+                        },
+                        '&::after': {
+                            content: '""',
+                            position: 'absolute',
+                            top: '-30%',
+                            right: '20%',
+                            width: '30%',
+                            height: '80%',
+                            borderRadius: '50%',
+                            background: 'inherit',
+                        },
                     }}
-                >
-                    <TrendingUpIcon sx={{ fontSize: 32, color: 'white' }} />
-                </Box>
+                />
+            ))}
+
+            {/* Ground/Grass at bottom */}
+            <Box
+                sx={{
+                    position: 'absolute',
+                    bottom: 0,
+                    left: 0,
+                    right: 0,
+                    height: 60,
+                    background: isDarkMode 
+                        ? 'linear-gradient(180deg, #1b5e20 0%, #2e7d32 100%)'
+                        : 'linear-gradient(180deg, #66bb6a 0%, #43a047 100%)',
+                    borderRadius: '100% 100% 0 0 / 30px 30px 0 0',
+                }}
+            />
+
+            {/* Main Content Container */}
+            <Box
+                sx={{
+                    position: 'relative',
+                    zIndex: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    height: '100%',
+                }}
+            >
+                {/* Title */}
                 <Typography
                     variant="h5"
                     sx={{
                         fontWeight: 700,
-                        color: 'text.primary',
+                        color: isDarkMode ? '#fff' : '#1565c0',
+                        textAlign: 'center',
                         mb: 1,
+                        textShadow: isDarkMode ? 'none' : '0 2px 10px rgba(255,255,255,0.5)',
                     }}
                 >
-                    Our Fundraising Progress
+                    Help Our Balloon Rise! 🎈
                 </Typography>
                 <Typography
                     variant="body2"
                     sx={{
-                        color: 'text.secondary',
-                        maxWidth: 400,
-                        mx: 'auto',
+                        color: isDarkMode ? 'rgba(255,255,255,0.7)' : '#1976d2',
+                        textAlign: 'center',
+                        mb: 4,
                     }}
                 >
-                    Help us reach our goal to support more students in their educational journey
+                    Every donation inflates and lifts us higher
                 </Typography>
-            </Box>
 
-            {/* Main Amount Display */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'baseline',
-                    gap: 1,
-                    mb: 3,
-                }}
-            >
-                <Typography
-                    variant="h2"
-                    sx={{
-                        fontWeight: 800,
-                        background: 'linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)',
-                        backgroundClip: 'text',
-                        WebkitBackgroundClip: 'text',
-                        WebkitTextFillColor: 'transparent',
-                        fontSize: { xs: '2.5rem', sm: '3.5rem' },
-                    }}
-                >
-                    ${currentAmount.toLocaleString()}
-                </Typography>
-                <Typography
-                    variant="h5"
-                    sx={{
-                        fontWeight: 500,
-                        color: 'text.secondary',
-                        fontSize: { xs: '1rem', sm: '1.25rem' },
-                    }}
-                >
-                    of ${goalAmount.toLocaleString()}
-                </Typography>
-            </Box>
-
-            {/* Progress Bar */}
-            <Box sx={{ position: 'relative', mb: 4 }}>
-                {/* Background Track */}
+                {/* Balloon Flight Zone */}
                 <Box
                     sx={{
-                        height: 24,
-                        borderRadius: 12,
-                        backgroundColor: isDarkMode ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)',
-                        overflow: 'hidden',
                         position: 'relative',
+                        width: '100%',
+                        height: { xs: 280, sm: 320 },
+                        display: 'flex',
+                        justifyContent: 'center',
                     }}
                 >
-                    {/* Progress Fill */}
+                    {/* Vertical Progress Track */}
                     <Box
-                        sx={{
-                            height: '100%',
-                            width: `${percentage}%`,
-                            borderRadius: 12,
-                            background: 'linear-gradient(90deg, #43a047, #66bb6a, #81c784)',
-                            backgroundSize: '200% 100%',
-                            animation: 'progressShimmer 3s ease infinite',
-                            transition: 'width 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                            position: 'relative',
-                            boxShadow: '0 0 20px rgba(76, 175, 80, 0.4)',
-                            '@keyframes progressShimmer': {
-                                '0%': { backgroundPosition: '0% 50%' },
-                                '50%': { backgroundPosition: '100% 50%' },
-                                '100%': { backgroundPosition: '0% 50%' },
-                            },
-                        }}
-                    />
-                    
-                    {/* Milestone Markers on Track */}
-                    {milestones.slice(0, 3).map((milestone) => (
-                        <Box
-                            key={milestone.percent}
-                            sx={{
-                                position: 'absolute',
-                                left: `${milestone.percent}%`,
-                                top: '50%',
-                                transform: 'translate(-50%, -50%)',
-                                width: 8,
-                                height: 8,
-                                borderRadius: '50%',
-                                backgroundColor: percentage >= milestone.percent 
-                                    ? 'white' 
-                                    : (isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.2)'),
-                                boxShadow: percentage >= milestone.percent 
-                                    ? '0 0 8px rgba(255,255,255,0.5)' 
-                                    : 'none',
-                                transition: 'all 0.5s ease',
-                                zIndex: 2,
-                            }}
-                        />
-                    ))}
-                </Box>
-
-                {/* Logo Marker */}
-                <Box
-                    sx={{
-                        position: 'absolute',
-                        left: `${Math.min(Math.max(percentage, 5), 95)}%`,
-                        top: '50%',
-                        transform: 'translate(-50%, -50%)',
-                        transition: 'left 1.5s cubic-bezier(0.4, 0, 0.2, 1)',
-                        zIndex: 10,
-                    }}
-                >
-                    <Box
-                        sx={{
-                            width: { xs: 48, sm: 56 },
-                            height: { xs: 48, sm: 56 },
-                            borderRadius: '50%',
-                            backgroundColor: 'white',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            border: '3px solid #4caf50',
-                            boxShadow: '0 4px 20px rgba(76, 175, 80, 0.4), 0 0 0 4px rgba(76, 175, 80, 0.15)',
-                            position: 'relative',
-                            overflow: 'hidden',
-                            '&::after': {
-                                content: '""',
-                                position: 'absolute',
-                                top: 0,
-                                left: '-100%',
-                                width: '100%',
-                                height: '100%',
-                                background: 'linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent)',
-                                animation: 'logoShine 2s infinite',
-                            },
-                            '@keyframes logoShine': {
-                                '0%': { left: '-100%' },
-                                '50%, 100%': { left: '100%' },
-                            },
-                        }}
-                    >
-                        <img
-                            src={Logo}
-                            alt="Enlighten Learning"
-                            style={{
-                                width: '70%',
-                                height: '70%',
-                                objectFit: 'contain',
-                            }}
-                        />
-                    </Box>
-                    {/* Percentage Badge below logo */}
-                    <Chip
-                        label={`${percentage.toFixed(0)}%`}
-                        size="small"
                         sx={{
                             position: 'absolute',
                             left: '50%',
-                            top: '100%',
+                            top: 0,
+                            bottom: 40,
                             transform: 'translateX(-50%)',
-                            mt: 0.5,
-                            fontWeight: 700,
-                            backgroundColor: '#4caf50',
-                            color: 'white',
-                            fontSize: '0.7rem',
-                            height: 20,
-                            boxShadow: '0 2px 8px rgba(76, 175, 80, 0.4)',
+                            width: 4,
+                            background: isDarkMode 
+                                ? 'rgba(255,255,255,0.1)' 
+                                : 'rgba(255,255,255,0.5)',
+                            borderRadius: 2,
                         }}
                     />
+
+                    {/* Milestone Markers */}
+                    {[0, 25, 50, 75, 100].map((milestone) => (
+                        <Box
+                            key={milestone}
+                            sx={{
+                                position: 'absolute',
+                                left: '50%',
+                                bottom: `${(milestone / 100) * 85 + 10}%`,
+                                transform: 'translateX(-50%)',
+                                display: 'flex',
+                                alignItems: 'center',
+                                gap: 2,
+                            }}
+                        >
+                            <Typography
+                                variant="caption"
+                                sx={{
+                                    position: 'absolute',
+                                    right: 30,
+                                    color: percentage >= milestone 
+                                        ? (isDarkMode ? '#81c784' : '#2e7d32')
+                                        : (isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)'),
+                                    fontWeight: percentage >= milestone ? 700 : 400,
+                                    fontSize: '0.7rem',
+                                    whiteSpace: 'nowrap',
+                                }}
+                            >
+                                ${(goalAmount * milestone / 100).toLocaleString()}
+                            </Typography>
+                            <Box
+                                sx={{
+                                    width: 12,
+                                    height: 12,
+                                    borderRadius: '50%',
+                                    backgroundColor: percentage >= milestone 
+                                        ? '#4caf50' 
+                                        : (isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.8)'),
+                                    border: '2px solid',
+                                    borderColor: percentage >= milestone 
+                                        ? '#2e7d32' 
+                                        : (isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'),
+                                    transition: 'all 0.5s ease',
+                                    boxShadow: percentage >= milestone 
+                                        ? '0 0 10px rgba(76, 175, 80, 0.5)' 
+                                        : 'none',
+                                }}
+                            />
+                        </Box>
+                    ))}
+
+                    {/* THE LOGO BALLOON */}
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            left: '50%',
+                            bottom: `${Math.max(riseAmount * 0.85, 5)}%`,
+                            transform: 'translateX(-50%)',
+                            transition: 'bottom 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                            animation: percentage >= 50 ? 'balloonBob 3s ease-in-out infinite' : 'none',
+                            '@keyframes balloonBob': {
+                                '0%, 100%': { transform: 'translateX(-50%) translateY(0) rotate(-2deg)' },
+                                '50%': { transform: 'translateX(-50%) translateY(-10px) rotate(2deg)' },
+                            },
+                        }}
+                    >
+                        {/* Balloon String */}
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: '100%',
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                                width: 3,
+                                height: { xs: 40, sm: 60 },
+                                background: `linear-gradient(180deg, #8d6e63 0%, #6d4c41 100%)`,
+                                borderRadius: 2,
+                                transformOrigin: 'top center',
+                                animation: percentage >= 50 ? 'stringWave 2s ease-in-out infinite' : 'none',
+                                '@keyframes stringWave': {
+                                    '0%, 100%': { transform: 'translateX(-50%) rotate(-3deg)' },
+                                    '50%': { transform: 'translateX(-50%) rotate(3deg)' },
+                                },
+                            }}
+                        />
+
+                        {/* Main Balloon (Logo) */}
+                        <Box
+                            sx={{
+                                width: balloonSize,
+                                height: balloonSize,
+                                transform: `scale(${balloonScale})`,
+                                transition: 'transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                                position: 'relative',
+                            }}
+                        >
+                            {/* Balloon Glow */}
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    top: '50%',
+                                    left: '50%',
+                                    transform: 'translate(-50%, -50%)',
+                                    width: '140%',
+                                    height: '140%',
+                                    borderRadius: '50%',
+                                    background: `radial-gradient(circle, rgba(76, 175, 80, ${0.2 + percentage * 0.003}) 0%, transparent 70%)`,
+                                    animation: 'glowPulse 2s ease-in-out infinite',
+                                    '@keyframes glowPulse': {
+                                        '0%, 100%': { opacity: 0.7, transform: 'translate(-50%, -50%) scale(1)' },
+                                        '50%': { opacity: 1, transform: 'translate(-50%, -50%) scale(1.1)' },
+                                    },
+                                }}
+                            />
+
+                            {/* Balloon Body */}
+                            <Box
+                                sx={{
+                                    width: '100%',
+                                    height: '100%',
+                                    borderRadius: '50%',
+                                    background: `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f5f5f5 30%, #e8f5e9 60%, #c8e6c9 100%)`,
+                                    boxShadow: `
+                                        inset -8px -8px 20px rgba(0,0,0,0.1),
+                                        inset 8px 8px 20px rgba(255,255,255,0.9),
+                                        0 10px 40px rgba(76, 175, 80, 0.3),
+                                        0 0 60px rgba(76, 175, 80, ${0.1 + percentage * 0.003})
+                                    `,
+                                    border: '4px solid',
+                                    borderColor: percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    position: 'relative',
+                                    overflow: 'hidden',
+                                    '&::before': {
+                                        content: '""',
+                                        position: 'absolute',
+                                        top: '10%',
+                                        left: '15%',
+                                        width: '30%',
+                                        height: '25%',
+                                        borderRadius: '50%',
+                                        background: 'linear-gradient(135deg, rgba(255,255,255,0.8) 0%, transparent 100%)',
+                                    },
+                                }}
+                            >
+                                {/* Logo Inside */}
+                                <img
+                                    src={Logo}
+                                    alt="Enlighten Learning"
+                                    style={{
+                                        width: '65%',
+                                        height: '65%',
+                                        objectFit: 'contain',
+                                        filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))',
+                                    }}
+                                />
+                            </Box>
+
+                            {/* Balloon Tie */}
+                            <Box
+                                sx={{
+                                    position: 'absolute',
+                                    bottom: -8,
+                                    left: '50%',
+                                    transform: 'translateX(-50%)',
+                                    width: 16,
+                                    height: 16,
+                                    background: percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)',
+                                }}
+                            />
+                        </Box>
+
+                        {/* Percentage Badge */}
+                        <Box
+                            sx={{
+                                position: 'absolute',
+                                top: -20,
+                                left: '50%',
+                                transform: 'translateX(-50%)',
+                            }}
+                        >
+                            <Chip
+                                label={`${percentage.toFixed(0)}%`}
+                                sx={{
+                                    fontWeight: 800,
+                                    backgroundColor: '#4caf50',
+                                    color: 'white',
+                                    fontSize: '0.9rem',
+                                    height: 32,
+                                    boxShadow: '0 4px 15px rgba(76, 175, 80, 0.4)',
+                                    border: '2px solid #2e7d32',
+                                }}
+                            />
+                        </Box>
+                    </Box>
                 </Box>
-            </Box>
 
-            {/* Milestone Labels */}
-            <Box
-                sx={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    mb: 4,
-                    px: { xs: 0, sm: 2 },
-                }}
-            >
-                {milestones.map((milestone, index) => (
-                    <Box
-                        key={milestone.percent}
+                {/* Amount Display */}
+                <Box
+                    sx={{
+                        mt: 4,
+                        textAlign: 'center',
+                        p: 3,
+                        borderRadius: 4,
+                        background: isDarkMode 
+                            ? 'rgba(0,0,0,0.3)' 
+                            : 'rgba(255,255,255,0.9)',
+                        backdropFilter: 'blur(10px)',
+                        boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                        width: '100%',
+                        maxWidth: 400,
+                    }}
+                >
+                    <Typography
+                        variant="h3"
                         sx={{
-                            textAlign: 'center',
-                            flex: 1,
-                            opacity: percentage >= milestone.percent ? 1 : 0.5,
-                            transition: 'opacity 0.5s ease',
+                            fontWeight: 800,
+                            background: 'linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)',
+                            backgroundClip: 'text',
+                            WebkitBackgroundClip: 'text',
+                            WebkitTextFillColor: 'transparent',
+                            fontSize: { xs: '2rem', sm: '2.5rem' },
+                            mb: 0.5,
                         }}
                     >
-                        <Typography sx={{ fontSize: isMobile ? '1.2rem' : '1.5rem', mb: 0.5 }}>
-                            {milestone.icon}
-                        </Typography>
-                        <Typography
-                            variant="caption"
+                        ${currentAmount.toLocaleString()}
+                    </Typography>
+                    <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                        raised of <strong>${goalAmount.toLocaleString()}</strong> goal
+                    </Typography>
+                    
+                    {/* Mini Progress Bar */}
+                    <Box
+                        sx={{
+                            height: 8,
+                            borderRadius: 4,
+                            backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                            overflow: 'hidden',
+                        }}
+                    >
+                        <Box
                             sx={{
-                                display: { xs: 'none', sm: 'block' },
-                                color: percentage >= milestone.percent ? '#4caf50' : 'text.secondary',
-                                fontWeight: percentage >= milestone.percent ? 600 : 400,
-                                fontSize: '0.7rem',
+                                height: '100%',
+                                width: `${percentage}%`,
+                                borderRadius: 4,
+                                background: 'linear-gradient(90deg, #66bb6a, #4caf50, #43a047)',
+                                transition: 'width 1.5s ease-out',
                             }}
-                        >
-                            {milestone.label}
-                        </Typography>
-                        <Typography
-                            variant="caption"
-                            sx={{
-                                color: 'text.secondary',
-                                fontSize: '0.7rem',
-                            }}
-                        >
-                            {milestone.percent}%
-                        </Typography>
+                        />
                     </Box>
-                ))}
-            </Box>
+                    
+                    {/* Stats Row */}
+                    <Grid container spacing={2} sx={{ mt: 2 }}>
+                        <Grid item xs={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#4caf50' }}>
+                                ${currentAmount.toLocaleString()}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">Raised</Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#2196f3' }}>
+                                ${(goalAmount - currentAmount).toLocaleString()}
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">To Go</Typography>
+                        </Grid>
+                        <Grid item xs={4}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#ff9800' }}>
+                                {percentage.toFixed(0)}%
+                            </Typography>
+                            <Typography variant="caption" color="text.secondary">Complete</Typography>
+                        </Grid>
+                    </Grid>
+                </Box>
 
-            {/* Stats Grid */}
-            <Grid container spacing={2}>
-                <Grid item xs={6} sm={3}>
-                    <Box
-                        sx={{
-                            textAlign: 'center',
-                            p: 2,
-                            borderRadius: 3,
-                            backgroundColor: isDarkMode ? 'rgba(76, 175, 80, 0.1)' : 'rgba(76, 175, 80, 0.05)',
-                            border: '1px solid',
-                            borderColor: isDarkMode ? 'rgba(76, 175, 80, 0.2)' : 'rgba(76, 175, 80, 0.15)',
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 700, color: '#4caf50', mb: 0.5, fontSize: { xs: '1rem', sm: '1.25rem' } }}
-                        >
-                            ${currentAmount.toLocaleString()}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                            Raised
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <Box
-                        sx={{
-                            textAlign: 'center',
-                            p: 2,
-                            borderRadius: 3,
-                            backgroundColor: isDarkMode ? 'rgba(33, 150, 243, 0.1)' : 'rgba(33, 150, 243, 0.05)',
-                            border: '1px solid',
-                            borderColor: isDarkMode ? 'rgba(33, 150, 243, 0.2)' : 'rgba(33, 150, 243, 0.15)',
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 700, color: '#2196f3', mb: 0.5, fontSize: { xs: '1rem', sm: '1.25rem' } }}
-                        >
-                            ${(goalAmount - currentAmount).toLocaleString()}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                            To Go
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <Box
-                        sx={{
-                            textAlign: 'center',
-                            p: 2,
-                            borderRadius: 3,
-                            backgroundColor: isDarkMode ? 'rgba(156, 39, 176, 0.1)' : 'rgba(156, 39, 176, 0.05)',
-                            border: '1px solid',
-                            borderColor: isDarkMode ? 'rgba(156, 39, 176, 0.2)' : 'rgba(156, 39, 176, 0.15)',
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 700, color: '#9c27b0', mb: 0.5, fontSize: { xs: '1rem', sm: '1.25rem' } }}
-                        >
-                            ${goalAmount.toLocaleString()}
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                            Goal
-                        </Typography>
-                    </Box>
-                </Grid>
-                <Grid item xs={6} sm={3}>
-                    <Box
-                        sx={{
-                            textAlign: 'center',
-                            p: 2,
-                            borderRadius: 3,
-                            backgroundColor: isDarkMode ? 'rgba(255, 152, 0, 0.1)' : 'rgba(255, 152, 0, 0.05)',
-                            border: '1px solid',
-                            borderColor: isDarkMode ? 'rgba(255, 152, 0, 0.2)' : 'rgba(255, 152, 0, 0.15)',
-                        }}
-                    >
-                        <Typography
-                            variant="h6"
-                            sx={{ fontWeight: 700, color: '#ff9800', mb: 0.5, fontSize: { xs: '1rem', sm: '1.25rem' } }}
-                        >
-                            {percentage.toFixed(0)}%
-                        </Typography>
-                        <Typography variant="caption" color="text.secondary" sx={{ fontWeight: 500 }}>
-                            Complete
-                        </Typography>
-                    </Box>
-                </Grid>
-            </Grid>
-
-            {/* Encouraging Message */}
-            <Box
-                sx={{
-                    mt: 3,
-                    p: 2,
-                    borderRadius: 2,
-                    background: isDarkMode 
-                        ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.15), rgba(129, 199, 132, 0.1))'
-                        : 'linear-gradient(135deg, rgba(76, 175, 80, 0.08), rgba(129, 199, 132, 0.05))',
-                    textAlign: 'center',
-                }}
-            >
+                {/* Encouraging Message */}
                 <Typography
                     variant="body2"
                     sx={{
+                        mt: 3,
                         color: isDarkMode ? '#81c784' : '#2e7d32',
                         fontWeight: 500,
+                        textAlign: 'center',
                         fontStyle: 'italic',
                     }}
                 >
                     {percentage >= 100 
-                        ? "🎉 We reached our goal! Thank you for your incredible support!"
+                        ? "🎈 The balloon has reached the sky! Thank you!"
                         : percentage >= 75 
-                            ? "⭐ Almost there! Your donation can help us cross the finish line!"
+                            ? "🎈 Almost at the clouds! One more push!"
                             : percentage >= 50 
-                                ? "🔥 Halfway there! Every contribution brings us closer to our goal!"
-                                : "🌱 Every donation makes a difference in a student's life!"}
+                                ? "🎈 Rising higher! Keep it going!"
+                                : percentage >= 25 
+                                    ? "🎈 Lifting off! Help us soar!"
+                                    : "🎈 Help inflate and launch our balloon!"}
                 </Typography>
             </Box>
         </Paper>
@@ -530,7 +567,7 @@ export default function DonateNow() {
     const [copiedZelle, setCopiedZelle] = React.useState(false);
 
     // Fundraising data
-    const currentAmount = 2000;
+    const currentAmount = 5000;
     const goalAmount = 10000;
     const zelleEmail = "Enlightenlearningfinance@gmail.com";
 
@@ -623,42 +660,6 @@ export default function DonateNow() {
                     >
                         Every dollar helps us make a bigger impact in our community! We're getting closer to our goal every day.
                     </Typography>
-
-                    {/* See Our Impact Button */}
-                    <Box sx={{ mt: 4, textAlign: 'center' }}>
-                        <Button
-                            component={Link}
-                            to={PathConstants.CHARITIES}
-                            variant="outlined"
-                            size="large"
-                            endIcon={<ArrowForwardIcon />}
-                            startIcon={<VolunteerIcon />}
-                            sx={{
-                                px: 4,
-                                py: 1.5,
-                                fontSize: '1rem',
-                                fontWeight: 600,
-                                borderRadius: 3,
-                                borderWidth: 2,
-                                borderColor: isDarkMode ? '#667eea' : '#764ba2',
-                                color: isDarkMode ? '#667eea' : '#764ba2',
-                                background: isDarkMode 
-                                    ? 'rgba(102, 126, 234, 0.1)' 
-                                    : 'rgba(118, 75, 162, 0.05)',
-                                '&:hover': {
-                                    borderWidth: 2,
-                                    borderColor: isDarkMode ? '#764ba2' : '#667eea',
-                                    background: isDarkMode 
-                                        ? 'rgba(102, 126, 234, 0.2)' 
-                                        : 'rgba(118, 75, 162, 0.1)',
-                                    transform: 'translateY(-2px)',
-                                },
-                                transition: 'all 0.3s ease',
-                            }}
-                        >
-                            See Our Impact & Charities
-                        </Button>
-                    </Box>
                 </Box>
 
                 <Divider sx={{ my: { xs: 4, sm: 6, md: 8 }, opacity: 0.3 }} />

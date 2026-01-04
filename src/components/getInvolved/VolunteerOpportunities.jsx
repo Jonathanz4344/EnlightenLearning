@@ -35,8 +35,24 @@ import { useMode } from "../Layout";
 // Simplified volunteer data - single array with all opportunities
 const volunteerData = [
     {
+        id: 6,
+        title: "Spring into Game Development: Kids Coding Workshop",
+        date: "2026-03-18 ",
+        time: "4:00 PM - 5:30 PM",
+        location: "Syosset Public Library",
+        description: "Help children code a simple Spring-themed game using Scratch. Volunteers must have a basic knowledge of Scratch.",
+        formUrl: "https://forms.gle/ipPGYsspt6geriRy6",
+        category: "Coding",
+        volunteersNeeded: 10,
+        totalParticipants: 30,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2026-01-04",
+        expirationDate: "2026-03-18",
+    },
+    {
         id: 5,
-        title: "Snowy Literature",
+        title: "Snowy Literature Workshop",
         date: "2025-12-12 ",
         time: "4:00 PM - 5:30 PM",
         location: "Shelter Rock Library",

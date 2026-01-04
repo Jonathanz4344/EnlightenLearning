@@ -35,8 +35,24 @@ import { useMode } from "../Layout";
 // Sample events data with expiration dates and registration start dates
 const eventsData = [
     {
+        id: 6,
+        title: "Spring into Game Development: Kids Coding Workshop",
+        date: "2026-03-18 ",
+        time: "4:00 PM - 5:30 PM",
+        location: "Syosset Public Library",
+        description: " Join us for a fun hands-on workshop where children will learn the basics of game development by using Scratch to create a Spring-themed game!\n\n*Register directly on the Syosset Library website below.",
+        formUrl: "https://syosset.librarycalendar.com/events/month/2026/03",
+        category: "Coding",
+        volunteersNeeded: 10,
+        totalParticipants: 30,
+        duration: "1.5 hours",
+        coordinator: "Enlighten Learning",
+        registrationStartDate: "2026-01-04",
+        expirationDate: "2026-03-18",
+    },
+    {
         id: 5,
-        title: "Snowy Literature",
+        title: "Snowy Literature Workshop",
         date: "2025-12-12 ",
         time: "4:00 PM - 5:30 PM",
         location: "Shelter Rock Library",
@@ -466,7 +482,7 @@ const EventCard = ({ event, section }) => {
                 <Typography
                     variant="body2"
                     color="text.primary"
-                    sx={{ lineHeight: 1.6, mb: 2 }}
+                    sx={{ lineHeight: 1.6, mb: 2, whiteSpace: 'pre-line' }}
                 >
                     {event.description}
                 </Typography>

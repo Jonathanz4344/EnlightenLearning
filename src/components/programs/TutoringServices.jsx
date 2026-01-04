@@ -39,28 +39,17 @@ import { useMode } from "../Layout";
 const subjectAreas = [
     {
         id: 1,
-        title: "NYS Test Prep",
+        title: "NYS & Regents Prep",
         subtitle: "Grades 3-8",
-        description: "Help your child excel on New York State standardized tests with focused test-taking strategies, comprehensive content review, and confidence-building techniques for academic success.",
+        description: "Comprehensive preparation for New York State exams for grades 3-8 and Regents exams for grade 8 and up. Test-taking strategies and comprehensive content review for academic success",
         icon: TestPrepIcon,
         color: "#4caf50",
         category: "Test Preparation",
-        grades: ["3rd", "4th", "5th", "6th", "7th", "8th"],
+        grades: ["Elementary", "Middle School", "High School"],
         // commitment: ""
     },
     {
-        id: 2,
-        title: "Regents Prep",
-        subtitle: "Middle School & High School",
-        description: "Comprehensive preparation for New York State Regents examinations across various subjects. Our tutors provide intensive review sessions and proven exam strategies.",
-        icon: RegentsIcon,
-        color: "#2196f3",
-        category: "Test Preparation",
-        grades: ["8th", "9th", "10th", "11th", "12th"],
-        commitment: "Intensive review sessions"
-    },
-    {
-        id: 6,
+        id: 5,
         title: "World Languages",
         subtitle: "Spanish, Mandarin, French",
         description: "Develop language proficiency through conversation practice, grammar instruction, and cultural immersion activities.",
@@ -71,7 +60,7 @@ const subjectAreas = [
         commitment: "Conversational sessions"
     },
     {
-        id: 7,
+        id: 6,
         title: "Music",
         subtitle: "Elementary, Middle & High School",
         description: "Whether you're just learning to read music or preparing for high-level concerts and competitions, our lessons are tailored to your level and interests.",
@@ -83,7 +72,7 @@ const subjectAreas = [
         specialNote: "*Instrument-dependent availability."
     },
     {
-        id: 3,
+        id: 2,
         title: "English",
         subtitle: "Elementary, Middle & High School",
         description: "Expert guidance in reading comprehension, writing skills, grammar, literature analysis, and essay composition across all grade levels.",
@@ -94,7 +83,7 @@ const subjectAreas = [
         commitment: "Weekly sessions"
     },
     {
-        id: 4,
+        id: 3,
         title: "Mathematics",
         subtitle: "Elementary through Geometry",
         description: "Build strong mathematical foundations and problem-solving skills with support ranging from fundamental math concepts at the elementary level, to high school level courses like Algebra 1/2, and Geometry.",
@@ -105,7 +94,7 @@ const subjectAreas = [
         commitment: "Regular practice sessions"
     },
     {
-        id: 5,
+        id: 4,
         title: "Science",
         subtitle: "Earth Science, Biology, Chemistry",
         description: "Develop understanding of scientific concepts, course specific content, and build critical thinking skills across various science disciplines from elementary level sciences to Earth Science, Biology and Chemistry. ",
@@ -349,7 +338,7 @@ const SubjectCard = ({ subject }) => {
                         }
                     }}
                 >
-                    Book {subject.title} Session
+                    Book Session
                 </Button>
             </Box>
         </Card>
@@ -625,7 +614,7 @@ export default function TutoringServices() {
 
                 {/* Subject Areas Section */}
                 <SubjectCarousel
-                    subjects={subjectAreas}
+                    subjects={[...subjectAreas].sort((a, b) => a.id - b.id)}
                     title="Our Tutoring Services"
                     subtitle="Choose the subject area where your child needs support and watch them excel"
                     icon={TutorIcon}

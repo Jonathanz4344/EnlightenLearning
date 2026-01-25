@@ -35,62 +35,27 @@ import PathConstants from "../../routes/pathConstants";
 const charitiesData = [
     {
         id: 1,
-        name: "Local Food Bank",
-        description: "Providing nutritious meals to families in need across our community.",
-        amountDonated: 500,
-        logo: "/images/donate/charity-placeholder.png", // Replace with actual logo
-        image: "/images/donate/charity1.jpg", // Replace with actual photo
-        website: "https://example.com",
-        category: "Food Security",
-    },
-    {
-        id: 2,
-        name: "Children's Education Fund",
-        description: "Supporting underprivileged children with educational resources and school supplies.",
-        amountDonated: 750,
-        logo: "/images/donate/charity-placeholder.png",
-        image: "/images/donate/charity2.jpg",
-        website: "https://example.com",
+        name: "Adventures in Learning",
+        description: "Adventures in Learning is a nonprofit organization dedicated to providing educational enrichment programs for children. They offer tutoring, mentorship, and creative learning experiences to help students reach their full potential.",
+        amountDonated: 1000,
+        logo: "/images/charity/charity1.jpg",
+        image: "/images/charity/charity1.jpg",
+        website: "https://www.adventuresinlearning.org",
         category: "Education",
     },
-    {
-        id: 3,
-        name: "Youth Mentorship Program",
-        description: "Connecting young people with mentors to guide them toward success.",
-        amountDonated: 300,
-        logo: "/images/donate/charity-placeholder.png",
-        image: "/images/donate/charity3.jpg",
-        website: "https://example.com",
-        category: "Youth Development",
-    },
-    // Add more charities as needed
+    
+    // Add more charities as you make donations!
 ];
 
 // Placeholder testimonials - replace with real quotes
 const testimonials = [
     {
         id: 1,
-        quote: "Thanks to Enlighten Learning's generous donation, we were able to provide school supplies to over 100 students this year.",
-        author: "Sarah Johnson",
-        role: "Director",
-        organization: "Children's Education Fund",
-        avatar: "/images/donate/avatar1.jpg",
-    },
-    {
-        id: 2,
-        quote: "The support from this amazing organization has helped us serve 50% more families in our community food program.",
-        author: "Michael Chen",
-        role: "Program Coordinator",
-        organization: "Local Food Bank",
-        avatar: "/images/donate/avatar2.jpg",
-    },
-    {
-        id: 3,
-        quote: "Enlighten Learning truly understands the importance of investing in our youth. Their contribution made a real difference.",
-        author: "Emily Rodriguez",
-        role: "Founder",
-        organization: "Youth Mentorship Program",
-        avatar: "/images/donate/avatar3.jpg",
+        quote: "We are incredibly grateful for Enlighten Learning's generous $1,000 donation. Their support helps us continue providing educational enrichment programs for children in our community.",
+        author: "Adventures in Learning",
+        role: "Partner Organization",
+        organization: "Adventures in Learning",
+        avatar: "/images/charity/charity1.jpg",
     },
 ];
 
@@ -265,7 +230,7 @@ const HeroSection = () => {
     );
 };
 
-// Photo Carousel Component
+// Photo Carousel Component - Optimized for single/few charities
 const PhotoCarousel = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
@@ -280,6 +245,8 @@ const PhotoCarousel = () => {
     const handleNext = () => {
         setCurrentIndex((prev) => (prev === charitiesData.length - 1 ? 0 : prev + 1));
     };
+
+    const currentCharity = charitiesData[currentIndex];
 
     return (
         <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -304,10 +271,10 @@ const PhotoCarousel = () => {
                         mx: 'auto',
                     }}
                 >
-                    Browse through photos of the charities and causes we've supported
+                    See the charities and causes we've proudly supported
                 </Typography>
 
-                {/* Carousel */}
+                {/* Featured Charity Display */}
                 <Box
                     sx={{
                         position: 'relative',
@@ -323,40 +290,18 @@ const PhotoCarousel = () => {
                             borderRadius: 4,
                             overflow: 'hidden',
                             aspectRatio: '16/9',
-                            background: isDarkMode
-                                ? 'linear-gradient(135deg, #2d3748 0%, #1a202c 100%)'
-                                : 'linear-gradient(135deg, #e2e8f0 0%, #cbd5e1 100%)',
                         }}
                     >
-                        {/* Placeholder for actual image */}
                         <Box
+                            component="img"
+                            src={currentCharity.image}
+                            alt={currentCharity.name}
                             sx={{
                                 width: '100%',
                                 height: '100%',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                p: 4,
+                                objectFit: 'cover',
                             }}
-                        >
-                            <VolunteerIcon sx={{ fontSize: 80, color: 'text.secondary', opacity: 0.5, mb: 2 }} />
-                            <Typography variant="h5" sx={{ fontWeight: 600, mb: 1 }}>
-                                {charitiesData[currentIndex].name}
-                            </Typography>
-                            <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
-                                {charitiesData[currentIndex].description}
-                            </Typography>
-                            <Chip
-                                label={`$${charitiesData[currentIndex].amountDonated} Donated`}
-                                sx={{
-                                    mt: 2,
-                                    backgroundColor: '#4caf50',
-                                    color: 'white',
-                                    fontWeight: 600,
-                                }}
-                            />
-                        </Box>
+                        />
 
                         {/* Overlay Info */}
                         <Box
@@ -366,12 +311,12 @@ const PhotoCarousel = () => {
                                 left: 0,
                                 right: 0,
                                 p: 3,
-                                background: 'linear-gradient(transparent, rgba(0,0,0,0.8))',
+                                background: 'linear-gradient(transparent, rgba(0,0,0,0.85))',
                                 color: 'white',
                             }}
                         >
                             <Chip
-                                label={charitiesData[currentIndex].category}
+                                label={currentCharity.category}
                                 size="small"
                                 sx={{
                                     mb: 1,
@@ -379,74 +324,92 @@ const PhotoCarousel = () => {
                                     color: 'white',
                                 }}
                             />
+                            <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>
+                                {currentCharity.name}
+                            </Typography>
+                            <Chip
+                                label={`$${currentCharity.amountDonated.toLocaleString()} Donated`}
+                                sx={{
+                                    mt: 1,
+                                    backgroundColor: '#4caf50',
+                                    color: 'white',
+                                    fontWeight: 600,
+                                }}
+                            />
                         </Box>
                     </Paper>
 
-                    {/* Navigation Buttons */}
-                    <IconButton
-                        onClick={handlePrev}
-                        sx={{
-                            position: 'absolute',
-                            left: { xs: 8, md: -24 },
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            backgroundColor: isDarkMode ? 'grey.800' : 'white',
-                            boxShadow: 3,
-                            '&:hover': {
-                                backgroundColor: isDarkMode ? 'grey.700' : 'grey.100',
-                            },
-                        }}
-                    >
-                        <ArrowBackIcon />
-                    </IconButton>
-                    <IconButton
-                        onClick={handleNext}
-                        sx={{
-                            position: 'absolute',
-                            right: { xs: 8, md: -24 },
-                            top: '50%',
-                            transform: 'translateY(-50%)',
-                            backgroundColor: isDarkMode ? 'grey.800' : 'white',
-                            boxShadow: 3,
-                            '&:hover': {
-                                backgroundColor: isDarkMode ? 'grey.700' : 'grey.100',
-                            },
-                        }}
-                    >
-                        <ArrowIcon />
-                    </IconButton>
-
-                    {/* Dots Indicator */}
-                    <Box
-                        sx={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            gap: 1,
-                            mt: 3,
-                        }}
-                    >
-                        {charitiesData.map((_, index) => (
-                            <Box
-                                key={index}
-                                onClick={() => setCurrentIndex(index)}
+                    {/* Navigation Buttons - Only show if more than one charity */}
+                    {charitiesData.length > 1 && (
+                        <>
+                            <IconButton
+                                onClick={handlePrev}
                                 sx={{
-                                    width: currentIndex === index ? 24 : 8,
-                                    height: 8,
-                                    borderRadius: 4,
-                                    backgroundColor: currentIndex === index ? '#667eea' : (isDarkMode ? 'grey.600' : 'grey.300'),
-                                    cursor: 'pointer',
-                                    transition: 'all 0.3s ease',
+                                    position: 'absolute',
+                                    left: { xs: 8, md: -24 },
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    backgroundColor: isDarkMode ? 'grey.800' : 'white',
+                                    boxShadow: 3,
+                                    '&:hover': {
+                                        backgroundColor: isDarkMode ? 'grey.700' : 'grey.100',
+                                    },
                                 }}
-                            />
-                        ))}
-                    </Box>
+                            >
+                                <ArrowBackIcon />
+                            </IconButton>
+                            <IconButton
+                                onClick={handleNext}
+                                sx={{
+                                    position: 'absolute',
+                                    right: { xs: 8, md: -24 },
+                                    top: '50%',
+                                    transform: 'translateY(-50%)',
+                                    backgroundColor: isDarkMode ? 'grey.800' : 'white',
+                                    boxShadow: 3,
+                                    '&:hover': {
+                                        backgroundColor: isDarkMode ? 'grey.700' : 'grey.100',
+                                    },
+                                }}
+                            >
+                                <ArrowIcon />
+                            </IconButton>
+                        </>
+                    )}
+
+                    {/* Dots Indicator - Only show if more than one charity */}
+                    {charitiesData.length > 1 && (
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                gap: 1,
+                                mt: 3,
+                            }}
+                        >
+                            {charitiesData.map((_, index) => (
+                                <Box
+                                    key={index}
+                                    onClick={() => setCurrentIndex(index)}
+                                    sx={{
+                                        width: currentIndex === index ? 24 : 8,
+                                        height: 8,
+                                        borderRadius: 4,
+                                        backgroundColor: currentIndex === index ? '#667eea' : (isDarkMode ? 'grey.600' : 'grey.300'),
+                                        cursor: 'pointer',
+                                        transition: 'all 0.3s ease',
+                                    }}
+                                />
+                            ))}
+                        </Box>
+                    )}
                 </Box>
             </Container>
         </Box>
     );
 };
 
-// Partner Charities Grid Component
+// Partner Charities Grid Component - Optimized for single/few charities
 const CharitiesGrid = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
@@ -467,7 +430,7 @@ const CharitiesGrid = () => {
                         mb: 2,
                     }}
                 >
-                    Our Partner Charities
+                    {charitiesData.length === 1 ? 'Our First Partner Charity' : 'Our Partner Charities'}
                 </Typography>
                 <Typography
                     variant="body1"
@@ -479,10 +442,13 @@ const CharitiesGrid = () => {
                         mx: 'auto',
                     }}
                 >
-                    These are the organizations we've proudly supported. Your donations help us continue this mission.
+                    {charitiesData.length === 1 
+                        ? "We're proud to announce our first charitable donation! This marks the beginning of our mission to give back to the community."
+                        : "These are the organizations we've proudly supported. Your donations help us continue this mission."
+                    }
                 </Typography>
 
-                <Grid container spacing={3}>
+                <Grid container spacing={4} justifyContent="center">
                     {charitiesData.map((charity) => (
                         <Grid item xs={12} sm={6} md={4} key={charity.id}>
                             <Card
@@ -490,10 +456,15 @@ const CharitiesGrid = () => {
                                 sx={{
                                     height: '100%',
                                     borderRadius: 4,
-                                    border: '1px solid',
-                                    borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                                    border: '2px solid',
+                                    borderColor: charitiesData.length === 1 ? '#667eea' : (isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'),
                                     transition: 'all 0.3s ease',
                                     overflow: 'hidden',
+                                    background: charitiesData.length === 1 
+                                        ? (isDarkMode
+                                            ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)'
+                                            : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)')
+                                        : 'transparent',
                                     '&:hover': {
                                         transform: 'translateY(-8px)',
                                         boxShadow: isDarkMode
@@ -503,27 +474,46 @@ const CharitiesGrid = () => {
                                     },
                                 }}
                             >
-                                {/* Card Header with gradient */}
+                                {/* Card Image - Full image display */}
                                 <Box
                                     sx={{
-                                        height: 120,
-                                        background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
                                         position: 'relative',
+                                        overflow: 'hidden',
+                                        backgroundColor: isDarkMode ? 'rgba(0,0,0,0.2)' : 'rgba(0,0,0,0.02)',
                                     }}
                                 >
-                                    <Avatar
+                                    <Box
+                                        component="img"
+                                        src={charity.image}
+                                        alt={charity.name}
                                         sx={{
-                                            width: 80,
-                                            height: 80,
-                                            backgroundColor: 'white',
-                                            border: '4px solid rgba(255,255,255,0.3)',
+                                            width: '100%',
+                                            height: 'auto',
+                                            display: 'block',
+                                        }}
+                                    />
+                                    <Box
+                                        sx={{
+                                            position: 'absolute',
+                                            top: 12,
+                                            left: 12,
+                                            display: 'flex',
+                                            gap: 1,
                                         }}
                                     >
-                                        <VolunteerIcon sx={{ fontSize: 40, color: '#667eea' }} />
-                                    </Avatar>
+                                        {charity.id === 1 && charitiesData.length >= 1 && (
+                                            <Chip
+                                                icon={<HeartIcon sx={{ color: 'white !important', fontSize: 16 }} />}
+                                                label="First Donation!"
+                                                size="small"
+                                                sx={{
+                                                    backgroundColor: '#e91e63',
+                                                    color: 'white',
+                                                    fontWeight: 600,
+                                                }}
+                                            />
+                                        )}
+                                    </Box>
                                     <Chip
                                         label={charity.category}
                                         size="small"
@@ -531,7 +521,7 @@ const CharitiesGrid = () => {
                                             position: 'absolute',
                                             top: 12,
                                             right: 12,
-                                            backgroundColor: 'rgba(255,255,255,0.2)',
+                                            backgroundColor: 'rgba(0,0,0,0.6)',
                                             color: 'white',
                                             fontSize: '0.7rem',
                                         }}
@@ -548,56 +538,81 @@ const CharitiesGrid = () => {
                                     <Typography
                                         variant="body2"
                                         color="text.secondary"
-                                        sx={{ mb: 2, minHeight: 60 }}
+                                        sx={{ mb: 2 }}
                                     >
                                         {charity.description}
                                     </Typography>
 
-                                    <Box
+                                    {/* Donation Amount */}
+                                    <Paper
+                                        elevation={0}
                                         sx={{
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'space-between',
-                                            mt: 2,
-                                            pt: 2,
-                                            borderTop: '1px solid',
-                                            borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                                            p: 2,
+                                            borderRadius: 2,
+                                            background: isDarkMode
+                                                ? 'linear-gradient(135deg, rgba(76, 175, 80, 0.2) 0%, rgba(129, 199, 132, 0.2) 100%)'
+                                                : 'linear-gradient(135deg, rgba(76, 175, 80, 0.1) 0%, rgba(129, 199, 132, 0.1) 100%)',
+                                            border: '1px solid',
+                                            borderColor: isDarkMode ? 'rgba(76, 175, 80, 0.3)' : 'rgba(76, 175, 80, 0.2)',
+                                            textAlign: 'center',
                                         }}
                                     >
-                                        <Box>
-                                            <Typography
-                                                variant="h5"
-                                                sx={{ fontWeight: 800, color: '#4caf50' }}
-                                            >
-                                                ${charity.amountDonated.toLocaleString()}
-                                            </Typography>
-                                            <Typography variant="caption" color="text.secondary">
-                                                Donated
-                                            </Typography>
-                                        </Box>
-                                        <IconButton
-                                            size="small"
+                                        <Typography variant="caption" color="text.secondary" sx={{ letterSpacing: 1 }}>
+                                            AMOUNT DONATED
+                                        </Typography>
+                                        <Typography
+                                            variant="h4"
                                             sx={{
-                                                backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.05)',
+                                                fontWeight: 800,
+                                                color: '#4caf50',
                                             }}
                                         >
-                                            <LaunchIcon fontSize="small" />
-                                        </IconButton>
-                                    </Box>
+                                            ${charity.amountDonated.toLocaleString()}
+                                        </Typography>
+                                    </Paper>
                                 </CardContent>
                             </Card>
                         </Grid>
                     ))}
                 </Grid>
+
+                {/* Future Charities Teaser - Only show when there's just 1 charity */}
+                {charitiesData.length === 1 && (
+                    <Box sx={{ mt: 6, textAlign: 'center' }}>
+                        <Paper
+                            elevation={0}
+                            sx={{
+                                p: 4,
+                                maxWidth: 600,
+                                mx: 'auto',
+                                borderRadius: 4,
+                                border: '2px dashed',
+                                borderColor: isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)',
+                                backgroundColor: 'transparent',
+                            }}
+                        >
+                            <GroupsIcon sx={{ fontSize: 48, color: 'text.secondary', opacity: 0.5, mb: 2 }} />
+                            <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                                More Charities Coming Soon
+                            </Typography>
+                            <Typography variant="body2" color="text.secondary">
+                                We're actively working to support more organizations. Stay tuned for future donations as we continue to grow our impact in the community!
+                            </Typography>
+                        </Paper>
+                    </Box>
+                )}
             </Container>
         </Box>
     );
 };
 
-// Testimonial Wall Component
+// Testimonial Wall Component - Optimized for single/few testimonials
 const TestimonialWall = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
+
+    // Don't show testimonials section if none exist
+    if (testimonials.length === 0) return null;
 
     return (
         <Box sx={{ py: { xs: 6, md: 10 } }}>
@@ -610,7 +625,7 @@ const TestimonialWall = () => {
                         mb: 2,
                     }}
                 >
-                    Words of Gratitude
+                    {testimonials.length === 1 ? 'A Message of Gratitude' : 'Words of Gratitude'}
                 </Typography>
                 <Typography
                     variant="body1"
@@ -622,78 +637,146 @@ const TestimonialWall = () => {
                         mx: 'auto',
                     }}
                 >
-                    Hear from the organizations we've had the privilege to support
+                    {testimonials.length === 1 
+                        ? 'Hear from the organization we\'ve had the privilege to support'
+                        : 'Hear from the organizations we\'ve had the privilege to support'
+                    }
                 </Typography>
 
-                <Grid container spacing={3}>
-                    {testimonials.map((testimonial) => (
-                        <Grid item xs={12} md={4} key={testimonial.id}>
-                            <Paper
-                                elevation={0}
+                {/* Single testimonial - centered and larger */}
+                {testimonials.length === 1 ? (
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: { xs: 4, md: 6 },
+                            maxWidth: 700,
+                            mx: 'auto',
+                            borderRadius: 4,
+                            border: '1px solid',
+                            borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                            position: 'relative',
+                            overflow: 'hidden',
+                            background: isDarkMode
+                                ? 'linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)'
+                                : 'linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%)',
+                            textAlign: 'center',
+                        }}
+                    >
+                        {/* Large Quote Icon */}
+                        <QuoteIcon
+                            sx={{
+                                fontSize: 80,
+                                color: isDarkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(102, 126, 234, 0.15)',
+                                mb: 2,
+                            }}
+                        />
+
+                        <Typography
+                            variant="h5"
+                            sx={{
+                                fontStyle: 'italic',
+                                mb: 4,
+                                lineHeight: 1.8,
+                                fontWeight: 400,
+                            }}
+                        >
+                            "{testimonials[0].quote}"
+                        </Typography>
+
+                        <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 2 }}>
+                            <Avatar
+                                src={testimonials[0].avatar}
                                 sx={{
-                                    p: 4,
-                                    height: '100%',
-                                    borderRadius: 4,
-                                    border: '1px solid',
-                                    borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
-                                    position: 'relative',
-                                    overflow: 'hidden',
-                                    transition: 'all 0.3s ease',
-                                    '&:hover': {
-                                        transform: 'translateY(-4px)',
-                                        boxShadow: isDarkMode
-                                            ? '0 12px 30px rgba(0,0,0,0.3)'
-                                            : '0 12px 30px rgba(0,0,0,0.08)',
-                                    },
+                                    width: 64,
+                                    height: 64,
+                                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
                                 }}
                             >
-                                {/* Quote Icon */}
-                                <QuoteIcon
+                                {testimonials[0].author.charAt(0)}
+                            </Avatar>
+                            <Box sx={{ textAlign: 'left' }}>
+                                <Typography variant="h6" sx={{ fontWeight: 700 }}>
+                                    {testimonials[0].author}
+                                </Typography>
+                                <Typography variant="body2" color="text.secondary">
+                                    {testimonials[0].role}
+                                </Typography>
+                            </Box>
+                        </Box>
+                    </Paper>
+                ) : (
+                    // Multiple testimonials grid
+                    <Grid container spacing={3}>
+                        {testimonials.map((testimonial) => (
+                            <Grid item xs={12} md={4} key={testimonial.id}>
+                                <Paper
+                                    elevation={0}
                                     sx={{
-                                        position: 'absolute',
-                                        top: 16,
-                                        right: 16,
-                                        fontSize: 48,
-                                        color: isDarkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(102, 126, 234, 0.15)',
-                                    }}
-                                />
-
-                                <Typography
-                                    variant="body1"
-                                    sx={{
-                                        fontStyle: 'italic',
-                                        mb: 3,
-                                        lineHeight: 1.8,
+                                        p: 4,
+                                        height: '100%',
+                                        borderRadius: 4,
+                                        border: '1px solid',
+                                        borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
                                         position: 'relative',
-                                        zIndex: 1,
+                                        overflow: 'hidden',
+                                        transition: 'all 0.3s ease',
+                                        '&:hover': {
+                                            transform: 'translateY(-4px)',
+                                            boxShadow: isDarkMode
+                                                ? '0 12px 30px rgba(0,0,0,0.3)'
+                                                : '0 12px 30px rgba(0,0,0,0.08)',
+                                        },
                                     }}
                                 >
-                                    "{testimonial.quote}"
-                                </Typography>
-
-                                <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                                    <Avatar
+                                    {/* Quote Icon */}
+                                    <QuoteIcon
                                         sx={{
-                                            width: 48,
-                                            height: 48,
-                                            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            position: 'absolute',
+                                            top: 16,
+                                            right: 16,
+                                            fontSize: 48,
+                                            color: isDarkMode ? 'rgba(102, 126, 234, 0.2)' : 'rgba(102, 126, 234, 0.15)',
+                                        }}
+                                    />
+
+                                    <Typography
+                                        variant="body1"
+                                        sx={{
+                                            fontStyle: 'italic',
+                                            mb: 3,
+                                            lineHeight: 1.8,
+                                            position: 'relative',
+                                            zIndex: 1,
                                         }}
                                     >
-                                        {testimonial.author.charAt(0)}
-                                    </Avatar>
-                                    <Box>
-                                        <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
-                                            {testimonial.author}
-                                        </Typography>
-                                        <Typography variant="caption" color="text.secondary">
-                                            {testimonial.role}, {testimonial.organization}
-                                        </Typography>
+                                        "{testimonial.quote}"
+                                    </Typography>
+
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <Avatar
+                                            src={testimonial.avatar}
+                                            sx={{
+                                                width: 48,
+                                                height: 48,
+                                                background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                                            }}
+                                        >
+                                            {testimonial.author.charAt(0)}
+                                        </Avatar>
+                                        <Box>
+                                            <Typography variant="subtitle2" sx={{ fontWeight: 700 }}>
+                                                {testimonial.author}
+                                            </Typography>
+                                            <Typography variant="caption" color="text.secondary">
+                                                {testimonial.role}, {testimonial.organization}
+                                            </Typography>
+                                        </Box>
                                     </Box>
-                                </Box>
-                            </Paper>
-                        </Grid>
-                    ))}
-                </Grid>
+                                </Paper>
+                            </Grid>
+                        ))}
+                    </Grid>
+                )}
             </Container>
         </Box>
     );

@@ -662,7 +662,7 @@ export default function DonateNow() {
                     </Typography>
                     {/* See Our Impact Button */}
                     <Box sx={{ mt: 4, textAlign: 'center' }}>
-                        {/* <Button
+                        <Button
                             component={Link}
                             to={PathConstants.CHARITIES}
                             variant="outlined"
@@ -693,7 +693,7 @@ export default function DonateNow() {
                             }}
                         >
                             See Our Impact & Charities
-                        </Button> */}
+                        </Button>
                     </Box>
                 </Box>
 

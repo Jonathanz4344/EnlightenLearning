@@ -49,14 +49,14 @@ const charitiesData = [
 
 // Placeholder testimonials - replace with real quotes
 const testimonials = [
-    {
-        id: 1,
-        quote: "We are incredibly grateful for Enlighten Learning's generous $1,000 donation. Their support helps us continue providing educational enrichment programs for children in our community.",
-        author: "Adventures in Learning",
-        role: "Partner Organization",
-        organization: "Adventures in Learning",
-        avatar: "/images/charity/charity1.jpg",
-    },
+    // {
+    //     id: 1,
+    //     quote: "We are incredibly grateful for Enlighten Learning's generous $1,000 donation. Their support helps us continue providing educational enrichment programs for children in our community.",
+    //     author: "Adventures in Learning",
+    //     role: "Charity Organization",
+    //     organization: "Adventures in Learning",
+    //     avatar: "/images/charity/charity1.jpg",
+    // },
 ];
 
 // Hero Section Component
@@ -152,7 +152,7 @@ const HeroSection = () => {
                             lineHeight: 1.6,
                         }}
                     >
-                        See where your donations go and the impact we're making in our community through our charitable partnerships.
+                        See where your donations go and the impact we're making in our community through our charitable efforts.
                     </Typography>
 
                     {/* Impact Stats */}
@@ -197,7 +197,7 @@ const HeroSection = () => {
                                     {totalCharities}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                                    Partner Charities
+                                   Charities Supported
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -219,7 +219,7 @@ const HeroSection = () => {
                                     100%
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                                    Transparency
+                                   Charitable Commitment
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -409,7 +409,7 @@ const PhotoCarousel = () => {
     );
 };
 
-// Partner Charities Grid Component - Optimized for single/few charities
+// Charities Grid Component - Optimized for single/few charities
 const CharitiesGrid = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
@@ -430,7 +430,7 @@ const CharitiesGrid = () => {
                         mb: 2,
                     }}
                 >
-                    {charitiesData.length === 1 ? 'Our First Partner Charity' : 'Our Partner Charities'}
+                    {charitiesData.length === 1 ? 'Our First Charity' : 'Our Charities'}
                 </Typography>
                 <Typography
                     variant="body1"
@@ -611,8 +611,58 @@ const TestimonialWall = () => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
 
-    // Don't show testimonials section if none exist
-    if (testimonials.length === 0) return null;
+    // Show "coming soon" message if no testimonials
+    if (testimonials.length === 0) {
+        return (
+            <Box sx={{ py: { xs: 6, md: 10 } }}>
+                <Container maxWidth="lg">
+                    <Typography
+                        variant="h4"
+                        sx={{
+                            fontWeight: 700,
+                            textAlign: 'center',
+                            mb: 2,
+                        }}
+                    >
+                        Messages of Gratitude
+                    </Typography>
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            textAlign: 'center',
+                            color: 'text.secondary',
+                            mb: 5,
+                            maxWidth: 600,
+                            mx: 'auto',
+                        }}
+                    >
+                        Hear from the organizations we support
+                    </Typography>
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            p: 4,
+                            maxWidth: 600,
+                            mx: 'auto',
+                            borderRadius: 4,
+                            border: '2px dashed',
+                            borderColor: isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)',
+                            backgroundColor: 'transparent',
+                            textAlign: 'center',
+                        }}
+                    >
+                        <QuoteIcon sx={{ fontSize: 48, color: 'text.secondary', opacity: 0.5, mb: 2 }} />
+                        <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                            Testimonials Coming Soon
+                        </Typography>
+                        <Typography variant="body2" color="text.secondary">
+                            We're collecting messages of gratitude from the charities we support. Check back soon to hear how your donations are making a difference!
+                        </Typography>
+                    </Paper>
+                </Container>
+            </Box>
+        );
+    }
 
     return (
         <Box sx={{ py: { xs: 6, md: 10 } }}>

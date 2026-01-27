@@ -275,6 +275,61 @@ const DonateButton = styled(Button)(({ theme }) => ({
   }
 }));
 
+const CharitiesButton = styled(Button)(({ theme }) => ({
+  background: theme.palette.mode === 'light'
+    ? 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #fb7185 100%)'
+    : 'linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%)',
+  backgroundSize: '200% 200%',
+  color: 'white',
+  fontWeight: 700,
+  textTransform: 'none',
+  padding: '8px 16px',
+  fontSize: '0.875rem',
+  borderRadius: '12px',
+  boxShadow: theme.palette.mode === 'light'
+    ? '0 4px 20px rgba(236, 72, 153, 0.35)'
+    : '0 4px 20px rgba(244, 114, 182, 0.35)',
+  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+  position: 'relative',
+  overflow: 'hidden',
+  animation: 'charitiesGradient 4s ease infinite',
+  '&::before': {
+    content: '""',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    background: 'linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.15) 100%)',
+    transform: 'translateX(-100%)',
+    transition: 'transform 0.5s ease',
+  },
+  '&:hover': {
+    transform: 'translateY(-2px) scale(1.03)',
+    boxShadow: theme.palette.mode === 'light'
+      ? '0 8px 30px rgba(236, 72, 153, 0.45)'
+      : '0 8px 30px rgba(244, 114, 182, 0.45)',
+    '&::before': {
+      transform: 'translateX(100%)',
+    },
+  },
+  '@keyframes charitiesGradient': {
+    '0%': {
+      backgroundPosition: '0% 50%',
+    },
+    '50%': {
+      backgroundPosition: '100% 50%',
+    },
+    '100%': {
+      backgroundPosition: '0% 50%',
+    },
+  },
+  [theme.breakpoints.down('md')]: {
+    padding: '6px 12px',
+    fontSize: '0.8rem',
+  }
+}));
+
 const DropdownContainer = styled(motion.div)(({ theme }) => ({
   position: 'absolute',
   top: '100%',
@@ -634,7 +689,6 @@ const Header = ({ mode, toggleColorMode }) => {
                   { text: "Our Mission", href: PathConstants.MISSION },
                   { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
                   { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
-                  { text: "Our Charities", href: PathConstants.CHARITIES },
                 ],
               },
             ]}
@@ -785,15 +839,20 @@ const Header = ({ mode, toggleColorMode }) => {
               </Box>
             )}
 
-            {/* Right Actions (Contact, Donate, Dark Mode) */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1, md: 2 } }}>
+            {/* Right Actions (Charities, Dark Mode, Contact, Donate) */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1, md: 1.5 } }}>
+              {!isMobile && (
+                <CharitiesButton component={Link} to={PathConstants.CHARITIES}>
+                  Charities
+                </CharitiesButton>
+              )}
+              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
               <ContactButton component={Link} to={PathConstants.CONTACT_US}>
                 Contact
               </ContactButton>
               <DonateButton component={Link} to={PathConstants.DONATE_NOW}>
                 Donate
               </DonateButton>
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
             </Box>
           </ModernToolbar>
         </Container>
@@ -826,7 +885,6 @@ const Header = ({ mode, toggleColorMode }) => {
           {menuItems.map((item) => (
             <Box key={item.menu || item.text}>
               {item.href ? (
-
                 <ListItem disablePadding>
                   <ListItemButton component={Link} to={item.href} onClick={handleDrawerClose}>
                     <ListItemText primary={item.text} />
@@ -862,6 +920,17 @@ const Header = ({ mode, toggleColorMode }) => {
               </AnimatePresence>
             </Box>
           ))}
+          {/* Charities button in mobile drawer */}
+          <ListItem disablePadding sx={{ px: 2, py: 1 }}>
+            <CharitiesButton 
+              component={Link} 
+              to={PathConstants.CHARITIES} 
+              onClick={handleDrawerClose}
+              fullWidth
+            >
+              Charities
+            </CharitiesButton>
+          </ListItem>
         </List>
       </ModernDrawer>
     </>

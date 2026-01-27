@@ -28,6 +28,7 @@ import {
     Psychology as PsychologyIcon,
     Assignment as AssignmentIcon,
 } from "@mui/icons-material";
+import { TUTORING_SESSIONS } from "../../constants/metrics";
 import { useMode } from "../Layout";
 import PathConstants from "../../routes/pathConstants";
 import Aarini from "/images/ourTeam/Aarini.jpg"
@@ -117,7 +118,7 @@ const teamMembers = [
 
 // Team stats
 const teamStats = [
-    { icon: GroupIcon, value: "180", label: "Sessions Taught", color: "#4caf50" },
+    { icon: GroupIcon, value: String(TUTORING_SESSIONS), label: "Sessions Taught", color: "#4caf50" },
     { icon: SchoolIcon, value: "200+", label: "Lives Impacted", color: "#2196f3" },
     { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },

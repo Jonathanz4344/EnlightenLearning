@@ -36,7 +36,11 @@ const charitiesData = [
     {
         id: 1,
         name: "Adventures in Learning",
-        description: "Adventures in Learning is a nonprofit organization dedicated to providing educational enrichment programs for children. They offer tutoring, mentorship, and creative learning experiences to help students reach their full potential.",
+        description: "Adventures in Learning is a nonprofit organization located in Manhasset that provides after school educational enrichment to support underserved children in Long Island.",
+        whySupport: [
+            "Supporting underserved children through education",
+            "Creating access to education and elating opportunities",
+        ],
         amountDonated: 1000,
         logo: "/images/charity/charity1.jpg",
         image: "/images/charity/charity1.jpg",
@@ -49,14 +53,14 @@ const charitiesData = [
 
 // Placeholder testimonials - replace with real quotes
 const testimonials = [
-    // {
-    //     id: 1,
-    //     quote: "We are incredibly grateful for Enlighten Learning's generous $1,000 donation. Their support helps us continue providing educational enrichment programs for children in our community.",
-    //     author: "Adventures in Learning",
-    //     role: "Charity Organization",
-    //     organization: "Adventures in Learning",
-    //     avatar: "/images/charity/charity1.jpg",
-    // },
+    {
+        id: 1,
+        quote: "Thank you, Enlighten Learning board of directors and faithful volunteers for the generous support and assistance you have provided to the Adventures in Learning after school homework tutoring and enrichment program. Your donation of $1,000 on 1/21/26 is so appreciated and we are honored that Adventures was chosen as the first donation of your organization, Enlighten Learning. Our gratitude to the amazing members of Enlighten Learning for partnering with us to bring educational opportunities to the underserved children in our Long Island communities.",
+        author: "Diana L Holden",
+        role: "Executive Director",
+        organization: "Adventures in Learning",
+        avatar: "/images/charity/charity1.jpg",
+    },
 ];
 
 // Hero Section Component
@@ -175,7 +179,7 @@ const HeroSection = () => {
                                     ${totalDonated.toLocaleString()}
                                 </Typography>
                                 <Typography variant="body2" sx={{ color: 'rgba(255,255,255,0.8)' }}>
-                                    Total Donated
+                                    Total Donations
                                 </Typography>
                             </Paper>
                         </Grid>
@@ -542,6 +546,31 @@ const CharitiesGrid = () => {
                                     >
                                         {charity.description}
                                     </Typography>
+
+                                    {/* Why Support Section */}
+                                    {charity.whySupport && charity.whySupport.length > 0 && (
+                                        <Box sx={{ mb: 2 }}>
+                                            <Typography
+                                                variant="subtitle2"
+                                                sx={{ fontWeight: 700, mb: 1 }}
+                                            >
+                                                Why {charity.name}?
+                                            </Typography>
+                                            <Box component="ul" sx={{ m: 0, pl: 2 }}>
+                                                {charity.whySupport.map((point, index) => (
+                                                    <Typography
+                                                        key={index}
+                                                        component="li"
+                                                        variant="body2"
+                                                        color="text.secondary"
+                                                        sx={{ mb: 0.5 }}
+                                                    >
+                                                        {point}
+                                                    </Typography>
+                                                ))}
+                                            </Box>
+                                        </Box>
+                                    )}
 
                                     {/* Donation Amount */}
                                     <Paper

@@ -221,8 +221,8 @@ const ContactButton = styled(Button)(({ theme }) => ({
 
 const DonateButton = styled(Button)(({ theme }) => ({
   background: theme.palette.mode === 'light'
-    ? 'linear-gradient(135deg, #8b5cf6 0%, #a855f7 25%, #c084fc 50%, #d946ef 75%, #e879f9 100%)'
-    : 'linear-gradient(135deg, #a78bfa 0%, #c4b5fd 25%, #ddd6fe 50%, #e879f9 75%, #f0abfc 100%)',
+    ? 'linear-gradient(135deg, #1976d2 0%, #2196f3 25%, #42a5f5 50%, #1e88e5 75%, #1565c0 100%)'
+    : 'linear-gradient(135deg, #42a5f5 0%, #64b5f6 25%, #90caf9 50%, #42a5f5 75%, #1e88e5 100%)',
   backgroundSize: '300% 300%',
   color: 'white',
   fontWeight: 700,
@@ -231,8 +231,8 @@ const DonateButton = styled(Button)(({ theme }) => ({
   fontSize: '0.875rem',
   borderRadius: '16px',
   boxShadow: theme.palette.mode === 'light'
-    ? '0 8px 32px rgba(139, 92, 246, 0.4)'
-    : '0 8px 32px rgba(167, 139, 250, 0.4)',
+    ? '0 8px 32px rgba(33, 150, 243, 0.4)'
+    : '0 8px 32px rgba(66, 165, 245, 0.4)',
   transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
@@ -251,8 +251,8 @@ const DonateButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-3px) scale(1.05)',
     boxShadow: theme.palette.mode === 'light'
-      ? '0 12px 40px rgba(139, 92, 246, 0.5)'
-      : '0 12px 40px rgba(167, 139, 250, 0.5)',
+      ? '0 12px 40px rgba(33, 150, 243, 0.5)'
+      : '0 12px 40px rgba(66, 165, 245, 0.5)',
     '&::before': {
       transform: 'translateX(100%)',
     },
@@ -277,18 +277,18 @@ const DonateButton = styled(Button)(({ theme }) => ({
 
 const CharitiesButton = styled(Button)(({ theme }) => ({
   background: theme.palette.mode === 'light'
-    ? 'linear-gradient(135deg, #ec4899 0%, #f472b6 50%, #fb7185 100%)'
-    : 'linear-gradient(135deg, #f472b6 0%, #ec4899 50%, #db2777 100%)',
+    ? 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%)'
+    : 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
   backgroundSize: '200% 200%',
-  color: 'white',
+  color: theme.palette.mode === 'light' ? '#78350f' : '#ffffff',
   fontWeight: 700,
   textTransform: 'none',
   padding: '8px 16px',
   fontSize: '0.875rem',
   borderRadius: '12px',
   boxShadow: theme.palette.mode === 'light'
-    ? '0 4px 20px rgba(236, 72, 153, 0.35)'
-    : '0 4px 20px rgba(244, 114, 182, 0.35)',
+    ? '0 4px 20px rgba(245, 158, 11, 0.35)'
+    : '0 4px 20px rgba(251, 191, 36, 0.35)',
   transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
   position: 'relative',
   overflow: 'hidden',
@@ -307,8 +307,8 @@ const CharitiesButton = styled(Button)(({ theme }) => ({
   '&:hover': {
     transform: 'translateY(-2px) scale(1.03)',
     boxShadow: theme.palette.mode === 'light'
-      ? '0 8px 30px rgba(236, 72, 153, 0.45)'
-      : '0 8px 30px rgba(244, 114, 182, 0.45)',
+      ? '0 8px 30px rgba(245, 158, 11, 0.45)'
+      : '0 8px 30px rgba(251, 191, 36, 0.45)',
     '&::before': {
       transform: 'translateX(100%)',
     },
@@ -843,7 +843,7 @@ const Header = ({ mode, toggleColorMode }) => {
             <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1, md: 1.5 } }}>
               {!isMobile && (
                 <CharitiesButton component={Link} to={PathConstants.CHARITIES}>
-                  Charities
+                  Our Impact
                 </CharitiesButton>
               )}
               <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
@@ -928,7 +928,7 @@ const Header = ({ mode, toggleColorMode }) => {
               onClick={handleDrawerClose}
               fullWidth
             >
-              Charities
+              Our Impact
             </CharitiesButton>
           </ListItem>
         </List>

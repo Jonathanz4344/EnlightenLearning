@@ -79,8 +79,8 @@ const HeroSection = () => {
                 py: { xs: 8, md: 12 },
                 overflow: 'hidden',
                 background: isDarkMode
-                    ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)'
-                    : 'linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%)',
+                    ? 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 50%, #1e40af 100%)'
+                    : 'linear-gradient(135deg, #1976d2 0%, #2196f3 50%, #42a5f5 100%)',
             }}
         >
             {/* Animated background shapes */}
@@ -871,8 +871,8 @@ const CTASection = () => {
             sx={{
                 py: { xs: 8, md: 12 },
                 background: isDarkMode
-                    ? 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)'
-                    : 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    ? 'linear-gradient(135deg, #0f172a 0%, #1e3a5f 100%)'
+                    : 'linear-gradient(135deg, #1976d2 0%, #2196f3 100%)',
             }}
         >
             <Container maxWidth="md">
@@ -903,7 +903,7 @@ const CTASection = () => {
                     <Button
                         component={Link}
                         to={PathConstants.DONATE_NOW}
-                        variant="contained"
+                        variant="outlined"
                         size="large"
                         endIcon={<ArrowIcon />}
                         sx={{
@@ -912,10 +912,13 @@ const CTASection = () => {
                             fontSize: '1.1rem',
                             fontWeight: 700,
                             borderRadius: 3,
-                            backgroundColor: 'white',
-                            color: '#667eea',
+                            backgroundColor: 'transparent',
+                            color: 'white',
+                            borderColor: 'white',
+                            borderWidth: 2,
                             '&:hover': {
-                                backgroundColor: 'rgba(255,255,255,0.9)',
+                                backgroundColor: 'rgba(255,255,255,0.15)',
+                                borderColor: 'white',
                                 transform: 'translateY(-2px)',
                             },
                         }}

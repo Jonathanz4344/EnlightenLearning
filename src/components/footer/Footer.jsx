@@ -413,7 +413,7 @@ export default function Footer() {
                 to={PathConstants.CHARITIES}
                 aria-label="View our charity partners"
               >
-                Our Charities
+                Our Impact
               </FooterLink>
             </Box>
           </Box>

@@ -118,7 +118,7 @@ const teamMembers = [
 
 // Team stats
 const teamStats = [
-    { icon: GroupIcon, value: String(TUTORING_SESSIONS), label: "Sessions Taught", color: "#4caf50" },
+    { icon: GroupIcon, value: `${TUTORING_SESSIONS}+`, label: "Sessions Taught", color: "#4caf50" },
     { icon: SchoolIcon, value: "200+", label: "Lives Impacted", color: "#2196f3" },
     { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
     { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },

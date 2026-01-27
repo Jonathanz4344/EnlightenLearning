@@ -381,6 +381,41 @@ export default function Footer() {
                 Join the Executive Team
               </FooterLink>
             </Box>
+
+            {/* Support Us Links */}
+            <Box
+              component="div"
+              role="navigation"
+              aria-labelledby="footer-support-heading"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                gap: 1,
+                minWidth: { xs: "45%", sm: "auto" },
+              }}
+            >
+              <Typography
+                variant="h6"
+                component="h3"
+                id="footer-support-heading"
+                color="primary.main"
+                sx={{ fontWeight: 600 }}
+              >
+                Support Us
+              </Typography>
+              <FooterLink
+                to={PathConstants.DONATE_NOW}
+                aria-label="Donate to support our mission"
+              >
+                Donate Now
+              </FooterLink>
+              <FooterLink
+                to={PathConstants.CHARITIES}
+                aria-label="View our charity partners"
+              >
+                Our Impact
+              </FooterLink>
+            </Box>
           </Box>
         </Box>
 

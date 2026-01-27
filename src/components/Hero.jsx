@@ -53,7 +53,7 @@ const InstagramEmbed = ({ url }) => {
 };
 
 // Facebook Embed Component
-const FacebookEmbed = ({ src }) => {
+const FacebookEmbed = ({ src, height = 550 }) => {
   return (
     <Fade in timeout={1400}>
       <Box sx={{
@@ -65,7 +65,7 @@ const FacebookEmbed = ({ src }) => {
         <iframe
           src={src}
           width="500"
-          height="645"
+          height={height}
           style={{
             border: 'none',
             overflow: 'hidden',
@@ -94,14 +94,16 @@ export default function Hero() {
 
   // Instagram post URLs - Easy to manage! (first one shows first)
   const instagramPosts = [
+    "https://www.instagram.com/p/DT1uI3lDgGu",
     "https://www.instagram.com/reel/DST6NLvDvD1",
     "https://www.instagram.com/p/DEvT6yEvrEh",
   ];
 
   // Facebook post URLs - Easy to manage! (first one shows first)
   const facebookPosts = [
-    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500",
-    "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500",
+    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02GwqjcdCUTEoyoFJXrA95V6F2cKnXpqmsk7h7fiuqDELNUcYEx8TM8HCwC3Lx6W37l%26id%3D61576772816131&show_text=true&width=500", height: 472 },
+    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500", height: 645 },
+    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500", height: 645 },
   ];
 
 
@@ -526,10 +528,11 @@ export default function Hero() {
                       }
                     }
                   }}>
-                    {visibleFacebookPosts.map((src, index) => (
+                    {visibleFacebookPosts.map((post, index) => (
                       <FacebookEmbed
                         key={index}
-                        src={src}
+                        src={post.src}
+                        height={post.height}
                       />
                     ))}
                   </Box>

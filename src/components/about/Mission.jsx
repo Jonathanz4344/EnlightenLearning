@@ -12,6 +12,7 @@ import {
     Fade,
     Grow,
 } from "@mui/material";
+import { TUTORING_SESSIONS_DISPLAY } from "../../constants/metrics";
 import {
     School as LearnIcon,
     Favorite as GiveIcon,
@@ -63,7 +64,7 @@ const missionPillars = [
         icon: PassionIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
-        stats: { value: "180+", label: "Sessions Taught" },
+        stats: { value: TUTORING_SESSIONS_DISPLAY, label: "Sessions Taught" },
         features: [
             "Dedicated volunteer tutors",
             "Charitable tutoring programs",
@@ -109,7 +110,7 @@ const missionPillars = [
 const impactMetrics = [
     { icon: EducationIcon, value: "200+", label: "Lives Impacted", color: "#4caf50" },
     { icon: CommunityIcon, value: "30+", label: "Active Volunteers", color: "#2196f3" },
-    { icon: EventIcon, value: "180+", label: "Sessions Taught", color: "#e91e63" },
+    { icon: EventIcon, value: TUTORING_SESSIONS_DISPLAY, label: "Sessions Taught", color: "#e91e63" },
     { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" }
 ];
 

@@ -22,6 +22,7 @@ import {
     FamilyRestroom as ParentIcon,
     VolunteerActivism as VolunteerIcon,
 } from "@mui/icons-material";
+import { TUTORING_SESSIONS_DISPLAY } from "../../constants/metrics";
 import { useMode } from "../Layout";
 
 const ReviewCard = ({ review, index, priority }) => {
@@ -556,7 +557,7 @@ export default function Reviews() {
                         <StatsCard
                             icon={PeopleIcon}
                             title="Tutoring Sessions"
-                            value="180+"
+                            value={TUTORING_SESSIONS_DISPLAY}
                             color="#4caf50"
                         />
                         <StatsCard

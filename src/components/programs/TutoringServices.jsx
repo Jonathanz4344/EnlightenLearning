@@ -33,6 +33,7 @@ import {
     Groups as GroupsIcon,
     MusicNote as MusicIcon,
 } from "@mui/icons-material";
+import { TUTORING_SESSIONS_DISPLAY } from "../../constants/metrics";
 import { useMode } from "../Layout";
 
 // Subject Areas Data
@@ -601,7 +602,7 @@ export default function TutoringServices() {
                         </Box>
                         <Box sx={{ textAlign: 'center' }}>
                             <Typography variant="h3" sx={{ color: '#ff9800' }} fontWeight="bold">
-                                180+
+                                {TUTORING_SESSIONS_DISPLAY}
                             </Typography>
                             <Typography variant="body1" color="text.secondary">
                                 Tutoring Sessions

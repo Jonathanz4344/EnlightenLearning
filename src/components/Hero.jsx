@@ -101,7 +101,7 @@ export default function Hero() {
 
   // Facebook post URLs - Easy to manage! (first one shows first)
   const facebookPosts = [
-    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02GwqjcdCUTEoyoFJXrA95V6F2cKnXpqmsk7h7fiuqDELNUcYEx8TM8HCwC3Lx6W37l%26id%3D61576772816131&show_text=true&width=500", height: 472 },
+    // { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02GwqjcdCUTEoyoFJXrA95V6F2cKnXpqmsk7h7fiuqDELNUcYEx8TM8HCwC3Lx6W37l%26id%3D61576772816131&show_text=true&width=500", height: 472 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500", height: 645 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500", height: 645 },
   ];

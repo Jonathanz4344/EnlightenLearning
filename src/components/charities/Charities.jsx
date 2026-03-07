@@ -39,7 +39,7 @@ const charitiesData = [
         description: "Adventures in Learning is a nonprofit organization located in Manhasset that provides after school educational enrichment to support underserved children in Long Island.",
         whySupport: [
             "Supporting underserved children through education",
-            "Creating access to education and elating opportunities",
+            "Creating access to education and opportunities",
         ],
         amountDonated: 1000,
         logo: "/images/charity/charity1.jpg",

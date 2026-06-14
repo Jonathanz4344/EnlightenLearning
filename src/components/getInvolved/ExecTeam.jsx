@@ -54,12 +54,12 @@ const execPositions = [
         id: 2,
         title: "Head of Academics",
         maxPositions: 2, // NEW: Multiple positions available
-        description: "Coordinates the quality and effectiveness of the tutoring program by guiding and training tutors, organizing academic resources, and ensuring consistent academic standards. Additionally, plan and conduct educational workshops to support student learning.",
+        description: "Works with Head of Tutoring Services coordinating the quality and effectiveness of the tutoring program by guiding and training tutors, and ensuring consistent academic standards. Additionally, plan and conduct educational workshops to support student learning.",
         icon: AcademicsIcon,
         responsibilities: [
             "Tutor guidance and training",
-            "Resource organization for tutors",
             "Oversight of academic quality across tutoring program",
+            "Assist the Head of Tutoring Services ",
             "Educational workshop planning and execution"
         ],
         currentMembers: [{ name: "Anna Zou", avatar: "AZ" }, { name: "Aarini Chakraborty", avatar: "AC" }],
@@ -101,47 +101,47 @@ const execPositions = [
     },
     {
         id: 5,
-        title: "Director of Finance",
+        title: "Director of Finance and Tutoring Services",
         maxPositions: 1, // NEW: Single position
-        description: "Oversees all financial operations, which includes discussing pricing quota with parents, recording organizational expenses, managing charity donations, and ensuring accurate financial records.",
+        description: "Oversees all financial operations, which includes discussing program fees with families managing charity donations, and ensuring accurate financial records. Because financial planning is closely integrated with the operation of the tutoring program, this role also manages tutor-student pairing and recruitment, and the overall coordination of the Tutoring Program.",
         icon: FinanceIcon,
         responsibilities: [
-            "Financial operations oversight",
-            "Pricing discussions with parents",
-            "Expense recording and tracking",
-            "Charity donation management"
+            "Recordkeeping of finances",
+            "Charity donation management",
+            "Discuss program fees with families",
+            "Oversees the Tutoring Program"
         ],
         currentMembers: [
             { name: "Brianna Tam", avatar: "BT" }
         ],
         category: "Operations"
     },
-    {
-        id: 6,
-        title: "Programs Director",
-        maxPositions: 1, // NEW: Single position, currently open
-        description: "Plans and executes special events; including agenda development, collaboration with relevant board members or other organizations and communicating with facilities to rent their space to host the event.",
-        icon: ProgramsIcon,
-        responsibilities: [
-            "Special event planning and execution",
-            "Agenda development",
-            "Cross-team collaboration",
-            "Facility coordination and rental"
-        ],
-        currentMembers: [],
-        category: "Development"
-    },
+    // {
+    //     id: 6,
+    //     title: "Programs Director",
+    //     maxPositions: 1, // NEW: Single position, currently open
+    //     description: "Plans and executes special events; including agenda development, collaboration with relevant board members or other organizations and communicating with facilities to rent their space to host the event.",
+    //     icon: ProgramsIcon,
+    //     responsibilities: [
+    //         "Special event planning and execution",
+    //         "Agenda development",
+    //         "Cross-team collaboration",
+    //         "Facility coordination and rental"
+    //     ],
+    //     currentMembers: [],
+    //     category: "Development"
+    // },
     {
         id: 7,
-        title: "Outreach Coordinator",
+        title: "Outreach and ProgramsCoordinator",
         maxPositions: 3, // NEW: 3 positions available, 1 filled
-        description: "In charge of recruitment of both students and tutors within your area. As well as expansion of the organization and spreading our mission. Essentially the individual responsible for overseeing and promoting our tutoring program in that area.",
+        description: "In charge of expanding the organization and spreading our mission. As well as planning and executing special events. Essentially the individual responsible for overseeing and promoting our tutoring program, events, opportunities, etc, in that area.",
         icon: OutreachIcon,
         responsibilities: [
-            "Student and tutor recruitment",
-            "Organizational expansion",
             "Mission promotion",
-            "Local program support and engagement"
+            "Organizational expansion and recruitment",
+            "Special event planning and execution",
+            "Facilitate communication with public facilities"
         ],
         currentMembers: [
             { name: "Tiffany Zhou", avatar: "TZ" },

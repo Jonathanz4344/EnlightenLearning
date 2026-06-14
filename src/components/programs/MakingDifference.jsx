@@ -264,8 +264,13 @@ export default function Reviews() {
     // Enhanced reviews with priority scoring
     const reviews = [
         {
+            text: "After the tutoring lessons, Kingsley has gained more confidence in learning both ELA and Math. I appreciate that the tutors are always on time and well prepared for the lessons. They are also flexible when schedule changes are needed. I am satisfied with the two tutors paired with Kingsley. I would recommend the program to others.",
+            author: "Iris A.",
+            priority: "large",
+        },
+        {
             text: "Being a tutor at Enlighten Learning has allowed me to experience so many meaningful moments with the kids I work with. One of my students, Kingsley, has especially made the experience memorable. We’ve built such a strong connection that he has chosen to continue tutoring with me again this year, which feels both rewarding and encouraging. Through this opportunity, I’ve gained valuable skills such as learning how to effectively socialize with younger children, developing patience, working independently, and practicing negotiation when challenges arise. Tutoring has truly taught me how impactful small efforts can be in helping others grow. I would gladly participate again, and I’m excited to continue tutoring my student this year and create even more new memories together.",
-            author: "Tiffany Q",
+            author: "Tiffany Q.",
             priority: "large",
         },
         {

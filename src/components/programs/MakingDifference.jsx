@@ -279,7 +279,7 @@ export default function Reviews() {
             priority: "medium",
         },
         {
-            text: "The classes were very good!",
+            text: "The classes were very good! ",
             author: "Emma Z.    ",
             priority: "small",
         },

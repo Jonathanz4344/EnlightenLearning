@@ -133,7 +133,7 @@ const execPositions = [
     // },
     {
         id: 7,
-        title: "Outreach and ProgramsCoordinator",
+        title: "Outreach Coordinator",
         maxPositions: 3, // NEW: 3 positions available, 1 filled
         description: "In charge of expanding the organization and spreading our mission. As well as planning and executing special events. Essentially the individual responsible for overseeing and promoting our tutoring program, events, opportunities, etc, in that area.",
         icon: OutreachIcon,
@@ -164,7 +164,7 @@ const execPositions = [
         currentMembers: [
             { name: "Eileen Liang", avatar: "EL" }
         ],
-        category: "Operations"
+        category: "Development"
     },
     {
         id: 9,

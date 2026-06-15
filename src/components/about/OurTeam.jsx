@@ -108,7 +108,7 @@ const teamMembers = [
     {
         id: 8,
         name: "Lauren Chen",
-        roles: ["Secretary", "OutreachCoordinator"],
+        roles: ["Secretary", "Outreach Coordinator"],
         icon: AssignmentIcon,
         color: '#607d8b',
         bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',

@@ -45,7 +45,7 @@ const teamMembers = [
     {
         id: 1,
         name: "Brianna Tam",
-        roles: ["Founder & President"," Head of Tutoring Services"],
+        roles: ["Founder & President"," Director of Finance and Tutoring Services"],
         icon: AdminIcon,
         color: '#e91e63',
         bgGradient: 'linear-gradient(135deg, #e91e63, #f06292)',
@@ -81,7 +81,7 @@ const teamMembers = [
     {
         id: 5,
         name: "Tiffany Zhou",
-        roles: ["Outreach Coordinator"],
+        roles: ["Outreach and Programs Coordinator"],
         icon: CampaignIcon,
         color: '#ff5722',
         bgGradient: 'linear-gradient(135deg, #ff5722, #ff8a65)',
@@ -108,7 +108,7 @@ const teamMembers = [
     {
         id: 8,
         name: "Lauren Chen",
-        roles: ["Secretary", "Outreach Coordinator"],
+        roles: ["Secretary", "Outreach and Programs Coordinator"],
         icon: AssignmentIcon,
         color: '#607d8b',
         bgGradient: 'linear-gradient(135deg, #607d8b, #78909c)',

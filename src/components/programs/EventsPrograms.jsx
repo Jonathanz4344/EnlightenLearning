@@ -44,7 +44,7 @@ const eventsData = [
         formUrl: "https://syosset.librarycalendar.com/event/coding-kids-48489",
         category: "Coding",
         volunteersNeeded: 10,
-        totalParticipants: 30,
+        totalParticipants: 20,
         duration: "1.5 hours",
         coordinator: "Enlighten Learning",
         registrationStartDate: "2026-01-04",

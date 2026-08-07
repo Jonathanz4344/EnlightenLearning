@@ -27,8 +27,9 @@ import {
     AdminPanelSettings as AdminIcon,
     Psychology as PsychologyIcon,
     Assignment as AssignmentIcon,
+    MonetizationOn as MoneyIcon,
 } from "@mui/icons-material";
-import { TUTORING_SESSIONS } from "../../constants/metrics";
+import { TUTORING_SESSIONS, TOTAL_RAISED_DISPLAY } from "../../constants/metrics";
 import { useMode } from "../Layout";
 import PathConstants from "../../routes/pathConstants";
 import Aarini from "/images/ourTeam/Aarini.jpg"
@@ -121,7 +122,7 @@ const teamStats = [
     { icon: GroupIcon, value: `${TUTORING_SESSIONS}+`, label: "Sessions Taught", color: "#4caf50" },
     { icon: SchoolIcon, value: "200+", label: "Lives Impacted", color: "#2196f3" },
     { icon: VolunteerIcon, value: "30+", label: "Active Volunteers", color: "#e91e63" },
-    { icon: StarIcon, value: "100%", label: "Dedication", color: "#ff9800" },
+    { icon: MoneyIcon, value: TOTAL_RAISED_DISPLAY, label: "Raised for Charity", color: "#ff9800" },
 ];
 
 const TeamMemberCard = ({ member, index }) => {

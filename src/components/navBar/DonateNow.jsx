@@ -36,6 +36,7 @@ import {
     VolunteerActivism as VolunteerIcon,
 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
+import { TOTAL_RAISED, FUNDRAISING_GOAL } from "../../constants/metrics";
 import { useMode } from "../Layout";
 import Logo from "/images/logo/Logo.png";
 import ZelleQr from "/images/donate/Zelle.jpg"
@@ -48,15 +49,23 @@ const donationAmounts = [25, 50, 100, 250];
 const FundraisingProgress = ({ currentAmount, goalAmount }) => {
     const { mode = "light" } = useMode() || {};
     const isDarkMode = mode === "dark";
-    const percentage = Math.min((currentAmount / goalAmount) * 100, 100);
+    // True progress, uncapped, so we can celebrate going past the goal
+    const rawPercentage = goalAmount > 0 ? (currentAmount / goalAmount) * 100 : 0;
+    const percentage = Math.min(rawPercentage, 100);
+    const isOverGoal = rawPercentage > 100;
+    const overageAmount = Math.max(currentAmount - goalAmount, 0);
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
     // Balloon rises from bottom (0%) to top (100%)
     const riseAmount = percentage; // 0-100
 
-    // Balloon inflates from 60% to 100% size
-    const balloonScale = 0.6 + (percentage / 100) * 0.4;
+    // Balloon inflates from 60% to 100% size, plus a little extra past the goal
+    const balloonScale = 0.6 + (percentage / 100) * 0.4 + (isOverGoal ? 0.08 : 0);
+
+    // Celebration accents once the goal is beaten
+    const goldGradient = 'linear-gradient(135deg, #ffd54f 0%, #ffb300 50%, #ff8f00 100%)';
+    const confettiColors = ['#f44336', '#ffc107', '#4caf50', '#2196f3', '#e91e63', '#9c27b0'];
 
     // Base balloon size
     const balloonSize = isMobile ? 120 : 160;
@@ -70,10 +79,14 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                 mb: 4,
                 p: { xs: 3, sm: 5 },
                 borderRadius: 5,
-                background: isDarkMode
-                    ? 'linear-gradient(180deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%)'
-                    : 'linear-gradient(180deg, #e3f2fd 0%, #bbdefb 30%, #90caf9 100%)',
-                border: 'none',
+                background: isOverGoal
+                    ? (isDarkMode
+                        ? 'linear-gradient(180deg, rgba(45, 32, 18, 0.95) 0%, rgba(30, 30, 50, 0.95) 60%, rgba(20, 20, 35, 0.95) 100%)'
+                        : 'linear-gradient(180deg, #fff8e1 0%, #ffe0b2 30%, #b3d9f7 70%, #90caf9 100%)')
+                    : (isDarkMode
+                        ? 'linear-gradient(180deg, rgba(20, 20, 35, 0.95) 0%, rgba(30, 30, 50, 0.95) 100%)'
+                        : 'linear-gradient(180deg, #e3f2fd 0%, #bbdefb 30%, #90caf9 100%)'),
+                border: isOverGoal ? '3px solid #ffb300' : 'none',
                 position: 'relative',
                 overflow: 'hidden',
                 minHeight: { xs: 500, sm: 550 },
@@ -126,6 +139,59 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                 />
             ))}
 
+            {/* Celebration sunburst + confetti once we pass the goal */}
+            {isOverGoal && (
+                <>
+                    <Box
+                        sx={{
+                            position: 'absolute',
+                            top: -120,
+                            left: '50%',
+                            transform: 'translateX(-50%)',
+                            width: 420,
+                            height: 420,
+                            borderRadius: '50%',
+                            background: isDarkMode
+                                ? 'radial-gradient(circle, rgba(255,193,7,0.22) 0%, transparent 65%)'
+                                : 'radial-gradient(circle, rgba(255,193,7,0.45) 0%, transparent 65%)',
+                            animation: 'sunPulse 4s ease-in-out infinite',
+                            pointerEvents: 'none',
+                            '@keyframes sunPulse': {
+                                '0%, 100%': { opacity: 0.6, transform: 'translateX(-50%) scale(1)' },
+                                '50%': { opacity: 1, transform: 'translateX(-50%) scale(1.12)' },
+                            },
+                        }}
+                    />
+                    {[...Array(16)].map((_, i) => (
+                        <Box
+                            key={`confetti-${i}`}
+                            sx={{
+                                position: 'absolute',
+                                top: -20,
+                                left: `${(i * 6.1 + 3) % 96}%`,
+                                width: i % 3 === 0 ? 12 : 8,
+                                height: i % 3 === 0 ? 8 : 12,
+                                borderRadius: i % 4 === 0 ? '50%' : '2px',
+                                backgroundColor: confettiColors[i % confettiColors.length],
+                                opacity: 0.85,
+                                pointerEvents: 'none',
+                                zIndex: 1,
+                                animation: `confettiFall${i % 3} ${5 + (i % 4)}s linear ${(i % 6) * 0.7}s infinite`,
+                                [`@keyframes confettiFall${i % 3}`]: {
+                                    '0%': { transform: 'translateY(0) rotate(0deg)', opacity: 0 },
+                                    '10%': { opacity: 0.9 },
+                                    '90%': { opacity: 0.9 },
+                                    '100%': {
+                                        transform: `translateY(560px) rotate(${540 + (i % 3) * 180}deg)`,
+                                        opacity: 0,
+                                    },
+                                },
+                            }}
+                        />
+                    ))}
+                </>
+            )}
+
             {/* Ground/Grass at bottom */}
             <Box
                 sx={{
@@ -157,23 +223,26 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     variant="h5"
                     sx={{
                         fontWeight: 700,
-                        color: isDarkMode ? '#fff' : '#1565c0',
+                        color: isOverGoal ? (isDarkMode ? '#ffca28' : '#ef6c00') : (isDarkMode ? '#fff' : '#1565c0'),
                         textAlign: 'center',
                         mb: 1,
                         textShadow: isDarkMode ? 'none' : '0 2px 10px rgba(255,255,255,0.5)',
                     }}
                 >
-                    Help Our Balloon Rise! 🎈
+                    {isOverGoal ? 'We Broke Through the Sky! 🎉' : 'Help Our Balloon Rise! 🎈'}
                 </Typography>
                 <Typography
                     variant="body2"
                     sx={{
-                        color: isDarkMode ? 'rgba(255,255,255,0.7)' : '#1976d2',
+                        color: isOverGoal ? (isDarkMode ? '#ffe082' : '#e65100') : (isDarkMode ? 'rgba(255,255,255,0.7)' : '#1976d2'),
                         textAlign: 'center',
                         mb: 4,
+                        fontWeight: isOverGoal ? 600 : 400,
                     }}
                 >
-                    Every donation inflates and lifts us higher
+                    {isOverGoal
+                        ? `Goal beaten by $${overageAmount.toLocaleString()} — every donation now goes even further`
+                        : 'Every donation inflates and lifts us higher'}
                 </Typography>
 
                 {/* Balloon Flight Zone */}
@@ -222,14 +291,18 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     position: 'absolute',
                                     right: 30,
                                     color: percentage >= milestone
-                                        ? (isDarkMode ? '#81c784' : '#2e7d32')
+                                        ? (isOverGoal
+                                            ? (isDarkMode ? '#ffca28' : '#ef6c00')
+                                            : (isDarkMode ? '#81c784' : '#2e7d32'))
                                         : (isDarkMode ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.3)'),
                                     fontWeight: percentage >= milestone ? 700 : 400,
                                     fontSize: '0.7rem',
                                     whiteSpace: 'nowrap',
                                 }}
                             >
-                                ${(goalAmount * milestone / 100).toLocaleString()}
+                                {isOverGoal && milestone === 100
+                                    ? 'GOAL 🏆'
+                                    : `$${(goalAmount * milestone / 100).toLocaleString()}`}
                             </Typography>
                             <Box
                                 sx={{
@@ -237,15 +310,17 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     height: 12,
                                     borderRadius: '50%',
                                     backgroundColor: percentage >= milestone
-                                        ? '#4caf50'
+                                        ? (isOverGoal ? '#ffb300' : '#4caf50')
                                         : (isDarkMode ? 'rgba(255,255,255,0.2)' : 'rgba(255,255,255,0.8)'),
                                     border: '2px solid',
                                     borderColor: percentage >= milestone
-                                        ? '#2e7d32'
+                                        ? (isOverGoal ? '#ef6c00' : '#2e7d32')
                                         : (isDarkMode ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.1)'),
                                     transition: 'all 0.5s ease',
                                     boxShadow: percentage >= milestone
-                                        ? '0 0 10px rgba(76, 175, 80, 0.5)'
+                                        ? (isOverGoal
+                                            ? '0 0 12px rgba(255, 179, 0, 0.7)'
+                                            : '0 0 10px rgba(76, 175, 80, 0.5)')
                                         : 'none',
                                 }}
                             />
@@ -260,10 +335,16 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                             bottom: `${Math.max(riseAmount * 0.85, 5)}%`,
                             transform: 'translateX(-50%)',
                             transition: 'bottom 1.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
-                            animation: percentage >= 50 ? 'balloonBob 3s ease-in-out infinite' : 'none',
+                            animation: isOverGoal
+                                ? 'balloonSoar 4.5s ease-in-out infinite'
+                                : percentage >= 50 ? 'balloonBob 3s ease-in-out infinite' : 'none',
                             '@keyframes balloonBob': {
                                 '0%, 100%': { transform: 'translateX(-50%) translateY(0) rotate(-2deg)' },
                                 '50%': { transform: 'translateX(-50%) translateY(-10px) rotate(2deg)' },
+                            },
+                            '@keyframes balloonSoar': {
+                                '0%, 100%': { transform: 'translateX(-50%) translateY(0) rotate(-4deg)' },
+                                '50%': { transform: 'translateX(-50%) translateY(-24px) rotate(4deg)' },
                             },
                         }}
                     >
@@ -307,7 +388,9 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     width: '140%',
                                     height: '140%',
                                     borderRadius: '50%',
-                                    background: `radial-gradient(circle, rgba(76, 175, 80, ${0.2 + percentage * 0.003}) 0%, transparent 70%)`,
+                                    background: isOverGoal
+                                        ? 'radial-gradient(circle, rgba(255, 179, 0, 0.55) 0%, transparent 70%)'
+                                        : `radial-gradient(circle, rgba(76, 175, 80, ${0.2 + percentage * 0.003}) 0%, transparent 70%)`,
                                     animation: 'glowPulse 2s ease-in-out infinite',
                                     '@keyframes glowPulse': {
                                         '0%, 100%': { opacity: 0.7, transform: 'translate(-50%, -50%) scale(1)' },
@@ -322,15 +405,24 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     width: '100%',
                                     height: '100%',
                                     borderRadius: '50%',
-                                    background: `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f5f5f5 30%, #e8f5e9 60%, #c8e6c9 100%)`,
-                                    boxShadow: `
+                                    background: isOverGoal
+                                        ? `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #fffde7 30%, #fff8e1 60%, #ffe082 100%)`
+                                        : `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f5f5f5 30%, #e8f5e9 60%, #c8e6c9 100%)`,
+                                    boxShadow: isOverGoal
+                                        ? `
+                                        inset -8px -8px 20px rgba(0,0,0,0.08),
+                                        inset 8px 8px 20px rgba(255,255,255,0.95),
+                                        0 10px 40px rgba(255, 179, 0, 0.45),
+                                        0 0 80px rgba(255, 179, 0, 0.5)
+                                    `
+                                        : `
                                         inset -8px -8px 20px rgba(0,0,0,0.1),
                                         inset 8px 8px 20px rgba(255,255,255,0.9),
                                         0 10px 40px rgba(76, 175, 80, 0.3),
                                         0 0 60px rgba(76, 175, 80, ${0.1 + percentage * 0.003})
                                     `,
                                     border: '4px solid',
-                                    borderColor: percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    borderColor: isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -370,7 +462,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     transform: 'translateX(-50%)',
                                     width: 16,
                                     height: 16,
-                                    background: percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    background: isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
                                     clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)',
                                 }}
                             />
@@ -386,15 +478,25 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                             }}
                         >
                             <Chip
-                                label={`${percentage.toFixed(0)}%`}
+                                label={isOverGoal ? `🏆 ${rawPercentage.toFixed(0)}%` : `${percentage.toFixed(0)}%`}
                                 sx={{
                                     fontWeight: 800,
-                                    backgroundColor: '#4caf50',
-                                    color: 'white',
+                                    backgroundColor: isOverGoal ? '#ffb300' : '#4caf50',
+                                    background: isOverGoal ? goldGradient : undefined,
+                                    color: isOverGoal ? '#4e342e' : 'white',
                                     fontSize: '0.9rem',
                                     height: 32,
-                                    boxShadow: '0 4px 15px rgba(76, 175, 80, 0.4)',
-                                    border: '2px solid #2e7d32',
+                                    whiteSpace: 'nowrap',
+                                    boxShadow: isOverGoal
+                                        ? '0 4px 18px rgba(255, 179, 0, 0.6)'
+                                        : '0 4px 15px rgba(76, 175, 80, 0.4)',
+                                    border: '2px solid',
+                                    borderColor: isOverGoal ? '#ef6c00' : '#2e7d32',
+                                    animation: isOverGoal ? 'badgePop 2.5s ease-in-out infinite' : 'none',
+                                    '@keyframes badgePop': {
+                                        '0%, 100%': { transform: 'scale(1)' },
+                                        '50%': { transform: 'scale(1.12)' },
+                                    },
                                 }}
                             />
                         </Box>
@@ -412,7 +514,10 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                             ? 'rgba(0,0,0,0.3)'
                             : 'rgba(255,255,255,0.9)',
                         backdropFilter: 'blur(10px)',
-                        boxShadow: '0 8px 32px rgba(0,0,0,0.1)',
+                        boxShadow: isOverGoal
+                            ? '0 8px 32px rgba(255, 179, 0, 0.35)'
+                            : '0 8px 32px rgba(0,0,0,0.1)',
+                        border: isOverGoal ? '2px solid #ffb300' : 'none',
                         width: '100%',
                         maxWidth: 400,
                     }}
@@ -421,7 +526,9 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         variant="h3"
                         sx={{
                             fontWeight: 800,
-                            background: 'linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)',
+                            background: isOverGoal
+                                ? 'linear-gradient(135deg, #ffb300 0%, #ef6c00 100%)'
+                                : 'linear-gradient(135deg, #4caf50 0%, #2e7d32 100%)',
                             backgroundClip: 'text',
                             WebkitBackgroundClip: 'text',
                             WebkitTextFillColor: 'transparent',
@@ -431,9 +538,16 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     >
                         ${currentAmount.toLocaleString()}
                     </Typography>
-                    <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
-                        raised of <strong>${goalAmount.toLocaleString()}</strong> goal
-                    </Typography>
+                    {isOverGoal ? (
+                        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                            raised — <strong>${overageAmount.toLocaleString()}</strong> past our{' '}
+                            ${goalAmount.toLocaleString()} goal 🎉
+                        </Typography>
+                    ) : (
+                        <Typography variant="body1" color="text.secondary" sx={{ mb: 2 }}>
+                            raised of <strong>${goalAmount.toLocaleString()}</strong> goal
+                        </Typography>
+                    )}
 
                     {/* Mini Progress Bar */}
                     <Box
@@ -449,8 +563,16 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                 height: '100%',
                                 width: `${percentage}%`,
                                 borderRadius: 4,
-                                background: 'linear-gradient(90deg, #66bb6a, #4caf50, #43a047)',
+                                background: isOverGoal
+                                    ? 'linear-gradient(90deg, #ffd54f, #ffb300, #ff8f00, #ffd54f)'
+                                    : 'linear-gradient(90deg, #66bb6a, #4caf50, #43a047)',
+                                backgroundSize: isOverGoal ? '200% 100%' : 'auto',
                                 transition: 'width 1.5s ease-out',
+                                animation: isOverGoal ? 'barShimmer 2.5s linear infinite' : 'none',
+                                '@keyframes barShimmer': {
+                                    '0%': { backgroundPosition: '0% 50%' },
+                                    '100%': { backgroundPosition: '200% 50%' },
+                                },
                             }}
                         />
                     </Box>
@@ -458,22 +580,28 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     {/* Stats Row */}
                     <Grid container spacing={2} sx={{ mt: 2 }}>
                         <Grid item xs={4}>
-                            <Typography variant="h6" sx={{ fontWeight: 700, color: '#4caf50' }}>
+                            <Typography variant="h6" sx={{ fontWeight: 700, color: isOverGoal ? '#ffb300' : '#4caf50' }}>
                                 ${currentAmount.toLocaleString()}
                             </Typography>
                             <Typography variant="caption" color="text.secondary">Raised</Typography>
                         </Grid>
                         <Grid item xs={4}>
                             <Typography variant="h6" sx={{ fontWeight: 700, color: '#2196f3' }}>
-                                ${(goalAmount - currentAmount).toLocaleString()}
+                                {isOverGoal
+                                    ? `+$${overageAmount.toLocaleString()}`
+                                    : `$${(goalAmount - currentAmount).toLocaleString()}`}
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">To Go</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                                {isOverGoal ? 'Above Goal' : 'To Go'}
+                            </Typography>
                         </Grid>
                         <Grid item xs={4}>
                             <Typography variant="h6" sx={{ fontWeight: 700, color: '#ff9800' }}>
-                                {percentage.toFixed(0)}%
+                                {rawPercentage.toFixed(0)}%
                             </Typography>
-                            <Typography variant="caption" color="text.secondary">Complete</Typography>
+                            <Typography variant="caption" color="text.secondary">
+                                {isOverGoal ? 'Of Goal' : 'Complete'}
+                            </Typography>
                         </Grid>
                     </Grid>
                 </Box>
@@ -483,13 +611,17 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     variant="body2"
                     sx={{
                         mt: 3,
-                        color: isDarkMode ? '#81c784' : '#2e7d32',
-                        fontWeight: 500,
+                        color: isOverGoal
+                            ? (isDarkMode ? '#ffca28' : '#ef6c00')
+                            : (isDarkMode ? '#81c784' : '#2e7d32'),
+                        fontWeight: isOverGoal ? 700 : 500,
                         textAlign: 'center',
                         fontStyle: 'italic',
                     }}
                 >
-                    {percentage >= 100
+                    {isOverGoal
+                        ? "🏆 Goal smashed — and we're still climbing! Thank you for lifting us this far."
+                        : percentage >= 100
                         ? "🎈 The balloon has reached the sky! Thank you!"
                         : percentage >= 75
                             ? "🎈 Almost at the clouds! One more push!"
@@ -567,8 +699,8 @@ export default function DonateNow() {
     const [copiedZelle, setCopiedZelle] = React.useState(false);
 
     // Fundraising data
-    const currentAmount = 2000;
-    const goalAmount = 10000;
+    const currentAmount = TOTAL_RAISED;
+    const goalAmount = FUNDRAISING_GOAL;
     const zelleEmail = "Enlightenlearningfinance@gmail.com";
 
     const copyToClipboard = (text) => {

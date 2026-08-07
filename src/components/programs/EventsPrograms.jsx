@@ -164,6 +164,15 @@ const getEventStatus = (event) => {
     return 'current';
 };
 
+// Returns a sortable timestamp for an event. The date field may be a single
+// date ("2025-01-10") or a range ("2025-07-21 - 2025-08-25"), so we sort on the
+// start date and fall back to the expiration date.
+const getSortTime = (event) => {
+    const startDate = (event.date || "").trim().split(/\s*-\s*(?=\d{4})/)[0].trim();
+    const parsed = parseDate(startDate) || parseDate(event.expirationDate);
+    return parsed && !isNaN(parsed.getTime()) ? parsed.getTime() : 0;
+};
+
 // Function to categorize events based on their status
 const categorizeEvents = () => {
     const categorized = {
@@ -175,6 +184,11 @@ const categorizeEvents = () => {
     eventsData.forEach(event => {
         const status = getEventStatus(event);
         categorized[status].push(event);
+    });
+
+    // Newest to oldest within each section
+    Object.values(categorized).forEach(section => {
+        section.sort((a, b) => getSortTime(b) - getSortTime(a));
     });
 
     return categorized;

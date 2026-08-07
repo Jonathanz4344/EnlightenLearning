@@ -169,6 +169,15 @@ const getVolunteerStatus = (volunteer) => {
     return 'open';
 };
 
+// Returns a sortable timestamp for an opportunity. The date field may be a
+// single date ("2025-01-10") or a range ("2025-07-21 - 2025-08-25"), so we sort
+// on the start date and fall back to the expiration date.
+const getSortTime = (volunteer) => {
+    const startDate = (volunteer.date || "").trim().split(/\s*-\s*(?=\d{4})/)[0].trim();
+    const parsed = parseDate(startDate) || parseDate(volunteer.expirationDate);
+    return parsed && !isNaN(parsed.getTime()) ? parsed.getTime() : 0;
+};
+
 // Function to categorize volunteers based on their status
 const categorizeVolunteers = () => {
     const categorized = {
@@ -180,6 +189,11 @@ const categorizeVolunteers = () => {
     volunteerData.forEach(volunteer => {
         const status = getVolunteerStatus(volunteer);
         categorized[status].push(volunteer);
+    });
+
+    // Newest to oldest within each section
+    Object.values(categorized).forEach(section => {
+        section.sort((a, b) => getSortTime(b) - getSortTime(a));
     });
 
     return categorized;

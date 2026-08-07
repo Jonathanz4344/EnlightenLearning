@@ -21,8 +21,9 @@ import {
     RateReview as RateReviewIcon,
     FamilyRestroom as ParentIcon,
     VolunteerActivism as VolunteerIcon,
+    MonetizationOn as MoneyIcon,
 } from "@mui/icons-material";
-import { TUTORING_SESSIONS_DISPLAY } from "../../constants/metrics";
+import { TUTORING_SESSIONS_DISPLAY, TOTAL_RAISED_DISPLAY } from "../../constants/metrics";
 import { useMode } from "../Layout";
 
 const ReviewCard = ({ review, index, priority }) => {
@@ -566,9 +567,9 @@ export default function Reviews() {
                             color="#4caf50"
                         />
                         <StatsCard
-                            icon={ReviewsIcon}
-                            title="Total Reviews"
-                            value={sortedReviews.length}
+                            icon={MoneyIcon}
+                            title="Raised for Charity"
+                            value={TOTAL_RAISED_DISPLAY}
                             color="#2196f3"
                         />
                         <StatsCard

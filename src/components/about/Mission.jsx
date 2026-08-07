@@ -12,7 +12,7 @@ import {
     Fade,
     Grow,
 } from "@mui/material";
-import { TUTORING_SESSIONS_DISPLAY } from "../../constants/metrics";
+import { TUTORING_SESSIONS_DISPLAY, TOTAL_RAISED_DISPLAY } from "../../constants/metrics";
 import {
     School as LearnIcon,
     Favorite as GiveIcon,
@@ -96,7 +96,7 @@ const missionPillars = [
         icon: FundraisingIcon,
         color: '#ff9800',
         bgGradient: 'linear-gradient(135deg, #ff9800, #ffb74d)',
-        stats: { value: "$2K+", label: "Funds Raised" },
+        stats: { value: TOTAL_RAISED_DISPLAY, label: "Funds Raised" },
         features: [
             "Multiple charity partnerships",
             "Supporting families in need ",
@@ -111,7 +111,7 @@ const impactMetrics = [
     { icon: EducationIcon, value: "200+", label: "Lives Impacted", color: "#4caf50" },
     { icon: CommunityIcon, value: "30+", label: "Active Volunteers", color: "#2196f3" },
     { icon: EventIcon, value: TUTORING_SESSIONS_DISPLAY, label: "Sessions Taught", color: "#e91e63" },
-    { icon: FundraisingIcon, value: "$2K+", label: "Raised for Charity", color: "#ff9800" }
+    { icon: FundraisingIcon, value: TOTAL_RAISED_DISPLAY, label: "Raised for Charity", color: "#ff9800" }
 ];
 
 // Values data - updated to include charitable commitment
@@ -899,7 +899,7 @@ export default function Mission() {
                                 }
                             }}>
                                 <Typography variant="h3" sx={{ fontWeight: 900, mb: 1 }}>
-                                    $2K+
+                                    {TOTAL_RAISED_DISPLAY}
                                 </Typography>
                                 <Typography variant="h6" sx={{ fontWeight: 600 }}>
                                     Raised for Charity

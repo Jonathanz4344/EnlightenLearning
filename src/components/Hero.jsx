@@ -95,7 +95,8 @@ export default function Hero() {
 
   // Instagram post URLs - Easy to manage! (first one shows first)
   const instagramPosts = [
-    "https://www.instagram.com/p/DctjBexESLi",
+    // Ronald McDonald House Instagram post, hidden for now. Remove the // to show it again.
+    // "https://www.instagram.com/p/DctjBexESLi",
     "https://www.instagram.com/p/DcbVcTejgVZ",
     "https://www.instagram.com/p/DT1uI3lDgGu",
     "https://www.instagram.com/reel/DST6NLvDvD1",
@@ -105,7 +106,8 @@ export default function Hero() {
   // Facebook post URLs - Easy to manage! (first one shows first)
   const facebookPosts = [
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0yic5oztA7myY15ro4jBHsXq7u1EAJCChe5WRxnegzZQUBcAuxAng379LpaD16Usrl%26id%3D61576772816131&show_text=true&width=500", height: 767 },
-    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0CnrQ6LuZDfoAoF18PVBuYu99twdF3ifU49B3nX2rapLP8h42xFvSwgYYbaPCt8kwl%26id%3D61576772816131&show_text=true&width=500", height: 728 },
+    // Cohen Children's Medical Center Facebook post, hidden for now. Remove the // to show it again.
+    // { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0CnrQ6LuZDfoAoF18PVBuYu99twdF3ifU49B3nX2rapLP8h42xFvSwgYYbaPCt8kwl%26id%3D61576772816131&show_text=true&width=500", height: 728 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02GwqjcdCUTEoyoFJXrA95V6F2cKnXpqmsk7h7fiuqDELNUcYEx8TM8HCwC3Lx6W37l%26id%3D61576772816131&show_text=true&width=500", height: 472 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500", height: 645 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500", height: 645 },

@@ -23,6 +23,7 @@ import {
   Public as WorldIcon,
   AutoAwesome as SparkleIcon,
   ExpandMore as ExpandMoreIcon,
+  ExpandLess as ExpandLessIcon,
 } from "@mui/icons-material";
 
 // Instagram Embed Component
@@ -94,6 +95,8 @@ export default function Hero() {
 
   // Instagram post URLs - Easy to manage! (first one shows first)
   const instagramPosts = [
+    "https://www.instagram.com/p/DctjBexESLi",
+    "https://www.instagram.com/p/DcbVcTejgVZ",
     "https://www.instagram.com/p/DT1uI3lDgGu",
     "https://www.instagram.com/reel/DST6NLvDvD1",
     "https://www.instagram.com/p/DEvT6yEvrEh",
@@ -101,6 +104,8 @@ export default function Hero() {
 
   // Facebook post URLs - Easy to manage! (first one shows first)
   const facebookPosts = [
+    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0yic5oztA7myY15ro4jBHsXq7u1EAJCChe5WRxnegzZQUBcAuxAng379LpaD16Usrl%26id%3D61576772816131&show_text=true&width=500", height: 767 },
+    { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid0CnrQ6LuZDfoAoF18PVBuYu99twdF3ifU49B3nX2rapLP8h42xFvSwgYYbaPCt8kwl%26id%3D61576772816131&show_text=true&width=500", height: 728 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fpermalink.php%3Fstory_fbid%3Dpfbid02GwqjcdCUTEoyoFJXrA95V6F2cKnXpqmsk7h7fiuqDELNUcYEx8TM8HCwC3Lx6W37l%26id%3D61576772816131&show_text=true&width=500", height: 472 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122148676226892427%26set%3Da.122095675754892427%26type%3D3&show_text=true&width=500", height: 645 },
     { src: "https://www.facebook.com/plugins/post.php?href=https%3A%2F%2Fwww.facebook.com%2Fphoto.php%3Ffbid%3D122130023210892427%26set%3Da.122096130290892427%26type%3D3&show_text=true&width=500", height: 645 },
@@ -110,6 +115,23 @@ export default function Hero() {
   // Get visible posts based on state
   const visibleInstagramPosts = showAllInstagram ? instagramPosts : instagramPosts.slice(0, 3);
   const visibleFacebookPosts = showAllFacebook ? facebookPosts : facebookPosts.slice(0, 3);
+
+  // Expand or collapse a column of posts. When collapsing, bring the button back
+  // into view so the visitor isn't left looking further down the page.
+  const togglePosts = (event, isExpanded, setExpanded) => {
+    const button = event.currentTarget;
+    setExpanded(!isExpanded);
+    if (isExpanded) {
+      requestAnimationFrame(() => button.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+    }
+  };
+
+  // Instagram posts revealed by "See More" need Instagram's script to load them
+  useEffect(() => {
+    if (showAllInstagram && window.instgrm) {
+      window.instgrm.Embeds.process();
+    }
+  }, [showAllInstagram]);
 
   // Load Instagram embed script
   useEffect(() => {
@@ -429,14 +451,14 @@ export default function Hero() {
                     ))}
                   </Box>
 
-                  {/* See More Button for Instagram */}
-                  {!showAllInstagram && instagramPosts.length > 3 && (
+                  {/* See More / See Less Button for Instagram */}
+                  {instagramPosts.length > 3 && (
                     <Box sx={{ mt: 4 }}>
                       <Button
                         variant="outlined"
                         size="large"
-                        startIcon={<ExpandMoreIcon />}
-                        onClick={() => setShowAllInstagram(true)}
+                        startIcon={showAllInstagram ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        onClick={(event) => togglePosts(event, showAllInstagram, setShowAllInstagram)}
                         sx={{
                           py: 1.5,
                           px: 3,
@@ -453,7 +475,7 @@ export default function Hero() {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        See More Posts
+                        {showAllInstagram ? 'See Less' : 'See More Posts'}
                       </Button>
                     </Box>
                   )}
@@ -537,14 +559,14 @@ export default function Hero() {
                     ))}
                   </Box>
 
-                  {/* See More Button for Facebook */}
-                  {!showAllFacebook && facebookPosts.length > 3 && (
+                  {/* See More / See Less Button for Facebook */}
+                  {facebookPosts.length > 3 && (
                     <Box sx={{ mt: 4 }}>
                       <Button
                         variant="outlined"
                         size="large"
-                        startIcon={<ExpandMoreIcon />}
-                        onClick={() => setShowAllFacebook(true)}
+                        startIcon={showAllFacebook ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                        onClick={(event) => togglePosts(event, showAllFacebook, setShowAllFacebook)}
                         sx={{
                           py: 1.5,
                           px: 3,
@@ -561,7 +583,7 @@ export default function Hero() {
                           transition: 'all 0.3s ease'
                         }}
                       >
-                        See More Posts
+                        {showAllFacebook ? 'See Less' : 'See More Posts'}
                       </Button>
                     </Box>
                   )}

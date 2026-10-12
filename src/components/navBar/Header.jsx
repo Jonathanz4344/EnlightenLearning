@@ -27,6 +27,8 @@ import { styled, useTheme } from "@mui/material/styles";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import NavbarGarland from "../seasonal/NavbarGarland";
+import { SEASONS } from "../../constants/season";
 
 const logoStyle = {
   width: "40px",
@@ -603,7 +605,7 @@ MenuLink.propTypes = {
   isMobile: PropTypes.bool,
 };
 
-const Header = ({ mode, toggleColorMode }) => {
+const Header = ({ mode, toggleColorMode, season = SEASONS.NORMAL }) => {
   const location = useLocation();
   const [open, setOpen] = useState(null);
   const [subMenuOpen, setSubMenuOpen] = useState(null);
@@ -746,7 +748,7 @@ const Header = ({ mode, toggleColorMode }) => {
       <Helmet>
         <meta
           name="description"
-          content="Miracle's Group - Empowering communities through education, tutoring services, and volunteer programs."
+          content="Long Island tutoring run by high school students. Enlighten Learning offers K-12 tutoring and NYS & Regents prep, and donates its proceeds to charity."
         />
         <meta
           name="keywords"
@@ -762,7 +764,7 @@ const Header = ({ mode, toggleColorMode }) => {
             <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
               <Link to={PathConstants.HOME}>
                 <motion.div whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.95 }}>
-                  <Box component="img" src={Logo} style={logoStyle} alt="Miracle's Group Logo" />
+                  <Box component="img" src={Logo} style={logoStyle} alt="Enlighten Learning logo" />
                 </motion.div>
               </Link>
               {isMobile && (
@@ -854,6 +856,9 @@ const Header = ({ mode, toggleColorMode }) => {
                 Donate
               </DonateButton>
             </Box>
+
+            {/* Seasonal lights and charms hanging from the bottom of the navbar */}
+            <NavbarGarland season={season} mode={mode} />
           </ModernToolbar>
         </Container>
       </StyledAppBar>
@@ -938,6 +943,7 @@ const Header = ({ mode, toggleColorMode }) => {
 };
 
 Header.propTypes = {
+  season: PropTypes.oneOf(Object.values(SEASONS)),
   mode: PropTypes.oneOf(["light", "dark"]).isRequired,
   toggleColorMode: PropTypes.func.isRequired,
 };

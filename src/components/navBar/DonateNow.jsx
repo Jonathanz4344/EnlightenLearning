@@ -41,14 +41,124 @@ import { useMode } from "../Layout";
 import Logo from "/images/logo/Logo.png";
 import ZelleQr from "/images/donate/Zelle.jpg"
 import PathConstants from "../../routes/pathConstants";
+import { SEASONS } from "../../constants/season";
+import FundraisingScenery from "../seasonal/FundraisingScenery";
+
+// The fundraising balloon changes with the season: a pumpkin in October and a
+// snowball in December. Pick the season in src/constants/season.js.
+const PumpkinRibs = () => (
+    <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+        <g fill="none" stroke="rgba(150, 60, 0, 0.35)" strokeWidth="2.5" strokeLinecap="round">
+            <path d="M50 3 C30 20 30 80 50 97" />
+            <path d="M50 3 C70 20 70 80 50 97" />
+            <path d="M42 4 C12 22 12 78 42 96" />
+            <path d="M58 4 C88 22 88 78 58 96" />
+        </g>
+    </svg>
+);
+
+const PumpkinStem = () => (
+    <svg viewBox="0 0 30 30" width="100%" height="100%">
+        <path d="M12 30 C12 22 11 14 8 8 L14 6 C16 13 17 21 17 30 Z" fill="#5d7a2a" />
+        <path d="M16 15 C20 9 27 9 29 13 C25 16 20 17 16 15 Z" fill="#6b8e23" />
+        <path d="M11 8 C7 2 1 4 2 9 C3 13 8 12 7 9" stroke="#6b8e23" strokeWidth="1.5" fill="none" strokeLinecap="round" />
+    </svg>
+);
+
+const SnowSparkles = () => (
+    <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ position: 'absolute', inset: 0 }}>
+        <g fill="rgba(120, 170, 220, 0.35)">
+            <circle cx="22" cy="62" r="2.2" />
+            <circle cx="78" cy="30" r="1.8" />
+            <circle cx="70" cy="78" r="2.4" />
+            <circle cx="30" cy="20" r="1.5" />
+            <circle cx="85" cy="58" r="1.6" />
+            <circle cx="15" cy="40" r="1.4" />
+        </g>
+        <g fill="#ffffff">
+            <path d="M80 70 L81.2 73.8 L85 75 L81.2 76.2 L80 80 L78.8 76.2 L75 75 L78.8 73.8 Z" />
+            <path d="M24 28 L25 31 L28 32 L25 33 L24 36 L23 33 L20 32 L23 31 Z" />
+        </g>
+    </svg>
+);
+
+const HollySprig = () => (
+    <svg viewBox="0 0 36 26" width="100%" height="100%">
+        <ellipse cx="11" cy="11" rx="9.5" ry="4.4" transform="rotate(-22 11 11)" fill="#2e7d32" />
+        <ellipse cx="25" cy="11" rx="9.5" ry="4.4" transform="rotate(22 25 11)" fill="#388e3c" />
+        <path d="M3 14 L17 8 M33 14 L19 8" stroke="#1b5e20" strokeWidth="0.8" />
+        <circle cx="15.5" cy="15" r="2.8" fill="#d32f2f" />
+        <circle cx="20.5" cy="15" r="2.8" fill="#c62828" />
+        <circle cx="18" cy="19.2" r="2.8" fill="#e53935" />
+        <circle cx="14.6" cy="14.1" r="0.8" fill="rgba(255, 255, 255, 0.7)" />
+    </svg>
+);
+
+const BALLOON_LOOKS = {
+    [SEASONS.NORMAL]: {
+        noun: 'balloon',
+        emoji: '🎈',
+        subtitle: 'Every donation inflates and lifts us higher',
+        startLine: 'Help inflate and launch our balloon!',
+        glow: '76, 175, 80',
+    },
+    [SEASONS.HALLOWEEN]: {
+        noun: 'pumpkin',
+        emoji: '🎃',
+        subtitle: 'Every donation grows our pumpkin and lifts us higher',
+        startLine: 'Help grow and launch our pumpkin!',
+        glow: '255, 140, 30',
+        body: 'radial-gradient(ellipse at 32% 28%, #ffd199 0%, #ff9a3c 35%, #f07a12 70%, #d35f05 100%)',
+        trim: '#c4540a',
+        inside: <PumpkinRibs />,
+        // A purple night sky over a dark hill
+        sky: {
+            light: 'linear-gradient(180deg, #2a1b4a 0%, #4b2c7a 50%, #c8653a 100%)',
+            dark: 'linear-gradient(180deg, #120b24 0%, #2a1748 55%, #5a2d1a 100%)',
+        },
+        ground: {
+            light: 'linear-gradient(180deg, #2f2240 0%, #1d1428 100%)',
+            dark: 'linear-gradient(180deg, #221830 0%, #140e1e 100%)',
+        },
+        // The sky is dark in both modes, so the panel keeps its dark-mode text colors
+        nightSky: true,
+        topper: { node: <PumpkinStem />, sx: { left: '24%', top: '-12%', width: '24%', height: '24%', transform: 'rotate(-18deg)' } },
+    },
+    [SEASONS.CHRISTMAS]: {
+        noun: 'snowball',
+        emoji: '❄️',
+        subtitle: 'Every donation builds our snowball and lifts us higher',
+        startLine: 'Help roll up and launch our snowball!',
+        glow: '100, 181, 246',
+        body: 'radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f7fbff 40%, #e3f0fc 75%, #c9e2f7 100%)',
+        trim: '#9cc9ef',
+        inside: <SnowSparkles />,
+        // A pale winter sky over snowy ground
+        sky: {
+            light: 'linear-gradient(180deg, #cfe6fb 0%, #e8f3fe 55%, #f7fbff 100%)',
+            dark: 'linear-gradient(180deg, #0d1b33 0%, #1a2f52 60%, #2a4570 100%)',
+        },
+        ground: {
+            light: 'linear-gradient(180deg, #ffffff 0%, #e3f0fc 100%)',
+            dark: 'linear-gradient(180deg, #e6eef8 0%, #c9d8ea 100%)',
+        },
+        topper: { node: <HollySprig />, sx: { right: '2%', top: '2%', width: '34%', height: '25%', transform: 'rotate(18deg)' } },
+    },
+};
 
 // Simple donation amounts
 const donationAmounts = [25, 50, 100, 250];
 
 // Logo Balloon Fundraising Progress - The logo IS the balloon!
 const FundraisingProgress = ({ currentAmount, goalAmount }) => {
-    const { mode = "light" } = useMode() || {};
-    const isDarkMode = mode === "dark";
+    const { mode = "light", season = SEASONS.NORMAL } = useMode() || {};
+    const look = BALLOON_LOOKS[season] ?? BALLOON_LOOKS[SEASONS.NORMAL];
+    const skyMode = mode === "dark" ? "dark" : "light";
+    // A night sky keeps the panel's dark-mode text colors so they stay readable
+    const isDarkMode = mode === "dark" || Boolean(look.nightSky);
+    // The totals box uses the site's theme text colors, so it follows the real mode
+    const isDarkTheme = mode === "dark";
+    const Noun = look.noun.charAt(0).toUpperCase() + look.noun.slice(1);
     // True progress, uncapped, so we can celebrate going past the goal
     const rawPercentage = goalAmount > 0 ? (currentAmount / goalAmount) * 100 : 0;
     const percentage = Math.min(rawPercentage, 100);
@@ -79,7 +189,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                 mb: 4,
                 p: { xs: 3, sm: 5 },
                 borderRadius: 5,
-                background: isOverGoal
+                background: look.sky ? look.sky[skyMode] : isOverGoal
                     ? (isDarkMode
                         ? 'linear-gradient(180deg, rgba(45, 32, 18, 0.95) 0%, rgba(30, 30, 50, 0.95) 60%, rgba(20, 20, 35, 0.95) 100%)'
                         : 'linear-gradient(180deg, #fff8e1 0%, #ffe0b2 30%, #b3d9f7 70%, #90caf9 100%)')
@@ -200,12 +310,15 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     left: 0,
                     right: 0,
                     height: 60,
-                    background: isDarkMode
+                    background: look.ground ? look.ground[skyMode] : isDarkMode
                         ? 'linear-gradient(180deg, #1b5e20 0%, #2e7d32 100%)'
                         : 'linear-gradient(180deg, #66bb6a 0%, #43a047 100%)',
                     borderRadius: '100% 100% 0 0 / 30px 30px 0 0',
                 }}
             />
+
+            {/* Seasonal scenery: moon and stars, or falling snow and pine trees */}
+            <FundraisingScenery season={season} />
 
             {/* Main Content Container */}
             <Box
@@ -229,7 +342,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         textShadow: isDarkMode ? 'none' : '0 2px 10px rgba(255,255,255,0.5)',
                     }}
                 >
-                    {isOverGoal ? 'We Broke Through the Sky! 🎉' : 'Help Our Balloon Rise! 🎈'}
+                    {isOverGoal ? 'We Broke Through the Sky! 🎉' : `Help Our ${Noun} Rise! ${look.emoji}`}
                 </Typography>
                 <Typography
                     variant="body2"
@@ -242,7 +355,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                 >
                     {isOverGoal
                         ? `Goal beaten by $${overageAmount.toLocaleString()} — every donation now goes even further`
-                        : 'Every donation inflates and lifts us higher'}
+                        : look.subtitle}
                 </Typography>
 
                 {/* Balloon Flight Zone */}
@@ -390,7 +503,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     borderRadius: '50%',
                                     background: isOverGoal
                                         ? 'radial-gradient(circle, rgba(255, 179, 0, 0.55) 0%, transparent 70%)'
-                                        : `radial-gradient(circle, rgba(76, 175, 80, ${0.2 + percentage * 0.003}) 0%, transparent 70%)`,
+                                        : `radial-gradient(circle, rgba(${look.glow}, ${0.2 + percentage * 0.003}) 0%, transparent 70%)`,
                                     animation: 'glowPulse 2s ease-in-out infinite',
                                     '@keyframes glowPulse': {
                                         '0%, 100%': { opacity: 0.7, transform: 'translate(-50%, -50%) scale(1)' },
@@ -405,9 +518,9 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     width: '100%',
                                     height: '100%',
                                     borderRadius: '50%',
-                                    background: isOverGoal
+                                    background: look.body ?? (isOverGoal
                                         ? `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #fffde7 30%, #fff8e1 60%, #ffe082 100%)`
-                                        : `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f5f5f5 30%, #e8f5e9 60%, #c8e6c9 100%)`,
+                                        : `radial-gradient(ellipse at 30% 30%, #ffffff 0%, #f5f5f5 30%, #e8f5e9 60%, #c8e6c9 100%)`),
                                     boxShadow: isOverGoal
                                         ? `
                                         inset -8px -8px 20px rgba(0,0,0,0.08),
@@ -418,11 +531,11 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                         : `
                                         inset -8px -8px 20px rgba(0,0,0,0.1),
                                         inset 8px 8px 20px rgba(255,255,255,0.9),
-                                        0 10px 40px rgba(76, 175, 80, 0.3),
-                                        0 0 60px rgba(76, 175, 80, ${0.1 + percentage * 0.003})
+                                        0 10px 40px rgba(${look.glow}, 0.3),
+                                        0 0 60px rgba(${look.glow}, ${0.1 + percentage * 0.003})
                                     `,
                                     border: '4px solid',
-                                    borderColor: isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    borderColor: look.trim ?? (isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7'),
                                     display: 'flex',
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -440,11 +553,15 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     },
                                 }}
                             >
+                                {/* Seasonal markings: pumpkin ribs or snow sparkles */}
+                                {look.inside}
+
                                 {/* Logo Inside */}
                                 <img
                                     src={Logo}
                                     alt="Enlighten Learning"
                                     style={{
+                                        position: 'relative',
                                         width: '65%',
                                         height: '65%',
                                         objectFit: 'contain',
@@ -452,6 +569,13 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     }}
                                 />
                             </Box>
+
+                            {/* Seasonal topper: a pumpkin stem or a sprig of holly */}
+                            {look.topper && (
+                                <Box sx={{ position: 'absolute', zIndex: 1, ...look.topper.sx }}>
+                                    {look.topper.node}
+                                </Box>
+                            )}
 
                             {/* Balloon Tie */}
                             <Box
@@ -462,7 +586,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                                     transform: 'translateX(-50%)',
                                     width: 16,
                                     height: 16,
-                                    background: isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7',
+                                    background: look.trim ?? (isOverGoal ? '#ffb300' : percentage >= 75 ? '#4caf50' : percentage >= 50 ? '#81c784' : '#a5d6a7'),
                                     clipPath: 'polygon(50% 100%, 0% 0%, 100% 0%)',
                                 }}
                             />
@@ -510,7 +634,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         textAlign: 'center',
                         p: 3,
                         borderRadius: 4,
-                        background: isDarkMode
+                        background: isDarkTheme
                             ? 'rgba(0,0,0,0.3)'
                             : 'rgba(255,255,255,0.9)',
                         backdropFilter: 'blur(10px)',
@@ -554,7 +678,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                         sx={{
                             height: 8,
                             borderRadius: 4,
-                            backgroundColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
+                            backgroundColor: isDarkTheme ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
                             overflow: 'hidden',
                         }}
                     >
@@ -622,14 +746,14 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     {isOverGoal
                         ? "🏆 Goal smashed — and we're still climbing! Thank you for lifting us this far."
                         : percentage >= 100
-                        ? "🎈 The balloon has reached the sky! Thank you!"
+                        ? `${look.emoji} The ${look.noun} has reached the sky! Thank you!`
                         : percentage >= 75
-                            ? "🎈 Almost at the clouds! One more push!"
+                            ? `${look.emoji} Almost at the clouds! One more push!`
                             : percentage >= 50
-                                ? "🎈 Rising higher! Keep it going!"
+                                ? `${look.emoji} Rising higher! Keep it going!`
                                 : percentage >= 25
-                                    ? "🎈 Lifting off! Help us soar!"
-                                    : "🎈 Help inflate and launch our balloon!"}
+                                    ? `${look.emoji} Lifting off! Help us soar!`
+                                    : `${look.emoji} ${look.startLine}`}
                 </Typography>
             </Box>
         </Paper>

@@ -21,6 +21,8 @@ import MailIcon from "@mui/icons-material/Mail";
 import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
 import { useMode } from "../Layout";
+import FooterScene from "../seasonal/FooterScene";
+import { SEASONS } from "../../constants/season";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 
@@ -89,7 +91,7 @@ function Copyright() {
 }
 
 export default function Footer() {
-  const { mode = "light" } = useMode() || {};
+  const { mode = "light", season = SEASONS.NORMAL } = useMode() || {};
   const isDarkMode = mode === "dark";
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
@@ -149,8 +151,11 @@ export default function Footer() {
         transition: "background-color 0.3s, color 0.3s",
         paddingTop: "4rem",
         paddingBottom: "4rem",
+        position: "relative",
       }}
     >
+      {/* Seasonal scene standing on the top edge of the footer */}
+      <FooterScene season={season} mode={mode} />
       <Container
         sx={{
           display: "flex",

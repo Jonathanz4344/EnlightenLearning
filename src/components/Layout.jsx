@@ -6,6 +6,8 @@ import Header from "./navBar/Header";
 import PropTypes from "prop-types";
 
 import getLPTheme from "./getLPTheme";
+import SeasonalEffects from "./seasonal/SeasonalEffects";
+import { getCurrentSeason } from "../constants/season";
 import CssBaseline from "@mui/material/CssBaseline";
 
 import Box from "@mui/material/Box";
@@ -65,24 +67,11 @@ export default function Layout() {
   const [mode, setMode] = React.useState("light");
   const [showCustomTheme] = React.useState(true);
 
-  // DEVELOPER SETTING: Change seasonal theme here
-  // Options: "normal", "halloween", "christmas"
-  const seasonalTheme = "normal"; // <-- Change this value to switch themes
+  // Seasonal decorations follow the date. To force a season, edit
+  // SEASON_OVERRIDE in src/constants/season.js.
+  const season = getCurrentSeason();
 
-  // Create appropriate theme based on mode and seasonal selection
-  let themeConfig;
-  switch (seasonalTheme) {
-    case "halloween":
-      themeConfig = getHalloweenTheme(mode);
-      break;
-    case "christmas":
-      themeConfig = getChristmasTheme(mode);
-      break;
-    default:
-      themeConfig = getLPTheme(mode);
-  }
-
-  const LPtheme = createTheme(themeConfig);
+  const LPtheme = createTheme(getLPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
 
   const toggleColorMode = () => {
@@ -90,13 +79,15 @@ export default function Layout() {
   };
 
   return (
-    <ModeContext.Provider value={{ mode, toggleColorMode }}>
+    <ModeContext.Provider value={{ mode, toggleColorMode, season }}>
       <ScrollRestoration />
       <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
         <CssBaseline />
+        <SeasonalEffects season={season} mode={mode} />
         <Header
           mode={mode}
           toggleColorMode={toggleColorMode}
+          season={season}
         />
         <main>
           <Suspense fallback={<div>Loading ...</div>}>

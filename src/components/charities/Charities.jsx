@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Box,
     Button,
@@ -45,9 +45,34 @@ const charitiesData = [
         logo: "/images/charity/charity1.jpg",
         image: "/images/charity/charity1.jpg",
         website: "https://www.adventuresinlearning.org",
-        category: "Education",
     },
-    
+    {
+        id: 2,
+        name: "Cohen Children's Medical Center",
+        description: "Cohen Children's Medical Center is a children's hospital that specializes in pediatric care and supporting families throughout their children's medical journeys.",
+        whySupport: [
+            "Focused on helping children receive the medical care they need",
+            "Promoting access to quality healthcare for young patients and their families",
+        ],
+        amountDonated: 1000,
+        logo: "/images/charity/charity2.jpeg",
+        image: "/images/charity/charity2.jpeg",
+        website: "https://www.northwell.edu/cohen-childrens-medical-center",
+    },
+    {
+        id: 3,
+        name: "Ronald McDonald House Long Island",
+        description: "Ronald McDonald House is an organization that helps families navigate their children's medical challenges by offering a welcoming place to stay and a supportive community near hospitals.",
+        whySupport: [
+            "Easing the financial and emotional strain so families can focus on their child's recovery",
+            "Providing essential resources and support during difficult times",
+        ],
+        amountDonated: 1000,
+        logo: "/images/charity/charity3.jpeg",
+        image: "/images/charity/charity3.jpeg",
+        website: "https://www.rmhlongisland.org",
+    },
+
     // Add more charities as you make donations!
 ];
 
@@ -60,6 +85,22 @@ const testimonials = [
         role: "Executive Director",
         organization: "Adventures in Learning",
         avatar: "/images/charity/charity1.jpg",
+    },
+    {
+        id: 2,
+        quote: "Thank you for your gift of $1,000 to Cohen Children's Medical Center. Your generous support helps us provide exceptional, compassionate care to every person we serve, regardless of their ability to pay. Because of you, we are able to reach far beyond our hospital walls-transforming lives, empowering our communities and accelerating medical breakthroughs from idea to reality. By supporting Cohen Children's Medical Center, you become part of the Northwell team. Together, we are building a healthier, brighter future for all. Thank you for your commitment and partnership.",
+        author: "Cohen Children's Medical Center",
+        role: "Northwell Health",
+        organization: "Cohen Children's Medical Center",
+        avatar: "/images/charity/charity2.jpeg",
+    },
+    {
+        id: 3,
+        quote: "Thank you for your generous donation of $1,000.00 in support of Ronald McDonald House Long Island. We are proud that Enlighten Learning finds our organization deserving of your support. For 40 years, we have been committed to supporting families caring for their sick children by helping them access the medical care and resources they need. Ronald McDonald House can continue to provide programs and support because of generous friends like you. As we reflect on 40 years of impact, we are especially grateful for supporters like you who make this work possible. Thank you for giving the gift of togetherness. You help families stay cared for during their most difficult days. We are so grateful.",
+        author: "Ronald McDonald House Long Island",
+        role: "Ronald McDonald House Charities",
+        organization: "Ronald McDonald House Long Island",
+        avatar: "/images/charity/charity3.jpeg",
     },
 ];
 
@@ -252,6 +293,15 @@ const PhotoCarousel = () => {
 
     const currentCharity = charitiesData[currentIndex];
 
+    // Auto-advance the carousel every few seconds; the timer resets whenever the slide changes manually
+    useEffect(() => {
+        if (charitiesData.length <= 1) return undefined;
+        const timer = setInterval(() => {
+            setCurrentIndex((prev) => (prev === charitiesData.length - 1 ? 0 : prev + 1));
+        }, 5000);
+        return () => clearInterval(timer);
+    }, [currentIndex]);
+
     return (
         <Box sx={{ py: { xs: 6, md: 10 } }}>
             <Container maxWidth="lg">
@@ -319,15 +369,6 @@ const PhotoCarousel = () => {
                                 color: 'white',
                             }}
                         >
-                            <Chip
-                                label={currentCharity.category}
-                                size="small"
-                                sx={{
-                                    mb: 1,
-                                    backgroundColor: 'rgba(255,255,255,0.2)',
-                                    color: 'white',
-                                }}
-                            />
                             <Typography variant="h5" sx={{ fontWeight: 700, mb: 0.5 }}>
                                 {currentCharity.name}
                             </Typography>
@@ -459,6 +500,8 @@ const CharitiesGrid = () => {
                                 elevation={0}
                                 sx={{
                                     height: '100%',
+                                    display: 'flex',
+                                    flexDirection: 'column',
                                     borderRadius: 4,
                                     border: '2px solid',
                                     borderColor: charitiesData.length === 1 ? '#667eea' : (isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)'),
@@ -478,7 +521,7 @@ const CharitiesGrid = () => {
                                     },
                                 }}
                             >
-                                {/* Card Image - Full image display */}
+                                {/* Card Image - same size on every card */}
                                 <Box
                                     sx={{
                                         position: 'relative',
@@ -492,7 +535,8 @@ const CharitiesGrid = () => {
                                         alt={charity.name}
                                         sx={{
                                             width: '100%',
-                                            height: 'auto',
+                                            aspectRatio: '4/3',
+                                            objectFit: 'cover',
                                             display: 'block',
                                         }}
                                     />
@@ -518,21 +562,9 @@ const CharitiesGrid = () => {
                                             />
                                         )}
                                     </Box>
-                                    <Chip
-                                        label={charity.category}
-                                        size="small"
-                                        sx={{
-                                            position: 'absolute',
-                                            top: 12,
-                                            right: 12,
-                                            backgroundColor: 'rgba(0,0,0,0.6)',
-                                            color: 'white',
-                                            fontSize: '0.7rem',
-                                        }}
-                                    />
                                 </Box>
 
-                                <CardContent sx={{ p: 3 }}>
+                                <CardContent sx={{ p: 3, flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
                                     <Typography
                                         variant="h6"
                                         sx={{ fontWeight: 700, mb: 1 }}
@@ -572,10 +604,11 @@ const CharitiesGrid = () => {
                                         </Box>
                                     )}
 
-                                    {/* Donation Amount */}
+                                    {/* Donation Amount - pinned to the bottom of the card */}
                                     <Paper
                                         elevation={0}
                                         sx={{
+                                            mt: 'auto',
                                             p: 2,
                                             borderRadius: 2,
                                             background: isDarkMode
@@ -793,6 +826,8 @@ const TestimonialWall = () => {
                                     sx={{
                                         p: 4,
                                         height: '100%',
+                                        display: 'flex',
+                                        flexDirection: 'column',
                                         borderRadius: 4,
                                         border: '1px solid',
                                         borderColor: isDarkMode ? 'rgba(255,255,255,0.1)' : 'rgba(0,0,0,0.08)',
@@ -831,7 +866,16 @@ const TestimonialWall = () => {
                                         "{testimonial.quote}"
                                     </Typography>
 
-                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                    <Box
+                                        sx={{
+                                            mt: 'auto',
+                                            display: 'flex',
+                                            flexDirection: 'column',
+                                            alignItems: 'center',
+                                            textAlign: 'center',
+                                            gap: 1,
+                                        }}
+                                    >
                                         <Avatar
                                             src={testimonial.avatar}
                                             sx={{
@@ -847,7 +891,9 @@ const TestimonialWall = () => {
                                                 {testimonial.author}
                                             </Typography>
                                             <Typography variant="caption" color="text.secondary">
-                                                {testimonial.role}, {testimonial.organization}
+                                                {testimonial.author === testimonial.organization
+                                                    ? testimonial.role
+                                                    : `${testimonial.role}, ${testimonial.organization}`}
                                             </Typography>
                                         </Box>
                                     </Box>

@@ -1,4 +1,5 @@
 import React from "react";
+import { Navigate } from "react-router-dom";
 import PathConstants from "./pathConstants";
 import Missions from "../components/about/Mission";
 import OurTeam from "../components/about/OurTeam";
@@ -27,6 +28,8 @@ const routes = [
   { path: PathConstants.CONTACT_US, element: <ContactUs /> },
   { path: PathConstants.DONATE_NOW, element: <DonateNow /> },
   { path: PathConstants.CHARITIES, element: <Charities /> },
+  // Old URL for the charities page, kept so existing links still work
+  { path: "/Charities", element: <Navigate to={PathConstants.CHARITIES} replace /> },
 ];
 
 export default routes;

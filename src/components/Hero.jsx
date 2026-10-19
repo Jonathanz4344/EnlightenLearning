@@ -99,7 +99,7 @@ export default function Hero() {
     // "https://www.instagram.com/p/DctjBexESLi",
     "https://www.instagram.com/p/DcbVcTejgVZ",
     "https://www.instagram.com/p/DT1uI3lDgGu",
-    "https://www.instagram.com/reel/DST6NLvDvD1",
+    "https://www.instagram.com/p/DWFhmeykZCW",
     "https://www.instagram.com/p/DEvT6yEvrEh",
   ];
 

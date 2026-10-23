@@ -1,8 +1,22 @@
-    {
-        "rewrites": [
-            {
-                "source": "/(.*)",
-                "destination": "/index.html"
-            }
-        ]
-    }
+{
+    "rewrites": [
+        {
+            "source": "/((?!api/)(?!.*\\.[a-zA-Z0-9]{2,5}$).*)",
+            "destination": "/index.html"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/fonts/(.*)",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+            ]
+        },
+        {
+            "source": "/assets/(.*)",
+            "headers": [
+                { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+            ]
+        }
+    ]
+}

@@ -1,106 +1,58 @@
-import { Outlet, ScrollRestoration } from "react-router-dom";
-import { Suspense } from "react";
 import * as React from "react";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
+import { ThemeProvider } from "@mui/material/styles";
+import CssBaseline from "@mui/material/CssBaseline";
+import Box from "@mui/material/Box";
+import Typography from "@mui/material/Typography";
 import Footer from "./footer/Footer";
 import Header from "./navBar/Header";
-import PropTypes from "prop-types";
-
-import getLPTheme from "./getLPTheme";
 import SeasonalEffects from "./seasonal/SeasonalEffects";
-import { getCurrentSeason } from "../constants/season";
-import CssBaseline from "@mui/material/CssBaseline";
+import createSiteTheme from "../theme/createSiteTheme";
+import SeasonContext from "../theme/SeasonContext";
+import { resolveSeason } from "../constants/season";
 
-import Box from "@mui/material/Box";
-import Divider from "@mui/material/Divider";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
-
-function ToggleCustomTheme({ showCustomTheme, toggleCustomTheme }) {
+function PageFallback() {
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        width: "100dvw",
-        position: "fixed",
-        bottom: 24,
-      }}
-    >
-      <ToggleButtonGroup
-        color="primary"
-        exclusive
-        value={showCustomTheme}
-        onChange={toggleCustomTheme}
-        aria-label="Platform"
-        sx={{
-          backgroundColor: "background.default",
-          "& .Mui-selected": {
-            pointerEvents: "none",
-          },
-        }}
-      >
-        <ToggleButton value>
-          <AutoAwesomeRoundedIcon sx={{ fontSize: "20px", mr: 1 }} />
-          Custom theme
-        </ToggleButton>
-        <ToggleButton value={false}>Material Design 2</ToggleButton>
-      </ToggleButtonGroup>
+    // Taller than the viewport so neither the footer nor the seasonal scene on its
+    // top edge sits in view and then jumps when the page arrives
+    <Box role="status" aria-live="polite" sx={{ minHeight: "calc(100vh + 80px)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+      <Typography variant="body2" sx={(theme) => ({ color: theme.vars.palette.text.secondary })}>
+        Loading ...
+      </Typography>
     </Box>
   );
 }
 
-ToggleCustomTheme.propTypes = {
-  showCustomTheme: PropTypes.shape({
-    valueOf: PropTypes.func.isRequired,
-  }).isRequired,
-  toggleCustomTheme: PropTypes.func.isRequired,
-};
-
-const ModeContext = React.createContext();
-
-export const useMode = () => React.useContext(ModeContext);
-
 export default function Layout() {
-  const [mode, setMode] = React.useState("light");
-  const [showCustomTheme] = React.useState(true);
+  const location = useLocation();
+  const { season, style } = React.useMemo(() => resolveSeason(location.search), [location.search]);
+  const theme = React.useMemo(() => createSiteTheme({ season, style }), [season, style]);
 
-  // Seasonal decorations follow the date. To force a season, edit
-  // SEASON_OVERRIDE in src/constants/season.js.
-  const season = getCurrentSeason();
-
-  const LPtheme = createTheme(getLPTheme(mode));
-  const defaultTheme = createTheme({ palette: { mode } });
-
-  const toggleColorMode = () => {
-    setMode((prev) => (prev === "dark" ? "light" : "dark"));
-  };
+  // The seasonal CSS variables and decor hang off this attribute
+  React.useEffect(() => {
+    const root = document.documentElement;
+    if (season === "normal") root.removeAttribute("data-season");
+    else root.setAttribute("data-season", season);
+    root.setAttribute("data-season-style", style);
+  }, [season, style]);
 
   return (
-    <ModeContext.Provider value={{ mode, toggleColorMode, season }}>
-      <ScrollRestoration />
-      <ThemeProvider theme={showCustomTheme ? LPtheme : defaultTheme}>
+    <SeasonContext.Provider value={{ season, style }}>
+      <ThemeProvider theme={theme} defaultMode="light" modeStorageKey="el-mode" noSsr disableTransitionOnChange>
         <CssBaseline />
-        <SeasonalEffects season={season} mode={mode} />
-        <Header
-          mode={mode}
-          toggleColorMode={toggleColorMode}
-          season={season}
-        />
-        <main>
-          <Suspense fallback={<div>Loading ...</div>}>
+        <ScrollRestoration />
+        <a className="el-skip-link" href="#main-content">
+          Skip to content
+        </a>
+        <SeasonalEffects />
+        <Header />
+        <Box component="main" id="main-content" sx={{ position: "relative", zIndex: 1 }}>
+          <React.Suspense fallback={<PageFallback />}>
             <Outlet />
-          </Suspense>
-        </main>
-        <Divider />
-        <div className="bg-slate-200">
-          <Footer />
-        </div>
-
-
+          </React.Suspense>
+        </Box>
+        <Footer />
       </ThemeProvider>
-    </ModeContext.Provider>
+    </SeasonContext.Provider>
   );
 }

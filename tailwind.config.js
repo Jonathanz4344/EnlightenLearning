@@ -1,12 +1,9 @@
-/** @type {import('tailwindcss/plugin')} */
-// eslint-disable-next-line import/no-import-module-exports
 import plugin from "tailwindcss/plugin";
-
-const defaultTheme = require("tailwindcss/defaultTheme");
+import defaultTheme from "tailwindcss/defaultTheme";
 
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  darkMode: ["class", '[data-mui-color-scheme="dark"]'],
+export default {
+  darkMode: ["class", '[data-theme="dark"]'],
   content: [
     "./data/**/*.{js,ts,jsx,tsx,mdx}",
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
@@ -20,17 +17,11 @@ module.exports = {
       border: {
         3: "3px",
       },
-      boxShadow: {
-        "outline-purple": "0 0 0 4px rgba(192, 132, 252, 0.25)",
-        "outline-purple-light": "0 0 0 4px rgba(245, 208, 254, 0.25)",
-        "outline-purple-xs": "0 0 0 1px rgba(192, 132, 252, 0.25)",
-        "outline-switch": "0 0 1px 3px rgba(168, 85, 247, 0.35)",
-      },
       cursor: {
         inherit: "inherit",
       },
       fontFamily: {
-        sans: ["IBM Plex Sans", ...defaultTheme.fontFamily.sans],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
       },
       keyframes: {
         "in-right": {

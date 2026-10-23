@@ -1,34 +1,26 @@
-import PropTypes from "prop-types";
-
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-
+import IconButton from "@mui/material/IconButton";
 import WbSunnyRoundedIcon from "@mui/icons-material/WbSunnyRounded";
 import ModeNightRoundedIcon from "@mui/icons-material/ModeNightRounded";
+import useThemeMode from "../theme/useThemeMode";
+import { duration, easing } from "../theme/tokens";
 
-function ToggleColorMode({ mode, toggleColorMode }) {
+// Switches between light and dark. The choice is remembered per browser.
+export default function ToggleColorMode() {
+  const { isDark, toggle } = useThemeMode();
   return (
-    <Box sx={{ maxWidth: "32px" }}>
-      <Button
-        variant="text"
-        onClick={toggleColorMode}
-        size="small"
-        aria-label="button to toggle theme"
-        sx={{ minWidth: "32px", height: "32px", p: "4px" }}
-      >
-        {mode === "dark" ? (
-          <WbSunnyRoundedIcon fontSize="small" />
-        ) : (
-          <ModeNightRoundedIcon fontSize="small" />
-        )}
-      </Button>
-    </Box>
+    <IconButton
+      onClick={toggle}
+      size="small"
+      aria-label="button to toggle theme"
+      aria-pressed={isDark}
+      sx={{
+        width: 40,
+        height: 40,
+        "& svg": { fontSize: 20, transition: `transform ${duration.slow}ms ${easing.standard}` },
+        "@media (hover: hover)": { "&:hover svg": { transform: "rotate(20deg)" } },
+      }}
+    >
+      {isDark ? <WbSunnyRoundedIcon /> : <ModeNightRoundedIcon />}
+    </IconButton>
   );
 }
-
-ToggleColorMode.propTypes = {
-  mode: PropTypes.oneOf(["dark", "light"]).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-};
-
-export default ToggleColorMode;

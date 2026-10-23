@@ -1,951 +1,497 @@
-import React, { useState, useCallback, useEffect, memo } from "react";
-import Box from "@mui/material/Box";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
-import MenuIcon from "@mui/icons-material/Menu";
-import MenuItem from "@mui/material/MenuItem";
-import IconButton from "@mui/material/IconButton";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
+import * as React from "react";
+import PropTypes from "prop-types";
 import { Link, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
-import PropTypes from "prop-types";
-import ToggleColorMode from "../ToggleColorMode";
-import PathConstants from "../../routes/pathConstants";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import Button from "@mui/material/Button";
 import Drawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import Divider from "@mui/material/Divider";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import CloseIcon from "@mui/icons-material/Close";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
-import Logo from "/images/logo/Logo.png";
-import { Helmet } from "react-helmet-async";
-import { styled, useTheme } from "@mui/material/styles";
-import useMediaQuery from "@mui/material/useMediaQuery";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
+import Collapse from "@mui/material/Collapse";
+import Divider from "@mui/material/Divider";
+import MenuIcon from "@mui/icons-material/Menu";
+import CloseIcon from "@mui/icons-material/Close";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
+import SmsRoundedIcon from "@mui/icons-material/SmsRounded";
+import ToggleColorMode from "../ToggleColorMode";
+import PathConstants from "../../routes/pathConstants";
 import NavbarGarland from "../seasonal/NavbarGarland";
-import { SEASONS } from "../../constants/season";
+import { useMotionOk } from "../../motion";
+import { site, phoneHref } from "../../config/site";
+import { radius, duration, easing, layout, zIndex } from "../../theme/tokens";
+import Logo from "/images/logo/Logo.png";
 
-const logoStyle = {
-  width: "40px",
-  height: "40px",
-  cursor: "pointer",
-  borderRadius: "50%",
-  objectFit: "cover",
-  border: "2px solid rgba(255, 255, 255, 0.2)",
-  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.15)",
-};
+// The frosted header. On desktop the navigation sits in the middle and the
+// actions on the right. The contact button, the phone pill and the Our Impact
+// link are shown only when there is room for them; whatever does not fit
+// moves into the drawer, which is always the navigation on phones.
 
-const drawerLogoStyle = {
-  width: "40px",
-  height: "40px",
-  borderRadius: "50%",
-  objectFit: "cover",
-  border: "2px solid rgba(255, 255, 255, 0.1)",
-  boxShadow: "0 2px 8px rgba(0, 0, 0, 0.1)",
-};
+const menuItems = [
+  { text: "Home", href: PathConstants.HOME },
+  {
+    text: "About Us",
+    menu: "about",
+    links: [
+      { text: "Our Mission", href: PathConstants.MISSION },
+      { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
+      { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
+    ],
+  },
+  {
+    text: "Programs",
+    menu: "programs",
+    links: [
+      { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES },
+      { text: "Events & Programs", href: PathConstants.EVENTS },
+    ],
+  },
+  {
+    text: "Get Involved",
+    menu: "get-involved",
+    links: [
+      { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES },
+      { text: "Apply as a Tutor", href: PathConstants.TUTOR },
+      { text: "Join the Executive Team", href: PathConstants.EXEC_TEAM },
+    ],
+  },
+];
 
-// Enhanced styled components with modern shapes and glassmorphism
-const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  boxShadow: 'none',
-  backgroundColor: 'transparent',
-  backgroundImage: 'none',
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  right: 0,
-  zIndex: 1100,
-  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%)'
-      : 'linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%)',
-    backdropFilter: 'blur(10px)',
-    borderRadius: '0 0 24px 24px',
-    opacity: 0,
-    transition: 'opacity 0.4s ease',
-    zIndex: -1,
-  },
-  '&.scrolled': {
-    '&::before': {
-      opacity: 1,
-    },
-  },
-  '& .MuiToolbar-root': {
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%)'
-      : 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%)',
-    backdropFilter: 'blur(20px)',
-    borderRadius: '0 0 24px 24px',
-    boxShadow: theme.palette.mode === 'light'
-      ? '0 8px 32px rgba(0, 0, 0, 0.08)'
-      : '0 8px 32px rgba(0, 0, 0, 0.3)',
-    transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  },
-  '&.scrolled .MuiToolbar-root': {
-    borderRadius: '16px 16px 20px 20px',
-    margin: '8px 16px 0',
-    boxShadow: theme.palette.mode === 'light'
-      ? '0 12px 40px rgba(0, 0, 0, 0.12)'
-      : '0 12px 40px rgba(0, 0, 0, 0.4)',
-  },
-  // Mobile responsive styles
-  [theme.breakpoints.down('md')]: {
-    marginTop: theme.spacing(1),
-    '& .MuiToolbar-root': {
-      minHeight: '60px !important',
-      borderRadius: '999px',
-      margin: '0 8px',
-      padding: '0 16px',
-    },
-    '&.scrolled .MuiToolbar-root': {
-      borderRadius: '999px',
-      margin: '4px 12px 0',
-    },
-  },
-}));
+const GAP = 12;
+const MENU_BUTTON_WIDTH = 44;
 
-const ModernToolbar = styled(Toolbar)(({ theme }) => ({
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'space-between',
-  minHeight: '64px !important',
-  padding: '0 24px',
-  position: 'relative',
-  [theme.breakpoints.down('md')]: {
-    padding: '0 16px',
-    minHeight: '60px !important',
-  },
-}));
+const navButtonSx = (theme) => ({
+  color: theme.vars.palette.text.primary,
+  fontWeight: 500,
+  fontSize: "0.9375rem",
+  padding: "8px 14px",
+  minHeight: 40,
+  whiteSpace: "nowrap",
+  borderRadius: `${radius.pill}px`,
+  "&:hover": { backgroundColor: theme.vars.palette.surface.sunken },
+  "&[aria-current='page'], &[data-active='true']": { color: theme.vars.palette.accentText.main },
+});
 
-const NavButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  fontWeight: 600,
-  fontSize: '0.875rem',
-  textTransform: 'none',
-  padding: '8px 16px',
-  borderRadius: '12px',
-  position: 'relative',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  background: 'transparent',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    borderRadius: '12px',
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(135deg, rgba(99, 102, 241, 0.1) 0%, rgba(168, 85, 247, 0.1) 100%)'
-      : 'linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(236, 72, 153, 0.15) 100%)',
-    opacity: 0,
-    transition: 'opacity 0.3s ease',
-    zIndex: -1,
-  },
-  '&:hover': {
-    transform: 'translateY(-2px)',
-    '&::before': {
-      opacity: 1,
-    },
-  },
-  '&::after': {
-    content: '""',
-    position: 'absolute',
-    bottom: '-2px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: 0,
-    height: '3px',
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(90deg, #6366f1, #a855f7)'
-      : 'linear-gradient(90deg, #8b5cf6, #ec4899)',
-    borderRadius: '2px',
-    transition: 'width 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  },
-  '&:hover::after': {
-    width: '60%',
-  }
-}));
+const actionSx = (theme) => ({
+  borderRadius: `${radius.pill}px`,
+  fontSize: "0.9375rem",
+  padding: "8px 18px",
+  minHeight: 40,
+  whiteSpace: "nowrap",
+  color: theme.vars.palette.text.primary,
+  borderColor: theme.vars.palette.hairline.strong,
+});
 
-const ContactButton = styled(Button)(({ theme }) => ({
-  color: theme.palette.text.primary,
-  fontWeight: 600,
-  textTransform: 'none',
-  padding: '8px 16px',
-  fontSize: '0.875rem',
-  borderRadius: '12px',
-  border: `2px solid ${theme.palette.divider}`,
-  background: theme.palette.mode === 'light'
-    ? 'rgba(255, 255, 255, 0.5)'
-    : 'rgba(17, 24, 39, 0.5)',
-  backdropFilter: 'blur(10px)',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  position: 'relative',
-  overflow: 'hidden',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: '-100%',
-    width: '100%',
-    height: '100%',
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent)'
-      : 'linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent)',
-    transition: 'left 0.6s ease',
-  },
-  '&:hover': {
-    transform: 'translateY(-2px)',
-    borderColor: theme.palette.primary.main,
-    boxShadow: theme.palette.mode === 'light'
-      ? '0 8px 25px rgba(99, 102, 241, 0.2)'
-      : '0 8px 25px rgba(139, 92, 246, 0.3)',
-    '&::before': {
-      left: '100%',
-    },
-  },
-  [theme.breakpoints.down('md')]: {
-    padding: '6px 12px',
-    fontSize: '0.8rem',
-  }
-}));
-
-const DonateButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.mode === 'light'
-    ? 'linear-gradient(135deg, #1976d2 0%, #2196f3 25%, #42a5f5 50%, #1e88e5 75%, #1565c0 100%)'
-    : 'linear-gradient(135deg, #42a5f5 0%, #64b5f6 25%, #90caf9 50%, #42a5f5 75%, #1e88e5 100%)',
-  backgroundSize: '300% 300%',
-  color: 'white',
-  fontWeight: 700,
-  textTransform: 'none',
-  padding: '10px 20px',
-  fontSize: '0.875rem',
-  borderRadius: '16px',
-  boxShadow: theme.palette.mode === 'light'
-    ? '0 8px 32px rgba(33, 150, 243, 0.4)'
-    : '0 8px 32px rgba(66, 165, 245, 0.4)',
-  transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-  position: 'relative',
-  overflow: 'hidden',
-  animation: 'gradientShift 3s ease infinite',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'linear-gradient(45deg, rgba(255,255,255,0.2) 0%, transparent 50%, rgba(255,255,255,0.2) 100%)',
-    transform: 'translateX(-100%)',
-    transition: 'transform 0.6s ease',
-  },
-  '&:hover': {
-    transform: 'translateY(-3px) scale(1.05)',
-    boxShadow: theme.palette.mode === 'light'
-      ? '0 12px 40px rgba(33, 150, 243, 0.5)'
-      : '0 12px 40px rgba(66, 165, 245, 0.5)',
-    '&::before': {
-      transform: 'translateX(100%)',
-    },
-  },
-  '@keyframes gradientShift': {
-    '0%': {
-      backgroundPosition: '0% 50%',
-    },
-    '50%': {
-      backgroundPosition: '100% 50%',
-    },
-    '100%': {
-      backgroundPosition: '0% 50%',
-    },
-  },
-  [theme.breakpoints.down('md')]: {
-    padding: '8px 12px',
-    fontSize: '0.8rem',
-    minWidth: 'auto',
-  }
-}));
-
-const CharitiesButton = styled(Button)(({ theme }) => ({
-  background: theme.palette.mode === 'light'
-    ? 'linear-gradient(135deg, #f59e0b 0%, #fbbf24 50%, #fcd34d 100%)'
-    : 'linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%)',
-  backgroundSize: '200% 200%',
-  color: theme.palette.mode === 'light' ? '#78350f' : '#ffffff',
-  fontWeight: 700,
-  textTransform: 'none',
-  padding: '8px 16px',
-  fontSize: '0.875rem',
-  borderRadius: '12px',
-  boxShadow: theme.palette.mode === 'light'
-    ? '0 4px 20px rgba(245, 158, 11, 0.35)'
-    : '0 4px 20px rgba(251, 191, 36, 0.35)',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  position: 'relative',
-  overflow: 'hidden',
-  animation: 'charitiesGradient 4s ease infinite',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    right: 0,
-    bottom: 0,
-    background: 'linear-gradient(45deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(255,255,255,0.15) 100%)',
-    transform: 'translateX(-100%)',
-    transition: 'transform 0.5s ease',
-  },
-  '&:hover': {
-    transform: 'translateY(-2px) scale(1.03)',
-    boxShadow: theme.palette.mode === 'light'
-      ? '0 8px 30px rgba(245, 158, 11, 0.45)'
-      : '0 8px 30px rgba(251, 191, 36, 0.45)',
-    '&::before': {
-      transform: 'translateX(100%)',
-    },
-  },
-  '@keyframes charitiesGradient': {
-    '0%': {
-      backgroundPosition: '0% 50%',
-    },
-    '50%': {
-      backgroundPosition: '100% 50%',
-    },
-    '100%': {
-      backgroundPosition: '0% 50%',
-    },
-  },
-  [theme.breakpoints.down('md')]: {
-    padding: '6px 12px',
-    fontSize: '0.8rem',
-  }
-}));
-
-const DropdownContainer = styled(motion.div)(({ theme }) => ({
-  position: 'absolute',
-  top: '100%',
-  left: '50%',
-  transform: 'translateX(-50%)',
-  zIndex: 1300,
-  minWidth: '240px',
-  background: theme.palette.mode === 'light'
-    ? 'rgba(255, 255, 255, 0.95)'
-    : 'rgba(17, 24, 39, 0.95)',
-  backdropFilter: 'blur(20px)',
-  borderRadius: '16px',
-  border: `1px solid ${theme.palette.divider}`,
-  boxShadow: theme.palette.mode === 'light'
-    ? '0 20px 60px rgba(0,0,0,0.15), 0 8px 20px rgba(0,0,0,0.1)'
-    : '0 20px 60px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.3)',
-  padding: '8px',
-  marginTop: '8px',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: '-9px',
-    left: '50%',
-    transform: 'translateX(-50%)',
-    width: 0,
-    height: 0,
-    borderLeft: '10px solid transparent',
-    borderRight: '10px solid transparent',
-    borderBottom: `10px solid ${theme.palette.background.paper}`,
-    filter: 'drop-shadow(0 -2px 4px rgba(0,0,0,0.1))',
-  }
-}));
-
-const DropdownItem = styled(MenuItem)(({ theme }) => ({
-  borderRadius: '10px',
-  margin: '2px 0',
-  padding: '10px 12px',
-  fontSize: '0.875rem',
-  transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-  position: 'relative',
-  overflow: 'hidden',
-  '&::before': {
-    content: '""',
-    position: 'absolute',
-    top: 0,
-    left: '-100%',
-    width: '100%',
-    height: '100%',
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(90deg, transparent, rgba(99, 102, 241, 0.1), transparent)'
-      : 'linear-gradient(90deg, transparent, rgba(139, 92, 246, 0.2), transparent)',
-    transition: 'left 0.5s ease',
-  },
-  '&:hover': {
-    backgroundColor: theme.palette.action.hover,
-    transform: 'translateX(6px)',
-    '&::before': {
-      left: '100%',
-    },
-  }
-}));
-
-const ModernDrawer = styled(Drawer)(({ theme }) => ({
-  '& .MuiDrawer-paper': {
-    width: '280px',
-    background: theme.palette.mode === 'light'
-      ? 'linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.9) 100%)'
-      : 'linear-gradient(135deg, rgba(17, 24, 39, 0.95) 0%, rgba(31, 41, 55, 0.9) 100%)',
-    backdropFilter: 'blur(20px)',
-    borderTopRightRadius: '32px',
-    borderBottomRightRadius: '32px',
-    border: 'none',
-    boxShadow: theme.palette.mode === 'light'
-      ? '8px 0 40px rgba(0,0,0,0.15)'
-      : '8px 0 40px rgba(0,0,0,0.4)',
-  }
-}));
-
-// Memoized FlyoutContent component for better performance
-const FlyoutContent = memo(
-  ({
-    items,
-    subMenuOpen,
-    handleSubMenuOpen,
-    handleSubMenuLeave,
-    onClick,
-    isMobile,
-  }) => {
-    return (
-      <Box
-        sx={{
-          minWidth: "180px",
-          bgcolor: "transparent",
-          borderRadius: "12px",
-          padding: "6px",
-        }}
-        role="menu"
-      >
-        {items.map((item, index) => (
-          <Box key={index}>
-            {item.links.map((link, linkIndex) => (
-              <MenuLink
-                key={linkIndex}
-                link={link}
-                handleSubMenuOpen={handleSubMenuOpen}
-                subMenuOpen={subMenuOpen}
-                handleSubMenuLeave={handleSubMenuLeave}
-                onClick={onClick}
-                isMobile={isMobile}
-              />
-            ))}
-          </Box>
-        ))}
-      </Box>
-    );
-  }
-);
-
-FlyoutContent.displayName = "FlyoutContent";
-
-FlyoutContent.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      links: PropTypes.array.isRequired,
-    })
-  ).isRequired,
-  subMenuOpen: PropTypes.string,
-  handleSubMenuOpen: PropTypes.func.isRequired,
-  handleSubMenuLeave: PropTypes.func.isRequired,
-  onClick: PropTypes.func,
-  isMobile: PropTypes.bool,
-};
-
-// Memoized MenuLink component for better performance
-const MenuLink = memo(
-  ({
-    link,
-    handleSubMenuOpen,
-    subMenuOpen,
-    handleSubMenuLeave,
-    onClick,
-    isMobile,
-  }) => {
-    const handleClick = useCallback(() => {
-      if (onClick) {
-        onClick();
-      }
-    }, [onClick]);
-
-    const handleKeyDown = useCallback(
-      (e) => {
-        if (e.key === "Enter" || e.key === " ") {
-          e.preventDefault();
-          if (link.href) {
-            e.currentTarget.querySelector("a")?.click();
-          }
+function DesktopMenu({ item, open, onOpen, onClose, pathname }) {
+  const ok = useMotionOk();
+  const isOpen = open === item.menu;
+  const active = item.links.some((l) => l.href === pathname);
+  const id = `menu-${item.menu}`;
+  return (
+    <Box
+      sx={{ position: "relative" }}
+      onMouseEnter={() => onOpen(item.menu)}
+      onMouseLeave={onClose}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
+    >
+      <Button
+        sx={navButtonSx}
+        data-active={active}
+        aria-haspopup="menu"
+        aria-expanded={isOpen}
+        aria-controls={isOpen ? id : undefined}
+        onClick={() => (isOpen ? onClose() : onOpen(item.menu))}
+        endIcon={
+          <ExpandMoreIcon
+            sx={{ fontSize: "18px !important", transition: `transform ${duration.base}ms ${easing.standard}`, transform: isOpen ? "rotate(180deg)" : "none" }}
+          />
         }
-      },
-      [link.href]
-    );
-
-    const interactions = isMobile
-      ? {
-        onClick: link.subMenu ? handleSubMenuOpen(link.text) : undefined,
-      }
-      : {
-        onMouseEnter: link.subMenu ? handleSubMenuOpen(link.text) : undefined,
-        onMouseLeave: link.subMenu ? handleSubMenuLeave : undefined,
-      };
-
-    return (
-      <div
-        {...interactions}
-        onClick={handleClick}
-        onKeyDown={handleKeyDown}
-        role="menuitem"
-        tabIndex={0}
-        style={{ position: "relative" }}
       >
-        <Link
-          to={link.href}
-          style={{ textDecoration: "none", display: "block" }}
-        >
-          <DropdownItem>
-            <Typography
-              variant="body2"
-              color="text.primary"
-              sx={{
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "space-between",
-                fontWeight: 600,
-              }}
+        {item.text}
+      </Button>
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            key={id}
+            initial={ok ? { opacity: 0, y: 6 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            exit={ok ? { opacity: 0, y: 6 } : undefined}
+            transition={{ duration: duration.base / 1000, ease: easing.standardArray }}
+            style={{ position: "absolute", top: "100%", left: 0, paddingTop: 8, zIndex: zIndex.menu }}
+          >
+            <Box
+              id={id}
+              role="menu"
+              aria-label={item.text}
+              sx={(theme) => ({
+                minWidth: 240,
+                p: 0.75,
+                borderRadius: `${radius.md}px`,
+                backgroundColor: theme.vars.palette.surface.paper,
+                border: `1px solid ${theme.vars.palette.hairline.main}`,
+                boxShadow: `0 16px 40px -16px ${theme.vars.palette.effects.shadowTint}`,
+              })}
             >
-              {link.text}
-              {link.subMenu && (
-                <ExpandMoreIcon
-                  fontSize="small"
-                  sx={{
-                    ml: 0.5,
-                    fontSize: "1rem",
-                    transform:
-                      subMenuOpen === link.text
-                        ? "rotate(180deg)"
-                        : "rotate(0deg)",
-                    transition: "transform 0.2s ease",
-                  }}
-                />
-              )}
-            </Typography>
-          </DropdownItem>
-        </Link>
-        <AnimatePresence>
-          {link.subMenu && subMenuOpen === link.text && (
-            <motion.div
-              initial={{ opacity: 0, y: 15 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 15, transition: { delay: 0.2 } }}
-              transition={{ duration: 0.1, ease: "easeOut" }}
-              style={{
-                position: "absolute",
-                top: isMobile ? "0" : "100%",
-                left: isMobile ? "100%" : "0",
-                zIndex: 1200,
-              }}
-            >
-              <Box
-                sx={{
-                  minWidth: "180px",
-                  bgcolor: "background.paper",
-                  borderRadius: "12px",
-                  border: "1px solid",
-                  borderColor: "divider",
-                  boxShadow: "0px 8px 30px rgba(0, 0, 0, 0.12)",
-                  p: 0.5,
-                }}
-                role="menu"
-              >
-                {link.subMenu.map((subLink, subIndex) => (
-                  <MenuLink
-                    key={subIndex}
-                    link={subLink}
-                    handleSubMenuOpen={handleSubMenuOpen}
-                    subMenuOpen={subMenuOpen}
-                    handleSubMenuLeave={handleSubMenuLeave}
-                    onClick={onClick}
-                    isMobile={isMobile}
-                  />
-                ))}
-              </Box>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-    );
-  }
-);
+              {item.links.map((link) => (
+                <Button
+                  key={link.href}
+                  component={Link}
+                  to={link.href}
+                  role="menuitem"
+                  onClick={onClose}
+                  aria-current={pathname === link.href ? "page" : undefined}
+                  sx={(theme) => ({
+                    ...navButtonSx(theme),
+                    display: "flex",
+                    justifyContent: "flex-start",
+                    width: "100%",
+                    borderRadius: `${radius.sm}px`,
+                    padding: "9px 12px",
+                  })}
+                >
+                  {link.text}
+                </Button>
+              ))}
+            </Box>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Box>
+  );
+}
 
-MenuLink.displayName = "MenuLink";
-
-MenuLink.propTypes = {
-  link: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    href: PropTypes.string.isRequired,
-    subMenu: PropTypes.array,
-  }).isRequired,
-  handleSubMenuOpen: PropTypes.func.isRequired,
-  subMenuOpen: PropTypes.string,
-  handleSubMenuLeave: PropTypes.func.isRequired,
-  onClick: PropTypes.func,
-  isMobile: PropTypes.bool,
+DesktopMenu.propTypes = {
+  item: PropTypes.object.isRequired,
+  open: PropTypes.string,
+  onOpen: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  pathname: PropTypes.string.isRequired,
 };
 
-const Header = ({ mode, toggleColorMode, season = SEASONS.NORMAL }) => {
+const phoneEntries = () => {
+  const entries = [];
+  if (site.phoneCall) entries.push({ key: "call", icon: <CallRoundedIcon />, label: site.phoneCall, href: phoneHref("tel", site.phoneCall) });
+  if (site.phoneText) entries.push({ key: "text", icon: <SmsRoundedIcon />, label: site.phoneText, href: phoneHref("sms", site.phoneText) });
+  return entries;
+};
+
+const PhonePill = React.forwardRef(function PhonePill({ sx }, ref) {
+  const entries = phoneEntries();
+  if (!entries.length) return null;
+  return (
+    <Box ref={ref} sx={[{ display: "inline-flex", alignItems: "center", gap: 0.5 }, ...(Array.isArray(sx) ? sx : [sx])]}>
+      {entries.map((entry) => (
+        <Typography
+          key={entry.key}
+          component="a"
+          href={entry.href}
+          variant="body2"
+          sx={(theme) => ({
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 0.75,
+            px: 1.5,
+            py: 0.75,
+            borderRadius: `${radius.pill}px`,
+            border: `1px solid ${theme.vars.palette.hairline.main}`,
+            color: theme.vars.palette.text.primary,
+            textDecoration: "none",
+            fontWeight: 500,
+            fontVariantNumeric: "tabular-nums",
+            whiteSpace: "nowrap",
+            "& > svg": { fontSize: 18, color: theme.vars.palette.accentText.main },
+            "&:hover": { backgroundColor: theme.vars.palette.surface.sunken },
+          })}
+        >
+          {entry.icon}
+          {entry.label}
+        </Typography>
+      ))}
+    </Box>
+  );
+});
+
+PhonePill.propTypes = { sx: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.func]) };
+
+const ALL_FIT = { contact: true, phone: true, impact: true, menu: false };
+
+export default function Header() {
   const location = useLocation();
-  const [open, setOpen] = useState(null);
-  const [subMenuOpen, setSubMenuOpen] = useState(null);
-  const [drawerOpen, setDrawerOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
+  const [open, setOpen] = React.useState(null);
+  const [drawerOpen, setDrawerOpen] = React.useState(false);
+  const [drawerGroup, setDrawerGroup] = React.useState(null);
+  const [scrolled, setScrolled] = React.useState(false);
+  const [fit, setFit] = React.useState(ALL_FIT);
 
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const toolbarRef = React.useRef(null);
+  const brandRef = React.useRef(null);
+  const navRef = React.useRef(null);
+  const phoneRef = React.useRef(null);
+  const contactRef = React.useRef(null);
+  const impactRef = React.useRef(null);
+  const fixedRef = React.useRef(null);
+  const widths = React.useRef({ phone: 0, contact: 0, impact: 0, fixed: 0 });
 
-  // Handle scroll effect
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+  React.useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Close menus when route changes
-  useEffect(() => {
+  React.useEffect(() => {
     setOpen(null);
-    setSubMenuOpen(null);
     setDrawerOpen(false);
   }, [location.pathname]);
 
-  const handleDrawerToggle = useCallback(() => {
-    setDrawerOpen((prev) => !prev);
+  // Decide which right-hand pieces fit. Each piece is measured while it is
+  // shown and its width remembered, so hiding it never loses the number.
+  React.useLayoutEffect(() => {
+    const toolbar = toolbarRef.current;
+    if (!toolbar) return undefined;
+    const measure = () => {
+      const w = widths.current;
+      if (phoneRef.current && phoneRef.current.offsetWidth) w.phone = phoneRef.current.offsetWidth;
+      if (contactRef.current && contactRef.current.offsetWidth) w.contact = contactRef.current.offsetWidth;
+      if (impactRef.current && impactRef.current.offsetWidth) w.impact = impactRef.current.offsetWidth;
+      if (fixedRef.current && fixedRef.current.offsetWidth) w.fixed = fixedRef.current.offsetWidth;
+      const total = toolbar.clientWidth;
+      const nav = navRef.current ? navRef.current.offsetWidth : 0;
+      const brand = brandRef.current ? brandRef.current.offsetWidth : 0;
+      // The navigation is centered, so the actions get the right half of the
+      // bar minus half the navigation. Without a visible navigation (phones)
+      // they get everything after the brand.
+      const budget = nav > 0 ? total / 2 - nav / 2 - GAP * 2 : total - brand - GAP * 2;
+      const plan = (reserveMenu) => {
+        let remaining = budget - w.fixed - (reserveMenu ? MENU_BUTTON_WIDTH + GAP : 0);
+        const next = { contact: false, phone: false, impact: false, menu: reserveMenu };
+        const take = (key, width) => {
+          if (width > 0 && remaining - (width + GAP) >= 0) {
+            next[key] = true;
+            remaining -= width + GAP;
+          }
+        };
+        // Our Impact first, then the phone number, then the contact button,
+        // which is the first to move into the drawer when the bar gets narrow
+        take("impact", w.impact);
+        take("phone", w.phone);
+        take("contact", w.contact);
+        return next;
+      };
+      // First try without a menu button; if anything is left out, plan again
+      // with room for the button that opens the drawer.
+      let next = plan(false);
+      const leftOut = !next.contact || !next.impact || (w.phone > 0 && !next.phone);
+      if (leftOut || nav === 0) next = plan(true);
+      setFit((prev) => (prev.contact === next.contact && prev.phone === next.phone && prev.impact === next.impact && prev.menu === next.menu ? prev : next));
+    };
+    measure();
+    const observer = new ResizeObserver(measure);
+    observer.observe(toolbar);
+    return () => observer.disconnect();
   }, []);
 
-  const menuItems = [
-    { text: "Home", href: PathConstants.HOME },
-    { text: "About Us", menu: "about" },
-    { text: "Programs", menu: "programs" },
-    { text: "Get Involved", menu: "get-involved" },
-  ];
-
-  const handleMouseEnter = useCallback(
-    (menu) => () => {
-      if (!isMobile) {
-        setOpen(menu);
-        setSubMenuOpen(null);
-      } else {
-        setOpen((prev) => (prev === menu ? null : menu));
-      }
-    },
-    [isMobile]
-  );
-
-  const handleMouseLeave = useCallback(() => {
-    if (!isMobile) {
-      setOpen(null);
-      setSubMenuOpen(null);
-    }
-  }, [isMobile]);
-
-  const handleSubMenuOpen = useCallback(
-    (menu) => () => {
-      setSubMenuOpen((prev) => (prev === menu ? null : menu));
-    },
-    []
-  );
-
-  const handleSubMenuLeave = useCallback(() => {
-    if (!isMobile) {
-      setSubMenuOpen(null);
-    }
-  }, [isMobile]);
-
-  const handleDrawerClose = useCallback(() => {
+  const closeDrawer = () => {
     setDrawerOpen(false);
-    setOpen(null);
-    setSubMenuOpen(null);
-  }, []);
-
-  const renderMenuContent = (menu) => {
-    switch (menu) {
-      case "about":
-        return (
-          <FlyoutContent
-            items={[
-              {
-                links: [
-                  { text: "Our Mission", href: PathConstants.MISSION },
-                  { text: "Meet Our Team", href: PathConstants.OUR_TEAM },
-                  { text: "Making a Difference", href: PathConstants.MAKING_DIFF },
-                ],
-              },
-            ]}
-            subMenuOpen={subMenuOpen}
-            handleSubMenuOpen={handleSubMenuOpen}
-            handleSubMenuLeave={handleSubMenuLeave}
-            onClick={handleDrawerClose}
-            isMobile={isMobile}
-          />
-        );
-      case "programs":
-        return (
-          <FlyoutContent
-            items={[
-              {
-                links: [
-                  { text: "Tutoring Services", href: PathConstants.TUTORING_SERVICES },
-                  { text: "Events & Programs", href: PathConstants.EVENTS },
-                ],
-              },
-            ]}
-            subMenuOpen={subMenuOpen}
-            handleSubMenuOpen={handleSubMenuOpen}
-            handleSubMenuLeave={handleSubMenuLeave}
-            onClick={handleDrawerClose}
-            isMobile={isMobile}
-          />
-        );
-      case "get-involved":
-        return (
-          <FlyoutContent
-            items={[
-              {
-                links: [
-                  { text: "Volunteer Opportunities", href: PathConstants.VOLUNTEER_OPPORTUNITIES },
-                  { text: "Apply as a Tutor", href: PathConstants.TUTOR },
-                  { text: "Join the Executive Team", href: PathConstants.EXEC_TEAM },
-                ],
-              },
-            ]}
-            subMenuOpen={subMenuOpen}
-            handleSubMenuOpen={handleSubMenuOpen}
-            handleSubMenuLeave={handleSubMenuLeave}
-            onClick={handleDrawerClose}
-            isMobile={isMobile}
-          />
-        );
-      default:
-        return null;
-    }
+    setDrawerGroup(null);
   };
+
+  const hasPhone = phoneEntries().length > 0;
+  const show = (visible) => ({ display: { xs: "none", md: visible ? "inline-flex" : "none" } });
 
   return (
     <>
-      <Helmet>
-        <meta
-          name="description"
-          content="Long Island tutoring run by high school students. Enlighten Learning offers K-12 tutoring and NYS & Regents prep, and donates its proceeds to charity."
-        />
-        <meta
-          name="keywords"
-          content="nonprofit, tutoring, education, volunteer, community support, fundraising"
-        />
-        <link rel="canonical" href={window.location.href} />
-      </Helmet>
-
-      <StyledAppBar className={isScrolled ? "scrolled" : ""}>
-        <Container maxWidth="lg">
-          <ModernToolbar component="nav" aria-label="Main navigation">
-            {/* Logo + Mobile Menu Button */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: 1.5 }}>
-              <Link to={PathConstants.HOME}>
-                <motion.div whileHover={{ scale: 1.1, rotate: 5 }} whileTap={{ scale: 0.95 }}>
-                  <Box component="img" src={Logo} style={logoStyle} alt="Enlighten Learning logo" />
-                </motion.div>
+      <Box
+        component="header"
+        sx={(theme) => ({
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: zIndex.header,
+          backgroundColor: theme.vars.palette.frost.main,
+          backdropFilter: "saturate(160%) blur(16px)",
+          WebkitBackdropFilter: "saturate(160%) blur(16px)",
+          borderBottom: `1px solid ${scrolled ? theme.vars.palette.frost.border : "transparent"}`,
+          transition: `border-color ${duration.base}ms ${easing.standard}, background-color ${duration.base}ms ${easing.standard}`,
+        })}
+      >
+        <Container maxWidth="xl">
+          <Box
+            ref={toolbarRef}
+            component="nav"
+            aria-label="Main navigation"
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: `${GAP}px`,
+              minHeight: { xs: layout.headerHeight.phone, md: layout.headerHeight.desktop },
+            }}
+          >
+            {/* Brand */}
+            <Box ref={brandRef} sx={{ display: "flex", alignItems: "center", flexShrink: 0 }}>
+              <Link to={PathConstants.HOME} style={{ display: "inline-flex", borderRadius: 999 }}>
+                <Box
+                  component="img"
+                  src={Logo}
+                  alt="Enlighten Learning logo"
+                  width={40}
+                  height={40}
+                  sx={(theme) => ({
+                    width: 40,
+                    height: 40,
+                    borderRadius: "50%",
+                    objectFit: "cover",
+                    border: `1px solid ${theme.vars.palette.hairline.main}`,
+                    transition: `transform ${duration.slow}ms ${easing.standard}`,
+                    "@media (hover: hover)": { "&:hover": { transform: "rotate(-6deg) scale(1.04)" } },
+                  })}
+                />
               </Link>
-              {isMobile && (
-                <IconButton
-                  sx={{
-                    color: "text.primary",
-                    borderRadius: "12px",
-                    padding: "8px",
-                    background: (theme) =>
-                      theme.palette.mode === "light"
-                        ? "rgba(255, 255, 255, 0.2)"
-                        : "rgba(255, 255, 255, 0.1)",
-                    backdropFilter: "blur(10px)",
-                    border: "1px solid",
-                    borderColor: "divider",
-                  }}
-                  onClick={handleDrawerToggle}
-                  aria-label="Open navigation menu"
-                >
-                  <MenuIcon />
-                </IconButton>
+            </Box>
+
+            {/* Desktop navigation, centered */}
+            <Box
+              ref={navRef}
+              sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                gap: 0.25,
+                position: "absolute",
+                left: "50%",
+                top: "50%",
+                transform: "translate(-50%, -50%)",
+                whiteSpace: "nowrap",
+              }}
+            >
+              {menuItems.map((item) =>
+                item.href ? (
+                  <Button key={item.text} component={Link} to={item.href} sx={navButtonSx} aria-current={location.pathname === item.href ? "page" : undefined}>
+                    {item.text}
+                  </Button>
+                ) : (
+                  <DesktopMenu key={item.menu} item={item} open={open} onOpen={setOpen} onClose={() => setOpen(null)} pathname={location.pathname} />
+                )
               )}
             </Box>
 
-            {/* Desktop Menu */}
-            {!isMobile && (
-              <Box
-                sx={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 0.5,
-                  flex: 1,
-                  justifyContent: "center",
-                }}
+            {/* Actions */}
+            <Box sx={{ display: "flex", alignItems: "center", gap: `${GAP}px`, flexShrink: 0 }}>
+              {hasPhone && <PhonePill ref={phoneRef} sx={show(fit.phone)} />}
+              <Button
+                ref={impactRef}
+                component={Link}
+                to={PathConstants.CHARITIES}
+                variant="text"
+                sx={(theme) => ({ ...actionSx(theme), ...show(fit.impact), color: theme.vars.palette.metallic.text, "&:hover": { backgroundColor: theme.vars.palette.metallic.soft } })}
               >
-                {menuItems.map((item) => (
-                  <Box
-                    key={item.menu || item.text}
-                    sx={{ position: "relative" }}
-                    onMouseEnter={item.menu ? handleMouseEnter(item.menu) : undefined}
-                    onMouseLeave={item.menu ? handleMouseLeave : undefined}
-                  >
-                    {item.href ? (
-                      <NavButton component={Link} to={item.href}>
-                        {item.text}
-                      </NavButton>
-                    ) : (
-                      <NavButton sx={{ display: "flex", alignItems: "center", gap: 0.5 }}>
-                        {item.text}
-                        <ExpandMoreIcon
-                          fontSize="small"
-                          sx={{
-                            fontSize: "1rem",
-                            transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
-                            transition: "transform 0.3s",
-                          }}
-                        />
-                      </NavButton>
-                    )}
-
-                    <AnimatePresence>
-                      {open === item.menu && (
-                        <DropdownContainer
-                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        >
-                          {renderMenuContent(item.menu)}
-                        </DropdownContainer>
-                      )}
-                    </AnimatePresence>
-                  </Box>
-                ))}
-              </Box>
-            )}
-
-            {/* Right Actions (Charities, Dark Mode, Contact, Donate) */}
-            <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.5, sm: 1, md: 1.5 } }}>
-              {!isMobile && (
-                <CharitiesButton component={Link} to={PathConstants.CHARITIES}>
-                  Our Impact
-                </CharitiesButton>
-              )}
-              <ToggleColorMode mode={mode} toggleColorMode={toggleColorMode} />
-              <ContactButton component={Link} to={PathConstants.CONTACT_US}>
+                Our Impact
+              </Button>
+              <Button
+                ref={contactRef}
+                component={Link}
+                to={PathConstants.CONTACT_US}
+                variant="outlined"
+                color="inherit"
+                sx={(theme) => ({ ...actionSx(theme), ...show(fit.contact) })}
+              >
                 Contact
-              </ContactButton>
-              <DonateButton component={Link} to={PathConstants.DONATE_NOW}>
-                Donate
-              </DonateButton>
+              </Button>
+              <Box ref={fixedRef} sx={{ display: "flex", alignItems: "center", gap: `${GAP}px` }}>
+                <ToggleColorMode />
+                <Button component={Link} to={PathConstants.DONATE_NOW} variant="contained" color="primary" sx={actionSx}>
+                  Donate
+                </Button>
+              </Box>
+              <IconButton
+                onClick={() => setDrawerOpen(true)}
+                aria-label="Open navigation menu"
+                aria-expanded={drawerOpen}
+                aria-controls="mobile-navigation"
+                sx={{ display: { xs: "inline-flex", md: fit.menu ? "inline-flex" : "none" }, width: MENU_BUTTON_WIDTH, height: MENU_BUTTON_WIDTH }}
+              >
+                <MenuIcon />
+              </IconButton>
             </Box>
 
             {/* Seasonal lights and charms hanging from the bottom of the navbar */}
-            <NavbarGarland season={season} mode={mode} />
-          </ModernToolbar>
+            <NavbarGarland />
+          </Box>
         </Container>
-      </StyledAppBar>
+      </Box>
 
-      {/* Mobile Drawer */}
-      <ModernDrawer
-        anchor="left"
-        open={drawerOpen}
-        onClose={handleDrawerClose}
-        ModalProps={{ keepMounted: true }}
-      >
-        <Box
-          sx={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            p: 2,
-          }}
-        >
-          <Link to={PathConstants.HOME} onClick={handleDrawerClose}>
-            <Box component="img" src={Logo} style={drawerLogoStyle} alt="Logo" />
+      {/* Drawer: the navigation on phones, and the overflow elsewhere */}
+      <Drawer anchor="left" open={drawerOpen} onClose={closeDrawer} ModalProps={{ keepMounted: true }} PaperProps={{ id: "mobile-navigation", sx: { width: 300, maxWidth: "88vw" } }}>
+        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", p: 2 }}>
+          <Link to={PathConstants.HOME} onClick={closeDrawer} style={{ display: "inline-flex" }}>
+            <Box component="img" src={Logo} alt="Logo" width={40} height={40} sx={(theme) => ({ width: 40, height: 40, borderRadius: "50%", objectFit: "cover", border: `1px solid ${theme.vars.palette.hairline.main}` })} />
           </Link>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={closeDrawer} aria-label="Close navigation menu">
             <CloseIcon />
           </IconButton>
         </Box>
-        <Divider sx={{ my: 1 }} />
-        <List>
-          {menuItems.map((item) => (
-            <Box key={item.menu || item.text}>
-              {item.href ? (
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to={item.href} onClick={handleDrawerClose}>
-                    <ListItemText primary={item.text} />
-                  </ListItemButton>
-                </ListItem>
-              ) : (
+        <Divider />
+        <List sx={{ px: 1 }}>
+          {menuItems.map((item) =>
+            item.href ? (
+              <ListItem key={item.text} disablePadding>
+                <ListItemButton component={Link} to={item.href} onClick={closeDrawer} selected={location.pathname === item.href}>
+                  <ListItemText primary={item.text} primaryTypographyProps={{ fontWeight: 500 }} />
+                </ListItemButton>
+              </ListItem>
+            ) : (
+              <Box key={item.menu}>
                 <ListItem disablePadding>
                   <ListItemButton
-                    onClick={() => setOpen((prev) => (prev === item.menu ? null : item.menu))}
+                    onClick={() => setDrawerGroup((prev) => (prev === item.menu ? null : item.menu))}
+                    aria-expanded={drawerGroup === item.menu}
                     sx={{ display: "flex", justifyContent: "space-between" }}
                   >
-                    <ListItemText primary={item.text} />
-                    <ExpandMoreIcon
-                      sx={{
-                        transform: open === item.menu ? "rotate(180deg)" : "rotate(0deg)",
-                        transition: "transform 0.3s",
-                      }}
-                    />
+                    <ListItemText primary={item.text} primaryTypographyProps={{ fontWeight: 500 }} />
+                    <ExpandMoreIcon sx={{ transition: `transform ${duration.base}ms ${easing.standard}`, transform: drawerGroup === item.menu ? "rotate(180deg)" : "none" }} />
                   </ListItemButton>
                 </ListItem>
-              )}
-
-              <AnimatePresence>
-                {open === item.menu && (
-                  <motion.div
-                    initial={{ opacity: 0, height: 0 }}
-                    animate={{ opacity: 1, height: "auto" }}
-                    exit={{ opacity: 0, height: 0 }}
-                  >
-                    {renderMenuContent(item.menu)}
-                  </motion.div>
-                )}
-              </AnimatePresence>
-            </Box>
-          ))}
-          {/* Charities button in mobile drawer */}
-          <ListItem disablePadding sx={{ px: 2, py: 1 }}>
-            <CharitiesButton 
-              component={Link} 
-              to={PathConstants.CHARITIES} 
-              onClick={handleDrawerClose}
-              fullWidth
-            >
-              Our Impact
-            </CharitiesButton>
+                <Collapse in={drawerGroup === item.menu} timeout="auto" unmountOnExit>
+                  <List disablePadding sx={{ pl: 2, pb: 1 }}>
+                    {item.links.map((link) => (
+                      <ListItem key={link.href} disablePadding>
+                        <ListItemButton component={Link} to={link.href} onClick={closeDrawer} selected={location.pathname === link.href}>
+                          <ListItemText primary={link.text} />
+                        </ListItemButton>
+                      </ListItem>
+                    ))}
+                  </List>
+                </Collapse>
+              </Box>
+            )
+          )}
+          <Divider sx={{ my: 1 }} />
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={PathConstants.CHARITIES} onClick={closeDrawer} selected={location.pathname === PathConstants.CHARITIES}>
+              <ListItemText primary="Our Impact" primaryTypographyProps={{ fontWeight: 500 }} />
+            </ListItemButton>
           </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to={PathConstants.CONTACT_US} onClick={closeDrawer} selected={location.pathname === PathConstants.CONTACT_US}>
+              <ListItemText primary="Contact" primaryTypographyProps={{ fontWeight: 500 }} />
+            </ListItemButton>
+          </ListItem>
+          {hasPhone && (
+            <ListItem sx={{ pt: 1 }}>
+              <PhonePill sx={{ flexWrap: "wrap" }} />
+            </ListItem>
+          )}
         </List>
-      </ModernDrawer>
+      </Drawer>
     </>
   );
-};
-
-Header.propTypes = {
-  season: PropTypes.oneOf(Object.values(SEASONS)),
-  mode: PropTypes.oneOf(["light", "dark"]).isRequired,
-  toggleColorMode: PropTypes.func.isRequired,
-};
-
-export default Header;
+}

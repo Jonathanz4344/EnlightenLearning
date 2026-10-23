@@ -1,85 +1,65 @@
 import * as React from "react";
-import {
-  Box,
-  Button,
-  Container,
-  IconButton,
-  Stack,
-  TextField,
-  Typography,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
-import { SiTiktok as TikTokIcon } from "react-icons/si";
-import GoogleIcon from "@mui/icons-material/Google";
-import PhoneIcon from "@mui/icons-material/Phone";
-import SmsIcon from "@mui/icons-material/Sms";
-import LocationOnIcon from "@mui/icons-material/LocationOn";
-import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import EmailIcon from "@mui/icons-material/Email";
 import MailIcon from "@mui/icons-material/Mail";
-import Logo from "/images/logo/Logo.png";
-import PathConstants from "../../routes/pathConstants";
-import { useMode } from "../Layout";
-import FooterScene from "../seasonal/FooterScene";
-import { SEASONS } from "../../constants/season";
+import CallRoundedIcon from "@mui/icons-material/CallRounded";
+import SmsRoundedIcon from "@mui/icons-material/SmsRounded";
+import AccessTimeRoundedIcon from "@mui/icons-material/AccessTimeRounded";
+import PlaceRoundedIcon from "@mui/icons-material/PlaceRounded";
 import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
+import Logo from "/images/logo/Logo.png";
+import PathConstants from "../../routes/pathConstants";
+import FooterScene from "../seasonal/FooterScene";
+import { site, phoneHref, hasHours, hasAddress } from "../../config/site";
+import { radius, duration, easing } from "../../theme/tokens";
 
 const logoStyle = {
   width: "140px",
   height: "auto",
 };
 
-const FooterLink = styled(Link)(({ theme }) => ({
+const linkSx = (theme) => ({
   color: "inherit",
   textDecoration: "none",
-  transition: "all 0.3s ease",
-  position: "relative",
   display: "inline-block",
-  "&:hover": {
-    color: theme.palette.primary.main,
-    transform: "translateX(4px)",
-  },
+  position: "relative",
+  fontSize: "0.9375rem",
+  transition: `color ${duration.fast}ms ${easing.standard}`,
   "&::after": {
     content: '""',
     position: "absolute",
-    bottom: "-2px",
     left: 0,
-    width: 0,
-    height: "2px",
-    background: theme.palette.primary.main,
-    transition: "width 0.3s ease",
-  },
-  "&:hover::after": {
+    bottom: -2,
     width: "100%",
+    height: "1px",
+    backgroundColor: theme.vars.palette.hairline.strong,
+    transform: "scaleX(0)",
+    transformOrigin: "left",
+    transition: `transform ${duration.base}ms ${easing.standard}, background-color ${duration.base}ms ${easing.standard}`,
   },
-}));
+  "&:hover": { color: theme.vars.palette.accentText.main },
+  "&:hover::after": { transform: "scaleX(1)", backgroundColor: theme.vars.palette.accentText.main },
+});
 
-const ExternalLink = styled("a")(({ theme }) => ({
-  color: "inherit",
-  textDecoration: "none",
-  transition: "all 0.3s ease",
-  position: "relative",
-  display: "inline-block",
-  "&:hover": {
-    color: theme.palette.primary.main,
-    transform: "translateX(4px)",
-  },
-  "&::after": {
-    content: '""',
-    position: "absolute",
-    bottom: "-2px",
-    left: 0,
-    width: 0,
-    height: "2px",
-    background: theme.palette.primary.main,
-    transition: "width 0.3s ease",
-  },
-  "&:hover::after": {
-    width: "100%",
-  },
-}));
+const FooterLink = styled(Link)(({ theme }) => linkSx(theme));
+const ExternalLink = styled("a")(({ theme }) => linkSx(theme));
+
+const columnHeadingSx = (theme) => ({
+  fontSize: "0.8125rem",
+  fontWeight: 600,
+  letterSpacing: "0.04em",
+  color: theme.vars.palette.text.secondary,
+  mb: 0.5,
+});
 
 function Copyright() {
   return (
@@ -90,9 +70,19 @@ function Copyright() {
   );
 }
 
+const DAY_LABELS = { monday: "Mon", tuesday: "Tue", wednesday: "Wed", thursday: "Thu", friday: "Fri", saturday: "Sat", sunday: "Sun" };
+const formatDays = (days) => {
+  const short = days.map((d) => DAY_LABELS[String(d).toLowerCase()] || d);
+  return short.length > 2 ? `${short[0]} to ${short[short.length - 1]}` : short.join(" and ");
+};
+const formatTime = (value) => {
+  const [h, m] = String(value).split(":").map(Number);
+  const suffix = h >= 12 ? "pm" : "am";
+  const hour = ((h + 11) % 12) + 1;
+  return m ? `${hour}:${String(m).padStart(2, "0")} ${suffix}` : `${hour} ${suffix}`;
+};
+
 export default function Footer() {
-  const { mode = "light", season = SEASONS.NORMAL } = useMode() || {};
-  const isDarkMode = mode === "dark";
   const [email, setEmail] = React.useState("");
   const [message, setMessage] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
@@ -114,8 +104,8 @@ export default function Footer() {
 
     try {
       // Determine the correct API URL
-      const isDev = process.env.NODE_ENV === 'development';
-      const apiUrl = isDev ? 'http://localhost:3000/api/subscribe' : '/api/subscribe';
+      const isDev = import.meta.env.DEV;
+      const apiUrl = isDev ? "http://localhost:3000/api/subscribe" : "/api/subscribe";
 
       const response = await fetch(apiUrl, {
         method: "POST",
@@ -140,40 +130,37 @@ export default function Footer() {
     }
   };
 
+  const showContactBlock = site.phoneCall || site.phoneText || hasHours() || hasAddress();
+
   return (
-    <footer
+    <Box
+      component="footer"
       aria-labelledby="footer-heading"
-      style={{
-        backgroundColor: isDarkMode ? "#121212" : "#f9f9f9",
-        color: isDarkMode ? "#fff" : "#333",
-        borderTop: "1px solid",
-        borderColor: isDarkMode ? "#333" : "#ddd",
-        transition: "background-color 0.3s, color 0.3s",
-        paddingTop: "4rem",
-        paddingBottom: "4rem",
+      sx={(theme) => ({
         position: "relative",
-      }}
+        backgroundColor: theme.vars.palette.surface.sunken,
+        color: theme.vars.palette.text.primary,
+        borderTop: `1px solid ${theme.vars.palette.hairline.main}`,
+        pt: { xs: 7, md: 10 },
+        pb: { xs: 5, md: 6 },
+      })}
     >
       {/* Seasonal scene standing on the top edge of the footer */}
-      <FooterScene season={season} mode={mode} />
+      <FooterScene />
       <Container
         sx={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "center",
-          gap: { xs: 4, sm: 8 },
-          textAlign: { sm: "center", md: "left" },
+          alignItems: "stretch",
+          gap: { xs: 5, md: 8 },
         }}
       >
         {/* --- Main Footer Content --- */}
         <Box
           sx={{
-            display: "flex",
-            flexDirection: { xs: "column", sm: "row" },
-            width: "100%",
-            justifyContent: "space-between",
-            gap: { xs: 3, sm: 6 },
-            flexWrap: { sm: "wrap", md: "nowrap" },
+            display: "grid",
+            gridTemplateColumns: { xs: "1fr", md: "minmax(0, 5fr) minmax(0, 7fr)" },
+            gap: { xs: 5, md: 8 },
           }}
         >
           {/* --- Logo and Contact --- */}
@@ -181,42 +168,80 @@ export default function Footer() {
             component="article"
             itemScope
             itemType="https://schema.org/Optician"
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 3,
-              minWidth: { xs: "100%", sm: "40%", md: "30%" },
-            }}
+            sx={{ display: "flex", flexDirection: "column", gap: 3 }}
           >
-            <FooterLink to={PathConstants.HOME} aria-label="Go to homepage">
-              <img src={Logo} style={logoStyle} alt="Logo" />
+            <FooterLink to={PathConstants.HOME} aria-label="Go to homepage" sx={{ "&::after": { display: "none" } }}>
+              <img src={Logo} style={logoStyle} alt="Logo" width={140} height={138} />
             </FooterLink>
 
             {/* Business Contact */}
-            <Box component="address" sx={{ fontStyle: "normal", mt: 2, display: "flex", flexDirection: "column", gap: 1 }}>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <EmailIcon fontSize="small" />
+            <Box component="address" sx={{ fontStyle: "normal", display: "flex", flexDirection: "column", gap: 1.25 }}>
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                <EmailIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main })} />
                 <ExternalLink href="mailto:enlightenandlearning@gmail.com">enlightenandlearning@gmail.com</ExternalLink>
               </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <InstagramIcon fontSize="small" />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                <InstagramIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main })} />
                 <ExternalLink href="https://www.instagram.com/enlighten_learning/" target="_blank" rel="noopener">@enlighten_learning</ExternalLink>
               </Box>
-              <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                <FacebookIcon fontSize="small" />
+              <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                <FacebookIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main })} />
                 <ExternalLink href="https://www.facebook.com/share/16yVvBdfyz/?mibextid=wwXIfr/" target="_blank" rel="noopener">@Enlighten Learning</ExternalLink>
               </Box>
+              {site.phoneCall && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                  <CallRoundedIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main })} />
+                  <ExternalLink href={phoneHref("tel", site.phoneCall)} sx={{ fontVariantNumeric: "tabular-nums" }}>{site.phoneCall}</ExternalLink>
+                  <Typography variant="caption" color="text.secondary">Calls</Typography>
+                </Box>
+              )}
+              {site.phoneText && (
+                <Box sx={{ display: "flex", alignItems: "center", gap: 1.25 }}>
+                  <SmsRoundedIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main })} />
+                  <ExternalLink href={phoneHref("sms", site.phoneText)} sx={{ fontVariantNumeric: "tabular-nums" }}>{site.phoneText}</ExternalLink>
+                  <Typography variant="caption" color="text.secondary">Texts</Typography>
+                </Box>
+              )}
+              {hasHours() && (
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.25 }}>
+                  <AccessTimeRoundedIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main, mt: "2px" })} />
+                  <Box component="dl" sx={{ m: 0, display: "grid", gridTemplateColumns: "auto auto", columnGap: 2, rowGap: 0.25, fontSize: "0.9375rem", fontVariantNumeric: "tabular-nums" }}>
+                    {site.hours.map((slot, i) => (
+                      <React.Fragment key={i}>
+                        <Box component="dt" sx={{ color: "text.secondary" }}>{formatDays(slot.days)}</Box>
+                        <Box component="dd" sx={{ m: 0 }}>{`${formatTime(slot.opens)} to ${formatTime(slot.closes)}`}</Box>
+                      </React.Fragment>
+                    ))}
+                  </Box>
+                </Box>
+              )}
+              {hasAddress() && (
+                <Box sx={{ display: "flex", alignItems: "flex-start", gap: 1.25 }}>
+                  <PlaceRoundedIcon fontSize="small" sx={(theme) => ({ color: theme.vars.palette.accentText.main, mt: "2px" })} />
+                  <ExternalLink href={site.address.mapUrl} target="_blank" rel="noopener">
+                    {site.address.street}, {site.address.city}, {site.address.region} {site.address.postalCode}
+                  </ExternalLink>
+                </Box>
+              )}
             </Box>
 
+            {hasAddress() && site.address.mapEmbedUrl && (
+              <Box
+                sx={(theme) => ({ borderRadius: `${radius.lg}px`, overflow: "hidden", border: `1px solid ${theme.vars.palette.hairline.main}`, aspectRatio: "16 / 9", maxWidth: 420 })}
+              >
+                <iframe title="Map" src={site.address.mapEmbedUrl} width="100%" height="100%" style={{ border: 0, display: "block" }} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+              </Box>
+            )}
+
             {/* --- Newsletter Form --- */}
-            <Box sx={{ mt: 2 }}>
+            <Box sx={{ mt: showContactBlock ? 0 : 1 }}>
               <Typography variant="h6" gutterBottom>Newsletter</Typography>
               <Typography variant="body2" color="inherit" mb={2}>
                 Subscribe to our newsletter for updates and events.
               </Typography>
 
               <form onSubmit={handleSubscribe}>
-                <Stack direction="row" spacing={1} useFlexGap>
+                <Stack direction="row" spacing={1} useFlexGap sx={{ maxWidth: 440 }}>
                   <TextField
                     id="footer-email-input"
                     hiddenLabel
@@ -228,6 +253,7 @@ export default function Footer() {
                     onChange={(e) => setEmail(e.target.value)}
                     required
                     disabled={isLoading}
+                    inputProps={{ "aria-label": "Your email address", autoComplete: "email", inputMode: "email" }}
                   />
                   <Button
                     type="submit"
@@ -259,12 +285,9 @@ export default function Footer() {
             component="nav"
             aria-label="Footer Navigation"
             sx={{
-              display: "flex",
-              flexDirection: { xs: "column", sm: "row" },
-              flexWrap: "wrap",
-              gap: { xs: 4, sm: 6 },
-              width: { xs: "100%", sm: "auto" },
-              justifyContent: { xs: "flex-start", sm: "space-between" },
+              display: "grid",
+              gridTemplateColumns: { xs: "repeat(2, minmax(0, 1fr))", lg: "repeat(4, minmax(0, 1fr))" },
+              gap: { xs: 4, md: 4 },
             }}
           >
             {/* About Us Links */}
@@ -272,20 +295,9 @@ export default function Footer() {
               component="div"
               role="navigation"
               aria-labelledby="footer-about-heading"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                minWidth: { xs: "45%", sm: "auto" },
-              }}
+              sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}
             >
-              <Typography
-                variant="h6"
-                component="h3"
-                id="footer-about-heading"
-                color="primary.main"
-                sx={{ fontWeight: 600 }}
-              >
+              <Typography variant="h6" component="h3" id="footer-about-heading" sx={columnHeadingSx}>
                 About Us
               </Typography>
               <FooterLink to={PathConstants.HOME} aria-label="Go to Home page">
@@ -316,20 +328,9 @@ export default function Footer() {
               component="div"
               role="navigation"
               aria-labelledby="footer-programs-heading"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                minWidth: { xs: "45%", sm: "auto" },
-              }}
+              sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}
             >
-              <Typography
-                variant="h6"
-                component="h3"
-                id="footer-programs-heading"
-                color="primary.main"
-                sx={{ fontWeight: 600 }}
-              >
+              <Typography variant="h6" component="h3" id="footer-programs-heading" sx={columnHeadingSx}>
                 Programs
               </Typography>
               <FooterLink
@@ -351,20 +352,9 @@ export default function Footer() {
               component="div"
               role="navigation"
               aria-labelledby="footer-getinvolved-heading"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                minWidth: { xs: "45%", sm: "auto" },
-              }}
+              sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}
             >
-              <Typography
-                variant="h6"
-                component="h3"
-                id="footer-getinvolved-heading"
-                color="primary.main"
-                sx={{ fontWeight: 600 }}
-              >
+              <Typography variant="h6" component="h3" id="footer-getinvolved-heading" sx={columnHeadingSx}>
                 Get Involved
               </Typography>
               <FooterLink
@@ -392,20 +382,9 @@ export default function Footer() {
               component="div"
               role="navigation"
               aria-labelledby="footer-support-heading"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                gap: 1,
-                minWidth: { xs: "45%", sm: "auto" },
-              }}
+              sx={{ display: "flex", flexDirection: "column", gap: 1.25 }}
             >
-              <Typography
-                variant="h6"
-                component="h3"
-                id="footer-support-heading"
-                color="primary.main"
-                sx={{ fontWeight: 600 }}
-              >
+              <Typography variant="h6" component="h3" id="footer-support-heading" sx={columnHeadingSx}>
                 Support Us
               </Typography>
               <FooterLink
@@ -426,15 +405,16 @@ export default function Footer() {
 
         {/* Footer Bottom - Copyright and Social Links */}
         <Box
-          sx={{
+          sx={(theme) => ({
             display: "flex",
             flexDirection: { xs: "column", sm: "row" },
             justifyContent: "space-between",
-            alignItems: { xs: "center", sm: "flex-end" },
-            pt: { xs: 4, sm: 8 },
+            alignItems: { xs: "center", sm: "center" },
+            pt: { xs: 3, md: 4 },
+            borderTop: `1px solid ${theme.vars.palette.hairline.main}`,
             width: "100%",
             gap: { xs: 2, sm: 0 },
-          }}
+          })}
         >
           {/* Legal Links and Copyright */}
           <Box
@@ -450,10 +430,10 @@ export default function Footer() {
           {/* Social Media Links with Mail Icon */}
           <Stack
             direction="row"
-            spacing={1}
+            spacing={0.5}
             sx={{
               justifyContent: { xs: "center", sm: "flex-end" },
-              mt: { xs: 2, sm: 0 },
+              mt: { xs: 1, sm: 0 },
             }}
           >
             <IconButton
@@ -487,6 +467,6 @@ export default function Footer() {
           </Stack>
         </Box>
       </Container>
-    </footer>
+    </Box>
   );
 }

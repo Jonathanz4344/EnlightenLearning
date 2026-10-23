@@ -1,0 +1,8 @@
+{
+  "note": "The meta description and keywords moved verbatim to src/config/site.js and are written by the Seo component on every page. tel and sms are URL schemes built by phoneHref, not words. The drawer close button gained an aria-label (reported as an addition).",
+  "removed": [
+    "Long Island tutoring run by high school students. Enlighten Learning offers K-12 tutoring and NYS & Regents prep, and donates its proceeds to charity.",
+    "nonprofit, tutoring, education, volunteer, community support, fundraising"
+  ],
+  "added": ["tel", "sms", "Close navigation menu"]
+}

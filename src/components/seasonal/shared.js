@@ -1,23 +1,29 @@
 import { keyframes } from "@emotion/react";
+import { zIndex } from "../../theme/tokens";
 
-// Building blocks shared by the seasonal scenes.
+// Building blocks shared by the seasonal scenes. Colors are never written
+// here: every piece reads the season's CSS variables (var(--el-season-...))
+// that vite.config.js writes into the document from src/theme/tokens.js, so
+// the decor flips with light and dark mode on its own.
 
 export const random = (min, max) => min + Math.random() * (max - min);
 
-// Every decoration layer sits below the header (z-index 1100) and its menus,
-// ignores clicks, is hidden from screen readers by the caller, and never prints.
-export const layerSx = (zIndex) => ({
+// Every decoration layer sits below the header and its menus, ignores
+// clicks, is hidden from screen readers by the caller, and never prints.
+export const layerSx = (z = zIndex.decor) => ({
   position: "fixed",
   inset: 0,
   overflow: "hidden",
   pointerEvents: "none",
-  zIndex,
+  zIndex: z,
   "@media print": { display: "none" },
 });
 
-// Hide moving pieces for visitors whose device asks for reduced motion
+// Hide moving pieces for visitors whose device asks for reduced motion, or
+// who turned the site's own "stop animations" setting on
 export const motionOnly = {
   "@media (prefers-reduced-motion: reduce)": { display: "none" },
+  "html[data-motion='off'] &": { display: "none" },
 };
 
 // Show only the first `count` pieces on phones
@@ -55,6 +61,9 @@ export const flapWings = {
     animation: `${flap} var(--flap, 0.2s) ease-in-out infinite alternate`,
   },
 };
+
+// Season CSS variable, for SVG style props
+export const seasonVar = (name) => `var(--el-season-${name})`;
 
 // A corner spider web: threads fan out from the top-left corner of a square of
 // the given size, joined by rings that sag toward the corner

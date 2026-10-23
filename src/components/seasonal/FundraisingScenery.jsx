@@ -2,13 +2,14 @@ import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import { keyframes } from "@emotion/react";
 import { SEASONS } from "../../constants/season";
-import { flapWings } from "./shared";
+import { flapWings, seasonVar } from "./shared";
 import { Pumpkin, FlyingBat } from "./Halloween";
 import { Tombstone, PineTree, Snowman } from "./FooterScene";
 
 // Seasonal scenery for the donate page's fundraising sky: a moon, stars, a bat
 // and a spooky hilltop at Halloween, and falling snow with pine trees and a
-// snowman at Christmas. Sits behind the balloon and the numbers.
+// snowman for the holidays. Sits behind the balloon and the numbers. Colors
+// are the season's CSS variables.
 
 const twinkle = keyframes`
   0%, 100% { opacity: 0.9; transform: scale(1); }
@@ -24,6 +25,11 @@ const glide = keyframes`
   0%, 100% { transform: translate(0, 0) rotate(-4deg); }
   50% { transform: translate(-26px, 10px) rotate(4deg); }
 `;
+
+const still = {
+  "@media (prefers-reduced-motion: reduce)": { animation: "none" },
+  "html[data-motion='off'] &": { animation: "none" },
+};
 
 // Fixed, scattered spots so the stars look random but stay put between visits
 const STARS = Array.from({ length: 18 }, (_, i) => ({
@@ -70,9 +76,10 @@ function HalloweenScenery() {
             width: star.size,
             height: star.size,
             borderRadius: "50%",
-            backgroundColor: "#fff6d6",
-            boxShadow: "0 0 4px rgba(255, 246, 214, 0.9)",
+            backgroundColor: seasonVar("star"),
+            boxShadow: `0 0 4px ${seasonVar("star")}`,
             animation: `${twinkle} 3s ease-in-out ${star.delay}s infinite`,
+            ...still,
           }}
         />
       ))}
@@ -86,12 +93,12 @@ function HalloweenScenery() {
           width: { xs: 52, sm: 76 },
           height: { xs: 52, sm: 76 },
           borderRadius: "50%",
-          background: "radial-gradient(circle at 35% 35%, #fffbe6 0%, #ffe9a8 55%, #f3cf6b 100%)",
-          boxShadow: "0 0 40px 12px rgba(255, 224, 138, 0.4)",
+          backgroundColor: seasonVar("moon"),
+          boxShadow: `0 0 40px 12px ${seasonVar("glow-orange")}`,
         }}
       >
-        <Box sx={{ position: "absolute", top: "28%", left: "52%", width: "16%", height: "16%", borderRadius: "50%", backgroundColor: "rgba(214, 170, 70, 0.35)" }} />
-        <Box sx={{ position: "absolute", top: "58%", left: "30%", width: "11%", height: "11%", borderRadius: "50%", backgroundColor: "rgba(214, 170, 70, 0.3)" }} />
+        <Box sx={{ position: "absolute", top: "28%", left: "52%", width: "16%", height: "16%", borderRadius: "50%", backgroundColor: seasonVar("pumpkin-light"), opacity: 0.35 }} />
+        <Box sx={{ position: "absolute", top: "58%", left: "30%", width: "11%", height: "11%", borderRadius: "50%", backgroundColor: seasonVar("pumpkin-light"), opacity: 0.3 }} />
         <Box
           sx={{
             position: "absolute",
@@ -102,9 +109,10 @@ function HalloweenScenery() {
             animation: `${glide} 6s ease-in-out infinite`,
             "--flap": "0.25s",
             ...flapWings,
+            ...still,
           }}
         >
-          <FlyingBat color="#1a1024" />
+          <FlyingBat />
         </Box>
       </Box>
 
@@ -129,10 +137,11 @@ function ChristmasScenery() {
             width: flake.size,
             height: flake.size,
             borderRadius: "50%",
-            backgroundColor: "#ffffff",
-            boxShadow: "0 0 3px rgba(120, 170, 220, 0.8)",
+            backgroundColor: seasonVar("snow"),
+            boxShadow: `0 0 3px ${seasonVar("flake-edge")}`,
             animation: `${snowDrift} ${flake.duration}s linear ${flake.delay}s infinite`,
             "@media (prefers-reduced-motion: reduce)": { display: "none" },
+            "html[data-motion='off'] &": { display: "none" },
           }}
         />
       ))}

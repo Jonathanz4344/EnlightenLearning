@@ -1,0 +1,96 @@
+/* Base styles that do not belong to any component. Colors come from the
+   CSS variables that vite.config.js writes into index.html from
+   src/theme/tokens.js, so there are no color literals here. */
+
+html {
+  background-color: var(--el-canvas);
+  color: var(--el-text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+  /* Room for the fixed header when jumping to an in-page anchor */
+  scroll-padding-top: 88px;
+}
+
+body {
+  margin: 0;
+  font-family: var(--el-font-text);
+  font-variant-numeric: tabular-nums;
+}
+
+img,
+svg,
+video {
+  max-width: 100%;
+}
+
+::selection {
+  background-color: var(--el-accent-soft);
+  color: var(--el-text);
+}
+
+:focus-visible {
+  outline: 3px solid var(--el-focus-ring);
+  outline-offset: 2px;
+}
+
+/* The skip link is visually hidden until it receives keyboard focus */
+.el-skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 2000;
+  padding: 10px 14px;
+  border-radius: var(--el-radius-pill);
+  background-color: var(--el-paper);
+  color: var(--el-text);
+  font-family: var(--el-font-text);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: 0 0 0 1px var(--el-hairline);
+  transform: translateY(-200%);
+}
+
+.el-skip-link:focus-visible {
+  transform: none;
+}
+
+/* Motion is off for anyone who asks for it, either through the operating
+   system or through the site's own "stop animations" setting
+   (data-motion="off" on the html element). Reveals finish instantly and
+   nothing stays hidden. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    transition-delay: 0ms !important;
+  }
+}
+
+html[data-motion="off"] {
+  scroll-behavior: auto;
+}
+
+html[data-motion="off"] *,
+html[data-motion="off"] *::before,
+html[data-motion="off"] *::after {
+  animation-duration: 0.001ms !important;
+  animation-delay: 0ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.001ms !important;
+  transition-delay: 0ms !important;
+}
+
+@media print {
+  .el-no-print {
+    display: none !important;
+  }
+}

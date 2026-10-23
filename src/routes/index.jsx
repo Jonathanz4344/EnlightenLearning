@@ -1,19 +1,21 @@
 import React from "react";
 import { Navigate } from "react-router-dom";
 import PathConstants from "./pathConstants";
-import Missions from "../components/about/Mission";
-import OurTeam from "../components/about/OurTeam";
-import ApplyTutor from "../components/getInvolved/ApplyTutor";
-import ExecTeam from "../components/getInvolved/ExecTeam";
-import VolunteerOpp from "../components/getInvolved/VolunteerOpportunities";
-import EventPrograms from "../components/programs/EventsPrograms";
-import MakingDiff from "../components/programs/MakingDifference";
-import TutoringServices from "../components/programs/TutoringServices";
-import ContactUs from "../components/navBar/ContactUs";
-import DonateNow from "../components/navBar/DonateNow";
-import Charities from "../components/charities/Charities";
 
+// Every page is its own chunk, loaded when first visited.
 const Home = React.lazy(() => import("../components/Home"));
+const Missions = React.lazy(() => import("../components/about/Mission"));
+const OurTeam = React.lazy(() => import("../components/about/OurTeam"));
+const ApplyTutor = React.lazy(() => import("../components/getInvolved/ApplyTutor"));
+const ExecTeam = React.lazy(() => import("../components/getInvolved/ExecTeam"));
+const VolunteerOpp = React.lazy(() => import("../components/getInvolved/VolunteerOpportunities"));
+const EventPrograms = React.lazy(() => import("../components/programs/EventsPrograms"));
+const MakingDiff = React.lazy(() => import("../components/programs/MakingDifference"));
+const TutoringServices = React.lazy(() => import("../components/programs/TutoringServices"));
+const ContactUs = React.lazy(() => import("../components/navBar/ContactUs"));
+const DonateNow = React.lazy(() => import("../components/navBar/DonateNow"));
+const Charities = React.lazy(() => import("../components/charities/Charities"));
+const NotFound = React.lazy(() => import("../components/NotFound"));
 
 const routes = [
   { path: PathConstants.HOME, element: <Home /> },
@@ -30,6 +32,7 @@ const routes = [
   { path: PathConstants.CHARITIES, element: <Charities /> },
   // Old URL for the charities page, kept so existing links still work
   { path: "/Charities", element: <Navigate to={PathConstants.CHARITIES} replace /> },
+  { path: "*", element: <NotFound /> },
 ];
 
 export default routes;

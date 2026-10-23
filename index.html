@@ -3,11 +3,34 @@
 
 <head>
   <meta charset="utf-8" />
-  <!-- favicon should live in public/ (see below) -->
-  <link rel="icon" type="image/png" href="/images/logo/Logo.png" />
-  <!-- need this to get responsive mobile -->
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Enlighten Learning</title>
+  <link rel="icon" type="image/png" href="/images/logo/Logo.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-32.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-180.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <!-- Self-hosted fonts, preloaded so headings and text paint in the right face -->
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-latin-opsz-normal.woff2" crossorigin />
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-wght-normal.woff2" crossorigin />
+  <!-- Pre-paint: read the remembered color mode, the motion setting and any
+       season preview from the query string before anything renders, so there
+       is no flash of the wrong canvas. The React theme reads the same keys. -->
+  <script>
+    (function () {
+      try {
+        var root = document.documentElement;
+        var mode = localStorage.getItem("el-mode");
+        var dark = mode === "dark" || (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
+        root.setAttribute("data-theme", dark ? "dark" : "light");
+        if (localStorage.getItem("el-motion") === "off") root.setAttribute("data-motion", "off");
+        var params = new URLSearchParams(window.location.search);
+        var season = params.get("season");
+        if (season === "halloween" || season === "christmas") root.setAttribute("data-season", season);
+      } catch (error) {
+        /* Storage can be blocked; the defaults are light mode and motion on */
+      }
+    })();
+  </script>
 </head>
 
 <body>

@@ -1,17 +1,19 @@
 import { useMemo } from "react";
 import Box from "@mui/material/Box";
-import { fall, sway, spin, random, layerSx, motionOnly, fewerOnPhones } from "./shared";
+import { fall, sway, spin, random, layerSx, motionOnly, fewerOnPhones, seasonVar } from "./shared";
+import { zIndex } from "../../theme/tokens";
 
-// Christmas: snowflakes drifting down over the page.
+// Holidays, dressed: a light snowfall drifting down over the page. Few flakes,
+// slow, with colors from the season's CSS variables.
 
-const FLAKE_COUNT = 28;
-const PHONE_FLAKE_COUNT = 14;
+const FLAKE_COUNT = 16;
+const PHONE_FLAKE_COUNT = 8;
 
 const ARMS = [0, 60, 120];
 const TIPS = [0, 60, 120, 180, 240, 300];
 
 const drawFlake = (stroke, strokeWidth) => (
-  <g stroke={stroke} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" fill="none">
+  <g style={{ stroke }} strokeWidth={strokeWidth} strokeLinecap="round" strokeLinejoin="round" fill="none">
     {ARMS.map((angle) => (
       <line key={angle} x1="12" y1="2" x2="12" y2="22" transform={`rotate(${angle} 12 12)`} />
     ))}
@@ -23,33 +25,33 @@ const drawFlake = (stroke, strokeWidth) => (
 
 const Snowflake = () => (
   <svg viewBox="0 0 24 24" width="100%" height="100%">
-    {/* Icy blue outline keeps white flakes visible on white sections */}
-    {drawFlake("rgba(52, 120, 205, 0.65)", 3.6)}
-    {drawFlake("#ffffff", 1.8)}
+    {/* An icy outline keeps white flakes visible on light sections */}
+    {drawFlake(seasonVar("flake-edge"), 3.4)}
+    {drawFlake(seasonVar("snow"), 1.6)}
   </svg>
 );
 
 function makeFlakes() {
   return Array.from({ length: FLAKE_COUNT }, (_, id) => {
-    const duration = random(10, 20);
-    const swayDuration = random(3, 6);
+    const duration = random(18, 30);
+    const swayDuration = random(4, 7);
     return {
       id,
-      size: random(14, 32),
+      size: random(10, 24),
       style: {
         left: `${random(0, 100)}%`,
-        opacity: random(0.65, 0.95),
+        opacity: random(0.5, 0.85),
         "--duration": `${duration}s`,
         // A negative delay starts each flake partway down, so the screen is filled right away
         "--delay": `${-random(0, duration)}s`,
       },
       swayStyle: {
-        "--sway": `${random(10, 40)}px`,
-        "--tilt": `${random(15, 45)}deg`,
+        "--sway": `${random(8, 28)}px`,
+        "--tilt": `${random(10, 30)}deg`,
         "--sway-duration": `${swayDuration}s`,
         "--sway-delay": `${-random(0, swayDuration)}s`,
       },
-      spinStyle: { "--spin-duration": `${random(6, 14)}s` },
+      spinStyle: { "--spin-duration": `${random(8, 16)}s` },
     };
   });
 }
@@ -58,7 +60,7 @@ export default function Christmas() {
   const flakes = useMemo(makeFlakes, []);
 
   return (
-    <Box aria-hidden="true" sx={{ ...layerSx(1080), ...motionOnly, ...fewerOnPhones(PHONE_FLAKE_COUNT) }}>
+    <Box aria-hidden="true" sx={{ ...layerSx(zIndex.decorMotion), ...motionOnly, ...fewerOnPhones(PHONE_FLAKE_COUNT) }}>
       {flakes.map((flake) => (
         <Box
           key={flake.id}

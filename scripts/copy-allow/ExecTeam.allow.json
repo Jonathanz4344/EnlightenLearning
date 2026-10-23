@@ -1,0 +1,8 @@
+{
+  "note": "Nothing from the original is dropped. The two added strings are document metadata, not rendered copy: the Seo title is the page's navigation label (Header.jsx, 'Join the Executive Team'), and the Seo description is the second and third sentences of the page's own lead paragraph, verbatim.",
+  "removed": [],
+  "added": [
+    "Join the Executive Team",
+    "Join our passionate team of student leaders. Together, we're dedicated to raising funds for charities that provide hope, care, and support, impacting countless lives."
+  ]
+}

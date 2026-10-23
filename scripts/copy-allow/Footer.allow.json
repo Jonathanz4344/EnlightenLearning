@@ -1,0 +1,5 @@
+{
+  "note": "Calls, Texts and Map only render once a call number, a text number or a map embed is configured in src/config/site.js. Reported as conditional additions.",
+  "removed": [],
+  "added": ["Calls", "Texts", "Map"]
+}

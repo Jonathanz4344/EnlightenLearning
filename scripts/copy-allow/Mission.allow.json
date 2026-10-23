@@ -1,0 +1,16 @@
+{
+  "note": "The coreValues array (Innovation, Compassion, Excellence, Community) and the ValueCard and CharitableCommitmentCard components were defined in the original Mission.jsx but never rendered: no JSX referenced coreValues or ValueCard. The Seo description is new page metadata built from the page's own lead sentence.",
+  "removed": [
+    "Innovation",
+    "We constantly seek creative solutions to educational challenges while finding new ways to support charitable causes.",
+    "Compassion",
+    "Every interaction is guided by empathy and genuine care for our students' wellbeing and for those in need in our community.",
+    "Excellence",
+    "We strive for the highest quality in education and charitable impact, ensuring every donation makes a meaningful difference.",
+    "Community",
+    "Together we're stronger - building connections that create lasting positive change while supporting families in need."
+  ],
+  "added": [
+    "Enlighten Learning is a movement to create a brighter future through knowledge and compassion. Learn how our tutoring gives back to children and families in need."
+  ]
+}

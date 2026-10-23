@@ -6,7 +6,8 @@ import PathConstants from "../routes/pathConstants";
 // The page shown for any address that does not exist on the site.
 export default function NotFound() {
   return (
-    <>
+    // At least as tall as the loading state it replaces, so nothing jumps
+    <Box sx={{ minHeight: "calc(100vh + 80px)" }}>
       <Seo title="Page not found" description="That page does not exist on the Enlighten Learning site." noindex />
       <PageIntro
         eyebrow="404"
@@ -21,6 +22,6 @@ export default function NotFound() {
       <Section size="sm">
         <Box sx={{ minHeight: { xs: 80, md: 160 } }} />
       </Section>
-    </>
+    </Box>
   );
 }

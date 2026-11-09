@@ -1,0 +1,73 @@
+// lunar: the palette and decor colors, loaded only with this season. Each mode keeps
+// text-safe shades. No palette is inverted, so dark mode gets light accents and light decor.
+import { paper, ink } from "../tokens.js";
+
+const lacquer = {
+  50: "#FDF0EE",
+  100: "#FADCD8",
+  200: "#F4B9B1",
+  300: "#EC9186",
+  400: "#DF6658",
+  500: "#CC4336",
+  600: "#B02A22",
+  700: "#8E1F1A",
+  800: "#681714",
+  900: "#470F0D",
+};
+
+export default {
+  label: "Lunar New Year",
+  scale: lacquer,
+  light: {
+    accent: lacquer[700],
+    accentSoft: lacquer[100],
+    tint: lacquer[50],
+    onAccent: paper[0],
+    decor: {
+      lantern: "#C8202A",
+      lanternDeep: "#8F1218",
+      gold: "#F0BE4A",
+      goldDeep: "#B98A1E",
+      cream: "#FFF1CF",
+      pink: "#F4A6AE",
+      redDeep: "#7F0B12",
+      blossom: "#F7B6C2",
+      blossomDeep: "#D9607C",
+      blossomHeart: "#C8922B",
+      branch: "#5A3A28",
+      orange: "#F08A24",
+      orangeDeep: "#C96A12",
+      orangeLeaf: "#3E8E41",
+      ground: "#8F1218",
+      string: "#B98A1E",
+      lights: ["#F0BE4A", "#D2202A", "#F7D98A", "#D2202A"],
+      shine: "#FFFFFF",
+    },
+  },
+  dark: {
+    accent: lacquer[300],
+    accentSoft: "#3A1B18",
+    tint: "#211413",
+    onAccent: ink[900],
+    decor: {
+      lantern: "#D93A3F",
+      lanternDeep: "#8F1218",
+      gold: "#F4C95C",
+      goldDeep: "#C8922B",
+      cream: "#FFF1CF",
+      pink: "#F4A6AE",
+      redDeep: "#7F0B12",
+      blossom: "#FBC7D1",
+      blossomDeep: "#E98AA0",
+      blossomHeart: "#E0AC2E",
+      branch: "#9C7A60",
+      orange: "#F59B3C",
+      orangeDeep: "#CF7A1F",
+      orangeLeaf: "#62B566",
+      ground: "#5E1014",
+      string: "#F4C95C",
+      lights: ["#F4C95C", "#F2605F", "#F9E0A0", "#F2605F"],
+      shine: "#FFFFFF",
+    },
+  },
+};

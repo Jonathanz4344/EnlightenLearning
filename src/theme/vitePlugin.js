@@ -1,26 +1,8 @@
 // Vite plugin that writes the design tokens into index.html before the
 // application loads, so the first paint already has the right canvas color
 // in dark mode, and that generates the web app manifest from the same tokens.
-import { cssVariablesBlock, modes, seasons, camelToKebab } from "./tokens.js";
+import { cssVariablesBlock, modes } from "./tokens.js";
 import { site } from "../config/site.js";
-
-function seasonBlock(seasonName, mode) {
-  const season = seasons[seasonName][mode];
-  const entries = [
-    [`--el-season-accent`, season.accent],
-    [`--el-season-accent-soft`, season.accentSoft],
-    [`--el-season-tint`, season.tint],
-    [`--el-season-on-accent`, season.onAccent],
-  ];
-  Object.entries(season.decor).forEach(([key, value]) => {
-    if (Array.isArray(value)) {
-      value.forEach((v, i) => entries.push([`--el-season-${camelToKebab(key)}-${i + 1}`, v]));
-    } else {
-      entries.push([`--el-season-${camelToKebab(key)}`, value]);
-    }
-  });
-  return entries.map(([name, value]) => `${name}:${value};`).join("");
-}
 
 export function tokensCss() {
   const parts = [
@@ -29,10 +11,6 @@ export function tokensCss() {
     `html{background-color:var(--el-canvas);color:var(--el-text);color-scheme:light}`,
     `html[data-theme="dark"]{color-scheme:dark}`,
   ];
-  Object.keys(seasons).forEach((name) => {
-    parts.push(`:root[data-season="${name}"]{${seasonBlock(name, "light")}}`);
-    parts.push(`:root[data-theme="dark"][data-season="${name}"]{${seasonBlock(name, "dark")}}`);
-  });
   return parts.join("\n");
 }
 

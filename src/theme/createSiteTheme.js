@@ -5,7 +5,6 @@ import {
   ink,
   paper,
   modes,
-  seasons,
   status,
   brands,
   radius,
@@ -21,7 +20,8 @@ import {
 // variables, so switching between light and dark only flips an attribute on
 // the html element: no re-render, no layout shift.
 //
-// season: "normal" | "halloween" | "christmas"
+// season: a name in SEASONS (src/constants/season.js)
+// seasonTokens: that season's palette, once its chunk has loaded
 // style: "dressed" (brand accent stays, season adds a palette for decor) or
 //        "full" (the season scale replaces the brand accent)
 
@@ -30,11 +30,10 @@ const normalSeason = (mode) => {
   return { accent: m.accentText, accentSoft: m.accentSoft, tint: m.tint, onAccent: m.onAccent };
 };
 
-function buildPalette(mode, season, style) {
+function buildPalette(mode, seasonDef, style) {
   const m = modes[mode];
   const s = status[mode];
   const isLight = mode === "light";
-  const seasonDef = season && seasons[season];
   const full = style === "full" && seasonDef;
   const scale = full ? seasonDef.scale : brandAccent;
   const sea = seasonDef ? seasonDef[mode] : normalSeason(mode);
@@ -120,15 +119,15 @@ const typography = {
 const softShadow = (theme) => `0 18px 48px -20px ${theme.vars.palette.effects.shadowTint}`;
 const menuShadow = (theme) => `0 12px 32px -8px ${theme.vars.palette.effects.shadowTint}, 0 0 0 1px ${theme.vars.palette.hairline.main}`;
 
-export default function createSiteTheme({ season = "normal", style = "dressed" } = {}) {
+export default function createSiteTheme({ season = "normal", seasonTokens = null, style = "dressed" } = {}) {
   return createTheme({
     cssVariables: {
       colorSchemeSelector: "data-theme",
       cssVarPrefix: "mui",
     },
     colorSchemes: {
-      light: { palette: buildPalette("light", season, style) },
-      dark: { palette: buildPalette("dark", season, style) },
+      light: { palette: buildPalette("light", seasonTokens, style) },
+      dark: { palette: buildPalette("dark", seasonTokens, style) },
     },
     typography,
     shape: { borderRadius: radius.md },

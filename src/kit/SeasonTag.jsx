@@ -5,35 +5,25 @@ import { SEASONS } from "../constants/season";
 import { radius } from "../theme/tokens";
 
 // A small greeting pill shown only while a season is on. The words are the
-// only seasonal copy on the site.
+// only seasonal copy on the site; the mark comes with the season's chunk.
 const GREETINGS = {
   [SEASONS.HALLOWEEN]: "Happy Halloween",
   [SEASONS.CHRISTMAS]: "Happy holidays",
+  [SEASONS.THANKSGIVING]: "Happy Thanksgiving",
+  [SEASONS.NEW_YEAR]: "Happy New Year",
+  [SEASONS.LUNAR]: "Happy Lunar New Year",
+  [SEASONS.ST_PATRICKS]: "Happy St. Patrick's Day",
+  [SEASONS.SPRING]: "Happy spring",
+  [SEASONS.JULY_4]: "Happy Fourth of July",
+  [SEASONS.SUMMER]: "Happy summer",
 };
 
-const PumpkinMark = () => (
-  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-    <path d="M12 6c.2-1.4.9-2.4 2.3-3" fill="none" stroke="var(--el-season-stem)" strokeWidth="1.6" strokeLinecap="round" />
-    <ellipse cx="8" cy="14" rx="5.5" ry="7" style={{ fill: "var(--el-season-pumpkin-deep)" }} />
-    <ellipse cx="16" cy="14" rx="5.5" ry="7" style={{ fill: "var(--el-season-pumpkin-deep)" }} />
-    <ellipse cx="12" cy="14" rx="5" ry="7.5" style={{ fill: "var(--el-season-pumpkin)" }} />
-  </svg>
-);
-
-const HollyMark = () => (
-  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-    <ellipse cx="8" cy="10" rx="6" ry="3" transform="rotate(-25 8 10)" style={{ fill: "var(--el-season-holly)" }} />
-    <ellipse cx="16" cy="10" rx="6" ry="3" transform="rotate(25 16 10)" style={{ fill: "var(--el-season-holly-deep)" }} />
-    <circle cx="10.5" cy="14.5" r="2" style={{ fill: "var(--el-season-berry)" }} />
-    <circle cx="13.5" cy="14.5" r="2" style={{ fill: "var(--el-season-berry-light)" }} />
-    <circle cx="12" cy="17.2" r="2" style={{ fill: "var(--el-season-berry)" }} />
-  </svg>
-);
-
 export default function SeasonTag({ sx }) {
-  const { season } = useSeason();
+  const { season, pack, pending } = useSeason();
   const greeting = GREETINGS[season];
-  if (!greeting) return null;
+  // Shown while the season loads, so nothing moves when it arrives; gone if it could not load
+  if (!greeting || (!pack && !pending)) return null;
+  const Mark = pack?.Mark;
   return (
     <Box
       component="span"
@@ -56,7 +46,7 @@ export default function SeasonTag({ sx }) {
         ...(Array.isArray(sx) ? sx : [sx]),
       ]}
     >
-      {season === SEASONS.HALLOWEEN ? <PumpkinMark /> : <HollyMark />}
+      {Mark ? <Mark /> : <Box component="span" sx={{ width: 16, height: 16, flexShrink: 0 }} />}
       {greeting}
     </Box>
   );

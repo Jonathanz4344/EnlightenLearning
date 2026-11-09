@@ -1,6 +1,7 @@
-// Design tokens for the whole site. This is the only file that may hold a
-// color literal. The MUI theme, the CSS variables injected into index.html,
-// the seasonal decor and the motion kit all read from here.
+// Design tokens for the whole site. Color literals live here and, for the
+// seasons, in src/theme/seasons/, which load only with their own season. The
+// MUI theme, the CSS variables injected into index.html and the motion kit all
+// read from here.
 //
 // Accent: the violet of the jar in the logo. Metallic: the gold of the bulb,
 // kept for stars and badges. Ink: a near-black with a faint violet cast.
@@ -17,34 +18,6 @@ export const accent = {
   700: "#513889",
   800: "#3C2A66",
   900: "#2A1D48",
-};
-
-// Seasonal scales used only when a season is shown in "full" style, where the
-// season palette replaces the brand accent.
-export const pumpkin = {
-  50: "#FCF3EC",
-  100: "#F8E4D6",
-  200: "#F2C8AC",
-  300: "#EBA57A",
-  400: "#E3844D",
-  500: "#D4682B",
-  600: "#B8521C",
-  700: "#8F3F16",
-  800: "#672D11",
-  900: "#461E0B",
-};
-
-export const evergreen = {
-  50: "#EEF6F0",
-  100: "#DDEFE3",
-  200: "#B9DFC6",
-  300: "#8CC9A3",
-  400: "#5FAE80",
-  500: "#3C9162",
-  600: "#2C744E",
-  700: "#1F5A3C",
-  800: "#17412C",
-  900: "#0F2B1D",
 };
 
 export const gold = {
@@ -168,139 +141,6 @@ export const modes = {
   },
 };
 
-// Seasonal accents and decor colors. Each mode keeps text-safe shades: no
-// palette is inverted, so dark mode gets light accents and light decor.
-export const seasons = {
-  halloween: {
-    label: "Halloween",
-    scale: pumpkin,
-    light: {
-      accent: pumpkin[600],
-      accentSoft: pumpkin[100],
-      tint: pumpkin[50],
-      onAccent: paper[0],
-      decor: {
-        pumpkin: "#E8762B",
-        pumpkinDeep: "#C4540A",
-        pumpkinLight: "#FFB069",
-        stem: "#5D7A2A",
-        leaf: "#6B8E23",
-        night: "#2B1D3A",
-        bat: "#2B1D3A",
-        ghost: "#FFFFFF",
-        ghostEdge: "rgba(90, 90, 130, 0.45)",
-        web: "rgba(80, 70, 100, 0.35)",
-        spider: "#2A2230",
-        candle: "#FFD34D",
-        glowPurple: "rgba(106, 27, 154, 0.10)",
-        glowOrange: "rgba(255, 115, 0, 0.10)",
-        stone: "#9A96A8",
-        stoneEdge: "#6F6A80",
-        ground: "#2F2240",
-        moon: "#FFE9A8",
-        star: "#FFF6D6",
-      },
-    },
-    dark: {
-      accent: pumpkin[300],
-      accentSoft: "#3A2415",
-      tint: "#1E1620",
-      onAccent: ink[900],
-      decor: {
-        pumpkin: "#F08A3C",
-        pumpkinDeep: "#C4540A",
-        pumpkinLight: "#FFC28A",
-        stem: "#8FA84B",
-        leaf: "#9FB84F",
-        night: "#120B24",
-        bat: "#C9B5E6",
-        ghost: "#FFFFFF",
-        ghostEdge: "rgba(200, 200, 230, 0.45)",
-        web: "rgba(230, 225, 245, 0.35)",
-        spider: "#CBB6E6",
-        candle: "#FFD34D",
-        glowPurple: "rgba(130, 70, 190, 0.22)",
-        glowOrange: "rgba(255, 140, 30, 0.16)",
-        stone: "#B5B0C4",
-        stoneEdge: "#8A849C",
-        ground: "#2A1F38",
-        moon: "#FFE9A8",
-        star: "#FFF6D6",
-      },
-    },
-  },
-  christmas: {
-    label: "Holidays",
-    scale: evergreen,
-    light: {
-      accent: evergreen[700],
-      accentSoft: evergreen[100],
-      tint: evergreen[50],
-      onAccent: paper[0],
-      decor: {
-        pine: "#2E7D32",
-        pineDeep: "#1B5E20",
-        trunk: "#6D4C41",
-        snow: "#FFFFFF",
-        snowEdge: "rgba(110, 150, 200, 0.45)",
-        flakeEdge: "rgba(52, 120, 205, 0.55)",
-        berry: "#C62828",
-        berryLight: "#E53935",
-        holly: "#2E7D32",
-        hollyDeep: "#1B5E20",
-        star: "#F4B400",
-        ribbonGold: "#D4AF37",
-        ribbonGoldDeep: "#B8932A",
-        ornaments: ["#C62828", "#F4B400", "#2A9D4B", "#2F6FDE"],
-        lights: ["#FF4D4D", "#FFD166", "#4CD964", "#4DA3FF"],
-        string: "#1F5130",
-        sky: "#CFE6FB",
-        skyDeep: "#E8F3FE",
-        ground: "#FFFFFF",
-        presentRed: "#D32F2F",
-        presentGreen: "#2E7D32",
-        presentBlue: "#1E63C7",
-        ribbonLight: "#F5F5F5",
-        coal: "#263238",
-        carrot: "#FF8A1C",
-      },
-    },
-    dark: {
-      accent: evergreen[300],
-      accentSoft: "#16301F",
-      tint: "#141D18",
-      onAccent: ink[900],
-      decor: {
-        pine: "#3E9A45",
-        pineDeep: "#2B7A30",
-        trunk: "#8D6E63",
-        snow: "#FFFFFF",
-        snowEdge: "rgba(110, 150, 200, 0.45)",
-        flakeEdge: "rgba(120, 170, 220, 0.6)",
-        berry: "#E8707A",
-        berryLight: "#F28B93",
-        holly: "#3E9A45",
-        hollyDeep: "#2B7A30",
-        star: "#FFD54F",
-        ribbonGold: "#E6C65C",
-        ribbonGoldDeep: "#C9A227",
-        ornaments: ["#E8707A", "#FFD166", "#7FC69A", "#8DB8FF"],
-        lights: ["#FF6B6B", "#FFD166", "#7CE38B", "#7FB8FF"],
-        string: "#6F9F7A",
-        sky: "#0D1B33",
-        skyDeep: "#1A2F52",
-        ground: "#E6EEF8",
-        presentRed: "#E8707A",
-        presentGreen: "#7FC69A",
-        presentBlue: "#8DB8FF",
-        ribbonLight: "#F5F5F5",
-        coal: "#263238",
-        carrot: "#FF8A1C",
-      },
-    },
-  },
-};
-
 // Brand colors for third-party marks. Used only on the icons of those services.
 export const brands = {
   instagram: "#E4405F",
@@ -373,8 +213,9 @@ export const layout = {
 };
 
 export const zIndex = {
-  decor: 1040,
-  decorMotion: 1080,
+  // Seasonal layers sit behind the page, whose content is at 1, so nothing falls over text
+  decor: 0,
+  decorMotion: 0,
   header: 1100,
   menu: 1300,
 };

@@ -45,7 +45,8 @@ const surfaces = (theme, variant) => {
         borderBottom: `1px solid ${theme.vars.palette.hairline.main}`,
       };
     default:
-      return { backgroundColor: theme.vars.palette.surface.canvas };
+      // No fill of its own: the body is the same canvas, and the season's falling layer passes behind here
+      return {};
   }
 };
 

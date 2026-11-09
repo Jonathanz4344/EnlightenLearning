@@ -21,7 +21,7 @@ import CallRoundedIcon from "@mui/icons-material/CallRounded";
 import SmsRoundedIcon from "@mui/icons-material/SmsRounded";
 import ToggleColorMode from "../ToggleColorMode";
 import PathConstants from "../../routes/pathConstants";
-import NavbarGarland from "../seasonal/NavbarGarland";
+import SeasonSlot from "../seasonal/SeasonSlot";
 import { useMotionOk } from "../../motion";
 import { site, phoneHref } from "../../config/site";
 import { radius, duration, easing, layout, zIndex } from "../../theme/tokens";
@@ -310,6 +310,7 @@ export default function Header() {
     <>
       <Box
         component="header"
+        data-scrolled={scrolled ? "" : undefined}
         sx={(theme) => ({
           position: "fixed",
           top: 0,
@@ -424,7 +425,7 @@ export default function Header() {
             </Box>
 
             {/* Seasonal lights and charms hanging from the bottom of the navbar */}
-            <NavbarGarland />
+            <SeasonSlot part="Garland" />
           </Box>
         </Container>
       </Box>

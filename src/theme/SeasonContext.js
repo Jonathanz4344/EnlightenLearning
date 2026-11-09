@@ -1,10 +1,11 @@
 import { createContext, useContext } from "react";
 import { SEASONS, SEASON_STYLES } from "../constants/season";
 
-// The season being shown ("normal", "halloween", "christmas") and its style
-// ("dressed" or "full"). Provided by Layout, read by the seasonal decor and
-// the SeasonTag.
-const SeasonContext = createContext({ season: SEASONS.NORMAL, style: SEASON_STYLES.DRESSED });
+// The season being shown (a name in SEASONS) and its style ("dressed" or
+// "full"), with the year on the New Year's decor, the animal on the Lunar New
+// Year decor, and the season's loaded pack (null on a plain day, while it
+// loads, or if it could not load). Provided by Layout.
+const SeasonContext = createContext({ season: SEASONS.NORMAL, style: SEASON_STYLES.DRESSED, newYear: null, zodiac: null, pack: null, pending: false });
 
 export const useSeason = () => useContext(SeasonContext);
 

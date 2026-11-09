@@ -18,7 +18,7 @@ import PathConstants from "../../routes/pathConstants";
 import { SEASONS } from "../../constants/season";
 import { useSeason } from "../../theme/SeasonContext";
 import { radius, duration, easing } from "../../theme/tokens";
-import FundraisingScenery from "../seasonal/FundraisingScenery";
+import SeasonSlot from "../seasonal/SeasonSlot";
 import {
   Seo,
   Section,
@@ -36,59 +36,12 @@ import {
 } from "../../kit";
 import { Reveal, Stagger, StaggerItem } from "../../motion";
 
-// The fundraising balloon changes with the season: a pumpkin in October and a
-// snowball in December. The season comes from src/constants/season.js. Every
-// seasonal color below is a CSS variable the theme writes while that season
-// is on, so the pieces follow light and dark mode on their own.
-const pumpkinRibs = (
-  <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ position: "absolute", inset: 0 }} aria-hidden="true">
-    <g strokeWidth="2.5" strokeLinecap="round" style={{ fill: "none", stroke: "var(--el-season-pumpkin-deep)", opacity: 0.5 }}>
-      <path d="M50 3 C30 20 30 80 50 97" />
-      <path d="M50 3 C70 20 70 80 50 97" />
-      <path d="M42 4 C12 22 12 78 42 96" />
-      <path d="M58 4 C88 22 88 78 58 96" />
-    </g>
-  </svg>
-);
-
-const pumpkinStem = (
-  <svg viewBox="0 0 30 30" width="100%" height="100%" aria-hidden="true">
-    <path d="M12 30 C12 22 11 14 8 8 L14 6 C16 13 17 21 17 30 Z" style={{ fill: "var(--el-season-stem)" }} />
-    <path d="M16 15 C20 9 27 9 29 13 C25 16 20 17 16 15 Z" style={{ fill: "var(--el-season-leaf)" }} />
-    <path d="M11 8 C7 2 1 4 2 9 C3 13 8 12 7 9" strokeWidth="1.5" strokeLinecap="round" style={{ fill: "none", stroke: "var(--el-season-leaf)" }} />
-  </svg>
-);
-
-const snowSparkles = (
-  <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ position: "absolute", inset: 0 }} aria-hidden="true">
-    <g style={{ fill: "var(--el-season-flake-edge)" }}>
-      <circle cx="22" cy="62" r="2.2" />
-      <circle cx="78" cy="30" r="1.8" />
-      <circle cx="70" cy="78" r="2.4" />
-      <circle cx="30" cy="20" r="1.5" />
-      <circle cx="85" cy="58" r="1.6" />
-      <circle cx="15" cy="40" r="1.4" />
-    </g>
-    <g style={{ fill: "var(--el-season-snow-edge)" }}>
-      <path d="M80 70 L81.2 73.8 L85 75 L81.2 76.2 L80 80 L78.8 76.2 L75 75 L78.8 73.8 Z" />
-      <path d="M24 28 L25 31 L28 32 L25 33 L24 36 L23 33 L20 32 L23 31 Z" />
-    </g>
-  </svg>
-);
-
-const hollySprig = (
-  <svg viewBox="0 0 36 26" width="100%" height="100%" aria-hidden="true">
-    <ellipse cx="11" cy="11" rx="9.5" ry="4.4" transform="rotate(-22 11 11)" style={{ fill: "var(--el-season-holly)" }} />
-    <ellipse cx="25" cy="11" rx="9.5" ry="4.4" transform="rotate(22 25 11)" style={{ fill: "var(--el-season-holly-deep)" }} />
-    <path d="M3 14 L17 8 M33 14 L19 8" strokeWidth="0.8" style={{ fill: "none", stroke: "var(--el-season-holly-deep)" }} />
-    <circle cx="15.5" cy="15" r="2.8" style={{ fill: "var(--el-season-berry)" }} />
-    <circle cx="20.5" cy="15" r="2.8" style={{ fill: "var(--el-season-berry)" }} />
-    <circle cx="18" cy="19.2" r="2.8" style={{ fill: "var(--el-season-berry-light)" }} />
-    <circle cx="14.6" cy="14.1" r="0.8" style={{ fill: "var(--el-season-snow)", opacity: 0.7 }} />
-  </svg>
-);
-
-const BALLOON_LOOKS = {
+// The fundraising balloon changes with the season: a pumpkin in October, a
+// turkey in November, a snowball in December, and so on through the year. The
+// words and the logo's size are here, so they are right before the season's
+// art has loaded; the art (its colors, markings and topper) comes in that
+// season's chunk.
+const BALLOON_WORDS = {
   [SEASONS.NORMAL]: {
     noun: "balloon",
     emoji: "🎈",
@@ -100,20 +53,61 @@ const BALLOON_LOOKS = {
     emoji: "🎃",
     subtitle: "Every donation grows our pumpkin and lifts us higher",
     startLine: "Help grow and launch our pumpkin!",
-    body: "var(--el-season-pumpkin)",
-    trim: "var(--el-season-pumpkin-deep)",
-    inside: pumpkinRibs,
-    topper: { node: pumpkinStem, sx: { left: "24%", top: "-12%", width: "24%", height: "24%", transform: "rotate(-18deg)" } },
   },
   [SEASONS.CHRISTMAS]: {
     noun: "snowball",
     emoji: "❄️",
     subtitle: "Every donation builds our snowball and lifts us higher",
     startLine: "Help roll up and launch our snowball!",
-    body: "var(--el-season-snow)",
-    trim: "var(--el-season-snow-edge)",
-    inside: snowSparkles,
-    topper: { node: hollySprig, sx: { right: "2%", top: "2%", width: "34%", height: "25%", transform: "rotate(18deg)" } },
+  },
+  [SEASONS.THANKSGIVING]: {
+    noun: "turkey",
+    logoSize: "54%",
+    emoji: "🦃",
+    subtitle: "Every donation plumps our turkey and lifts us higher",
+    startLine: "Help plump up and launch our turkey!",
+  },
+  [SEASONS.NEW_YEAR]: {
+    noun: "New Year's ball",
+    title: "New Year's Ball",
+    emoji: "🎊",
+    subtitle: ({ newYear }) => `Every donation lights our ${newYear} ball and lifts us higher`,
+    startLine: "Help light up and launch our New Year's ball!",
+  },
+  [SEASONS.LUNAR]: {
+    noun: "lantern",
+    emoji: "🏮",
+    subtitle: ({ zodiac }) => `Year of the ${zodiac.charAt(0).toUpperCase()}${zodiac.slice(1)}: every donation lights our lantern and lifts us higher`,
+    startLine: "Help light and launch our lantern!",
+  },
+  [SEASONS.ST_PATRICKS]: {
+    noun: "clover",
+    logoSize: "50%",
+    emoji: "🍀",
+    subtitle: "Every donation brings our clover luck and lifts us higher",
+    startLine: "Help grow and launch our clover!",
+  },
+  [SEASONS.SPRING]: {
+    noun: "flower",
+    logoSize: "58%",
+    emoji: "🌷",
+    subtitle: "Every donation helps our flower bloom and lifts us higher",
+    startLine: "Help plant and launch our flower!",
+  },
+  [SEASONS.JULY_4]: {
+    noun: "star-spangled balloon",
+    title: "Star-Spangled Balloon",
+    emoji: "🎆",
+    subtitle: "Every donation lifts our stars and stripes higher",
+    startLine: "Help launch our star-spangled balloon!",
+  },
+  [SEASONS.SUMMER]: {
+    noun: "beach ball",
+    logoSize: "56%",
+    title: "Beach Ball",
+    emoji: "🏖️",
+    subtitle: "Every donation pumps up our beach ball and lifts us higher",
+    startLine: "Help pump up and launch our beach ball!",
   },
 };
 
@@ -137,9 +131,13 @@ const MILESTONES = [0, 25, 50, 75, 100];
 // inflates with the share of the goal raised, on a tinted sky over a strip of
 // ground, with the seasonal scenery behind it.
 const FundraisingProgress = ({ currentAmount, goalAmount }) => {
-  const { season } = useSeason();
-  const look = BALLOON_LOOKS[season] ?? BALLOON_LOOKS[SEASONS.NORMAL];
-  const Noun = look.noun.charAt(0).toUpperCase() + look.noun.slice(1);
+  const { season, newYear, zodiac, pack, pending } = useSeason();
+  // The season's words while its art is on the way or in, the plain ones if it could not load
+  const words = (pack || pending ? BALLOON_WORDS[season] : null) ?? BALLOON_WORDS[SEASONS.NORMAL];
+  const look = { ...words, ...pack?.balloon };
+  const Noun = look.title ?? look.noun.charAt(0).toUpperCase() + look.noun.slice(1);
+  // A few looks carry the year or the year's animal
+  const withYear = (value) => (typeof value === "function" ? value({ newYear, zodiac }) : value);
   // True progress, uncapped, so we can celebrate going past the goal
   const rawPercentage = goalAmount > 0 ? (currentAmount / goalAmount) * 100 : 0;
   const percentage = Math.min(rawPercentage, 100);
@@ -223,8 +221,8 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
         })}
       />
 
-      {/* Seasonal scenery: moon and stars, or falling snow and pine trees */}
-      <FundraisingScenery season={season} />
+      {/* Seasonal scenery: moon and stars, falling snow and pine trees, and so on */}
+      <SeasonSlot part="Scenery" />
 
       {/* Main content */}
       <Box
@@ -252,7 +250,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
             fontWeight: isOverGoal ? 600 : 400,
           })}
         >
-          {isOverGoal ? `Goal beaten by $${overageAmount.toLocaleString()} — every donation now goes even further` : look.subtitle}
+          {isOverGoal ? `Goal beaten by $${overageAmount.toLocaleString()} — every donation now goes even further` : withYear(look.subtitle)}
         </Typography>
 
         {/* Balloon flight zone */}
@@ -294,7 +292,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                   component="span"
                   sx={(theme) => ({
                     position: "absolute",
-                    right: { xs: 68, sm: 92 },
+                    right: { xs: 80, sm: 92 },
                     color: reached ? honorColor(theme) : theme.vars.palette.text.secondary,
                     fontWeight: reached ? 700 : 500,
                     fontVariantNumeric: "tabular-nums",
@@ -308,7 +306,7 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                   sx={(theme) => ({
                     position: "absolute",
                     right: 16,
-                    width: { xs: 46, sm: 70 },
+                    width: { xs: 58, sm: 70 },
                     height: "1px",
                     backgroundColor: theme.vars.palette.hairline.strong,
                   })}
@@ -371,22 +369,29 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                   position: "relative",
                 }}
               >
+                {/* What stands behind the body: a tail fan, leaves or petals */}
+                {look.behind && (
+                  <Box aria-hidden="true" sx={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+                    {look.behind}
+                  </Box>
+                )}
+
                 {/* Balloon body */}
                 <Box
                   sx={(theme) => ({
                     width: "100%",
                     height: "100%",
                     borderRadius: "50%",
-                    backgroundColor: look.body ?? (isOverGoal ? theme.vars.palette.metallic.main : theme.vars.palette.primary.main),
+                    backgroundColor: look.bare ? "transparent" : (look.body ?? (isOverGoal ? theme.vars.palette.metallic.main : theme.vars.palette.primary.main)),
                     border: "3px solid",
-                    borderColor: look.trim ?? (isOverGoal ? theme.vars.palette.metallic.text : theme.vars.palette.primary.dark),
+                    borderColor: look.bare ? "transparent" : (look.trim ?? (isOverGoal ? theme.vars.palette.metallic.text : theme.vars.palette.primary.dark)),
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
                     position: "relative",
                     overflow: "hidden",
                     // One soft highlight so the body reads as round
-                    "&::before": {
+                    "&::before": look.bare ? undefined : {
                       content: '""',
                       position: "absolute",
                       top: "10%",
@@ -399,34 +404,41 @@ const FundraisingProgress = ({ currentAmount, goalAmount }) => {
                     },
                   })}
                 >
-                  {/* Seasonal markings: pumpkin ribs or snow sparkles */}
+                  {/* Seasonal markings: pumpkin ribs, snow sparkles, a flag, and so on */}
                   {look.inside}
 
                   {/* Logo inside */}
-                  <img src={Logo} alt="Enlighten Learning" style={{ position: "relative", width: "65%", height: "65%", objectFit: "contain" }} />
+                  <img src={Logo} alt="Enlighten Learning" style={{ position: "relative", width: look.logoSize ?? "65%", height: look.logoSize ?? "65%", objectFit: "contain" }} />
                 </Box>
 
-                {/* Seasonal topper: a pumpkin stem or a sprig of holly */}
+                {/* Seasonal topper: a pumpkin stem, a sprig of holly, a turkey's head */}
                 {look.topper && (
-                  <Box aria-hidden="true" sx={{ position: "absolute", zIndex: 1, ...look.topper.sx }}>
-                    {look.topper.node}
+                  <Box aria-hidden="true" sx={{ position: "absolute", zIndex: 1, pointerEvents: "none", ...look.topper.sx }}>
+                    {withYear(look.topper.node)}
                   </Box>
                 )}
 
-                {/* Balloon tie */}
-                <Box
-                  aria-hidden="true"
-                  sx={(theme) => ({
-                    position: "absolute",
-                    bottom: -8,
-                    left: "50%",
-                    transform: "translateX(-50%)",
-                    width: 16,
-                    height: 16,
-                    backgroundColor: look.trim ?? (isOverGoal ? theme.vars.palette.metallic.text : theme.vars.palette.primary.dark),
-                    clipPath: "polygon(50% 100%, 0% 0%, 100% 0%)",
-                  })}
-                />
+                {/* Balloon tie, unless the season hangs its own or has none */}
+                {look.tie ? (
+                  <Box key="season-tie" aria-hidden="true" sx={{ position: "absolute", inset: 0, pointerEvents: "none" }}>
+                    {look.tie}
+                  </Box>
+                ) : look.tie === false ? null : (
+                  <Box
+                    key="plain-tie"
+                    aria-hidden="true"
+                    sx={(theme) => ({
+                      position: "absolute",
+                      bottom: -8,
+                      left: "50%",
+                      transform: "translateX(-50%)",
+                      width: 16,
+                      height: 16,
+                      backgroundColor: look.trim ?? (isOverGoal ? theme.vars.palette.metallic.text : theme.vars.palette.primary.dark),
+                      clipPath: "polygon(50% 100%, 0% 0%, 100% 0%)",
+                    })}
+                  />
+                )}
               </Box>
 
               {/* Percentage badge */}

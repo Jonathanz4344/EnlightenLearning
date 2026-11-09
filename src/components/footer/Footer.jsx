@@ -18,7 +18,7 @@ import { Link } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import Logo from "/images/logo/Logo.png";
 import PathConstants from "../../routes/pathConstants";
-import FooterScene from "../seasonal/FooterScene";
+import SeasonSlot from "../seasonal/SeasonSlot";
 import { site, phoneHref, hasHours, hasAddress } from "../../config/site";
 import { radius, duration, easing } from "../../theme/tokens";
 
@@ -146,7 +146,7 @@ export default function Footer() {
       })}
     >
       {/* Seasonal scene standing on the top edge of the footer */}
-      <FooterScene />
+      <SeasonSlot part="FooterScene" />
       <Container
         sx={{
           display: "flex",

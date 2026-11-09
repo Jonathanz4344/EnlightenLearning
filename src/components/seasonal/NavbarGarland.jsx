@@ -1,15 +1,13 @@
 import PropTypes from "prop-types";
 import Box from "@mui/material/Box";
 import { keyframes } from "@emotion/react";
-import { SEASONS } from "../../constants/season";
 import { useSeason } from "../../theme/SeasonContext";
 import { flapWings, seasonVar } from "./shared";
-import { Pumpkin, FlyingBat, Ghost, SpiderShape } from "./Halloween";
 
 // A string draped along the bottom edge of the header with small charms
-// swinging from it. Halloween gets party flags with jack-o'-lanterns, bats,
-// ghosts and a spider. The holidays get twinkling lights and glass ornaments.
-// Purely decorative, so it ignores clicks. Colors are season CSS variables.
+// swinging from it. Each season brings party flags or twinkling lights, and
+// its own charms (see its pack in ./packs). Purely decorative, so it ignores
+// clicks. Colors are season CSS variables.
 
 const SWAGS = 8;
 const DROP = 12; // how far each swag dips below the header, in pixels
@@ -39,60 +37,12 @@ const STRING_PATH = Array.from(
   (_, i) => `M${i * 100} 2 Q${i * 100 + 50} ${2 * DROP - 2} ${(i + 1) * 100} 2`
 ).join(" ");
 
-const Ornament = ({ color }) => (
-  <svg viewBox="0 0 24 30" width="100%" height="100%">
-    <circle cx="12" cy="2.6" r="1.6" fill="none" style={{ stroke: seasonVar("ribbon-gold-deep") }} strokeWidth="1" />
-    <rect x="8.5" y="3.8" width="7" height="4" rx="1" style={{ fill: seasonVar("ribbon-gold") }} />
-    <circle cx="12" cy="18" r="10" style={{ fill: color }} />
-    <path d="M2.4 18 Q12 22.5 21.6 18" style={{ stroke: seasonVar("snow") }} strokeOpacity="0.55" strokeWidth="1.4" fill="none" />
-    <ellipse cx="8.2" cy="13.5" rx="2.2" ry="3.4" style={{ fill: seasonVar("snow") }} fillOpacity="0.45" transform="rotate(-30 8.2 13.5)" />
-  </svg>
-);
-
-Ornament.propTypes = { color: PropTypes.string.isRequired };
-
-// Each charm: what to draw, its size in pixels, and how long its thread is.
-// Halloween threads are longer so the charms hang below the flags.
-function halloweenCharms() {
-  const bat = { width: 30, height: 15, node: <FlyingBat /> };
-  const pumpkin = { width: 24, height: 23, node: <Pumpkin face /> };
-  const ghost = { width: 18, height: 20, node: <Ghost /> };
-  const spider = { width: 16, height: 16, node: <SpiderShape /> };
-  return [pumpkin, bat, ghost, spider, pumpkin, ghost, bat, pumpkin].map((charm, i) => ({
-    ...charm,
-    thread: i % 2 === 0 ? 14 : 22,
-  }));
-}
-
-function christmasCharms() {
-  return Array.from({ length: SWAGS }, (_, i) => ({
-    width: 16,
-    height: 20,
-    thread: i % 2 === 0 ? 8 : 16,
-    node: <Ornament color={seasonVar(`ornaments-${(i % 4) + 1}`)} />,
-  }));
-}
-
-const THEMES = {
-  [SEASONS.HALLOWEEN]: {
-    flags: ["pumpkin", "night", "bat"].map(seasonVar),
-    string: seasonVar("night"),
-    charms: halloweenCharms,
-  },
-  [SEASONS.CHRISTMAS]: {
-    lights: [1, 2, 3, 4].map((i) => seasonVar(`lights-${i}`)),
-    string: seasonVar("string"),
-    charms: christmasCharms,
-  },
-};
-
-export default function NavbarGarland() {
-  const { season } = useSeason();
-  const theme = THEMES[season];
-  if (!theme) return null;
+// theme: the season's flags or lights, the string's color and its charms
+export default function NavbarGarland({ theme }) {
+  const { zodiac } = useSeason();
 
   const stringColor = theme.string;
-  const charms = theme.charms();
+  const charms = theme.charms({ zodiac });
 
   const spotsAlongString = (spots) => {
     const points = [];
@@ -115,16 +65,26 @@ export default function NavbarGarland() {
         height: DROP + 4,
         pointerEvents: "none",
         "@media print": { display: "none" },
+        // Once the page scrolls, text passes under the header, so the garland fades out of its way
+        transition: "opacity 200ms ease",
+        "header[data-scrolled] &": { opacity: 0 },
         // Hold still for visitors who ask for reduced motion
         "@media (prefers-reduced-motion: reduce)": {
+          transition: "none",
           "& *": { animation: "none !important" },
         },
         "html[data-motion='off'] &": {
+          transition: "none",
           "& *": { animation: "none !important" },
         },
         [muiTheme.breakpoints.down("md")]: {
           // Half the charms on small screens so they don't crowd
           "& .garland-charm:nth-of-type(even)": { display: "none" },
+          // The newer seasons stop above the page title, which starts 36 pixels under the header here
+          ...(theme.fitsSmallScreens && {
+            "& .garland-thread": { height: 6 },
+            "& .garland-art": { top: 4, transform: "scale(0.72)", transformOrigin: "top center" },
+          }),
         },
       })}
     >
@@ -187,8 +147,8 @@ export default function NavbarGarland() {
           }}
         >
           <svg viewBox="0 0 13 15" width="100%" height="100%">
-            <path d="M0 0 L13 0 L6.5 15 Z" style={{ fill: theme.flags[i % theme.flags.length] }} />
-            <path d="M1.5 0 L4 0 L6.5 11 Z" style={{ fill: seasonVar("ghost") }} fillOpacity="0.18" />
+            <path d="M0 0 L13 0 L6.5 15 Z" style={{ fill: theme.flags[i % theme.flags.length], stroke: theme.flagEdge }} strokeWidth={theme.flagEdge ? 0.5 : undefined} />
+            <path d="M1.5 0 L4 0 L6.5 11 Z" style={{ fill: theme.shine ?? seasonVar("ghost") }} fillOpacity="0.18" />
           </svg>
         </Box>
       ))}
@@ -212,6 +172,7 @@ export default function NavbarGarland() {
           >
             {/* Thread */}
             <Box
+              className="garland-thread"
               sx={{
                 position: "absolute",
                 top: 0,
@@ -222,6 +183,7 @@ export default function NavbarGarland() {
               }}
             />
             <Box
+              className="garland-art"
               sx={{
                 position: "absolute",
                 top: charm.thread,
@@ -240,3 +202,15 @@ export default function NavbarGarland() {
     </Box>
   );
 }
+
+NavbarGarland.propTypes = {
+  theme: PropTypes.shape({
+    flags: PropTypes.arrayOf(PropTypes.string),
+    lights: PropTypes.arrayOf(PropTypes.string),
+    string: PropTypes.string.isRequired,
+    flagEdge: PropTypes.string,
+    shine: PropTypes.string,
+    fitsSmallScreens: PropTypes.bool,
+    charms: PropTypes.func.isRequired,
+  }).isRequired,
+};

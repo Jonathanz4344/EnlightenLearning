@@ -4,6 +4,7 @@ import Box from "@mui/material/Box";
 import { keyframes } from "@emotion/react";
 import { fall, sway, spin, flapWings, buildWebPath, random, layerSx, motionOnly, fewerOnPhones, seasonVar } from "./shared";
 import { zIndex } from "../../theme/tokens";
+import { twinkle, glide, STARS, onGround, still, SKY_TOP } from "./sceneryKit";
 
 // Halloween, dressed: a faint glow at the screen edges, a spider web in one
 // top corner with a dangling spider, a few bats, and a handful of small
@@ -287,6 +288,130 @@ const fill = { width: "100%", height: "100%" };
 
 // ---- Scene ----
 
+// ---- Scenery on the donate page ----
+
+export function HalloweenScenery() {
+  return (
+    <>
+      {STARS.map((star, i) => (
+        <Box
+          key={`star-${i}`}
+          sx={{
+            position: "absolute",
+            left: `${star.left}%`,
+            top: `${star.top}%`,
+            width: star.size,
+            height: star.size,
+            borderRadius: "50%",
+            backgroundColor: seasonVar("star"),
+            boxShadow: `0 0 4px ${seasonVar("star")}`,
+            animation: `${twinkle} 3s ease-in-out ${star.delay}s infinite`,
+            ...still,
+          }}
+        />
+      ))}
+
+      {/* Moon with a bat gliding past */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: { xs: SKY_TOP.xs, sm: "7%" },
+          right: { xs: "6%", sm: "9%" },
+          width: { xs: 52, sm: 76 },
+          height: { xs: 52, sm: 76 },
+          borderRadius: "50%",
+          backgroundColor: seasonVar("moon"),
+          boxShadow: `0 0 40px 12px ${seasonVar("glow-orange")}`,
+        }}
+      >
+        <Box sx={{ position: "absolute", top: "28%", left: "52%", width: "16%", height: "16%", borderRadius: "50%", backgroundColor: seasonVar("pumpkin-light"), opacity: 0.35 }} />
+        <Box sx={{ position: "absolute", top: "58%", left: "30%", width: "11%", height: "11%", borderRadius: "50%", backgroundColor: seasonVar("pumpkin-light"), opacity: 0.3 }} />
+        <Box
+          sx={{
+            position: "absolute",
+            top: "38%",
+            left: "-30%",
+            width: { xs: 30, sm: 40 },
+            height: { xs: 15, sm: 20 },
+            animation: `${glide} 6s ease-in-out infinite`,
+            "--flap": "0.25s",
+            ...flapWings,
+            ...still,
+          }}
+        >
+          <FlyingBat />
+        </Box>
+      </Box>
+
+      {onGround("left", "3%", 22, 28, <Tombstone />, "stone-1")}
+      {onGround("left", "11%", 34, 33, <Pumpkin face />, "pumpkin-1")}
+      {onGround("right", "12%", 20, 28, <Tombstone cross />, "stone-2")}
+      {onGround("right", "3%", 30, 29, <Pumpkin face />, "pumpkin-2")}
+    </>
+  );
+}
+
+// ---- In the footer scene ----
+
+export const Tombstone = ({ cross }) =>
+  cross ? (
+    <svg viewBox="0 0 22 32" width="100%" height="100%">
+      <path d="M8 1 H14 V9 H21 V15 H14 V31 H8 V15 H1 V9 H8 Z" style={{ fill: seasonVar("stone"), stroke: seasonVar("stone-edge") }} strokeWidth="1" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 24 30" width="100%" height="100%">
+      <path d="M2 29 V11 C2 5 6.5 1 12 1 C17.5 1 22 5 22 11 V29 Z" style={{ fill: seasonVar("stone"), stroke: seasonVar("stone-edge") }} strokeWidth="1" />
+      <path d="M7.5 12 H16.5 M7.5 16 H16.5 M7.5 20 H13" style={{ stroke: seasonVar("stone-edge") }} strokeWidth="1.2" strokeLinecap="round" />
+    </svg>
+  );
+
+Tombstone.propTypes = { cross: PropTypes.bool };
+
+export const DeadTree = () => (
+  <svg viewBox="0 0 60 70" width="100%" height="100%">
+    <path
+      d="M28 70 L29 46 C24 40 16 38 9 30 M24 41 C20 37 18 31 19 25 M29 46 C30 34 27 22 31 10 M30 26 C36 22 42 21 48 14 M41 20 C44 22 49 22 53 20 M31 36 C37 34 43 36 47 33"
+      fill="none"
+      style={{ stroke: seasonVar("night") }}
+      strokeWidth="3.4"
+      strokeLinecap="round"
+    />
+    <path d="M24 70 L28 46 L32 70 Z" style={{ fill: seasonVar("night") }} />
+  </svg>
+);
+
+// ---- The fundraising balloon ----
+
+export const PumpkinRibs = () => (
+  <svg viewBox="0 0 100 100" width="100%" height="100%" style={{ position: "absolute", inset: 0 }} aria-hidden="true">
+    <g strokeWidth="2.5" strokeLinecap="round" style={{ fill: "none", stroke: "var(--el-season-pumpkin-deep)", opacity: 0.5 }}>
+      <path d="M50 3 C30 20 30 80 50 97" />
+      <path d="M50 3 C70 20 70 80 50 97" />
+      <path d="M42 4 C12 22 12 78 42 96" />
+      <path d="M58 4 C88 22 88 78 58 96" />
+    </g>
+  </svg>
+);
+
+export const PumpkinStem = () => (
+  <svg viewBox="0 0 30 30" width="100%" height="100%" aria-hidden="true">
+    <path d="M12 30 C12 22 11 14 8 8 L14 6 C16 13 17 21 17 30 Z" style={{ fill: "var(--el-season-stem)" }} />
+    <path d="M16 15 C20 9 27 9 29 13 C25 16 20 17 16 15 Z" style={{ fill: "var(--el-season-leaf)" }} />
+    <path d="M11 8 C7 2 1 4 2 9 C3 13 8 12 7 9" strokeWidth="1.5" strokeLinecap="round" style={{ fill: "none", stroke: "var(--el-season-leaf)" }} />
+  </svg>
+);
+
+// ---- The mark on the greeting ----
+
+export const PumpkinMark = () => (
+  <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+    <path d="M12 6c.2-1.4.9-2.4 2.3-3" fill="none" stroke="var(--el-season-stem)" strokeWidth="1.6" strokeLinecap="round" />
+    <ellipse cx="8" cy="14" rx="5.5" ry="7" style={{ fill: "var(--el-season-pumpkin-deep)" }} />
+    <ellipse cx="16" cy="14" rx="5.5" ry="7" style={{ fill: "var(--el-season-pumpkin-deep)" }} />
+    <ellipse cx="12" cy="14" rx="5" ry="7.5" style={{ fill: "var(--el-season-pumpkin)" }} />
+  </svg>
+);
+
 export default function Halloween() {
   const treats = useMemo(makeTreats, []);
   const bats = useMemo(makeBats, []);
@@ -306,7 +431,7 @@ export default function Halloween() {
         }}
       />
 
-      <Box aria-hidden="true" sx={layerSx(zIndex.decor + 10)}>
+      <Box aria-hidden="true" sx={layerSx(zIndex.decor)}>
         <CornerWeb side="left" />
         <Spider />
       </Box>

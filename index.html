@@ -35,9 +35,9 @@
   <!-- Self-hosted fonts, preloaded so headings and text paint in the right face -->
   <link rel="preload" as="font" type="font/woff2" href="/fonts/fraunces-latin-opsz-normal.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/inter-latin-wght-normal.woff2" crossorigin />
-  <!-- Pre-paint: read the remembered color mode, the motion setting and any
-       season preview from the query string before anything renders, so there
-       is no flash of the wrong canvas. The React theme reads the same keys. -->
+  <!-- Pre-paint: read the remembered color mode and the motion setting before
+       anything renders, so there is no flash of the wrong canvas. The React
+       theme reads the same keys. -->
   <script>
     (function () {
       try {
@@ -46,9 +46,6 @@
         var dark = mode === "dark" || (mode === "system" && window.matchMedia("(prefers-color-scheme: dark)").matches);
         root.setAttribute("data-theme", dark ? "dark" : "light");
         if (localStorage.getItem("el-motion") === "off") root.setAttribute("data-motion", "off");
-        var params = new URLSearchParams(window.location.search);
-        var season = params.get("season");
-        if (season === "halloween" || season === "christmas") root.setAttribute("data-season", season);
       } catch (error) {
         /* Storage can be blocked; the defaults are light mode and motion on */
       }

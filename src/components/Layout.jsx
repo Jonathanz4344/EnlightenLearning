@@ -6,7 +6,8 @@ import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Footer from "./footer/Footer";
 import Header from "./navBar/Header";
-import SeasonalEffects from "./seasonal/SeasonalEffects";
+import SeasonSlot from "./seasonal/SeasonSlot";
+import { useSeasonPack } from "./seasonal/loadSeason";
 import createSiteTheme from "../theme/createSiteTheme";
 import SeasonContext from "../theme/SeasonContext";
 import { resolveSeason } from "../constants/season";
@@ -25,26 +26,30 @@ function PageFallback() {
 
 export default function Layout() {
   const location = useLocation();
-  const { season, style } = React.useMemo(() => resolveSeason(location.search), [location.search]);
-  const theme = React.useMemo(() => createSiteTheme({ season, style }), [season, style]);
+  const seasonInfo = React.useMemo(() => resolveSeason(location.search), [location.search]);
+  const { season, style } = seasonInfo;
+  // Today's season only: its chunk, or nothing on a plain day
+  const { pack, pending } = useSeasonPack(season);
+  const seasonValue = React.useMemo(() => ({ ...seasonInfo, pack, pending }), [seasonInfo, pack, pending]);
+  const theme = React.useMemo(() => createSiteTheme({ season, seasonTokens: pack?.tokens ?? null, style }), [season, pack, style]);
 
-  // The seasonal CSS variables and decor hang off this attribute
-  React.useEffect(() => {
+  // The seasonal CSS variables and decor hang off this attribute, set before the first paint
+  React.useLayoutEffect(() => {
     const root = document.documentElement;
-    if (season === "normal") root.removeAttribute("data-season");
-    else root.setAttribute("data-season", season);
+    if (pack) root.setAttribute("data-season", season);
+    else root.removeAttribute("data-season");
     root.setAttribute("data-season-style", style);
-  }, [season, style]);
+  }, [season, pack, style]);
 
   return (
-    <SeasonContext.Provider value={{ season, style }}>
+    <SeasonContext.Provider value={seasonValue}>
       <ThemeProvider theme={theme} defaultMode="light" modeStorageKey="el-mode" noSsr disableTransitionOnChange>
         <CssBaseline />
         <ScrollRestoration />
         <a className="el-skip-link" href="#main-content">
           Skip to content
         </a>
-        <SeasonalEffects />
+        <SeasonSlot part="Effects" />
         <Header />
         <Box component="main" id="main-content" sx={{ position: "relative", zIndex: 1 }}>
           <React.Suspense fallback={<PageFallback />}>

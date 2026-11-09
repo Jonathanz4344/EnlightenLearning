@@ -62,8 +62,26 @@ export const flapWings = {
   },
 };
 
+const flutter = keyframes`
+  from { transform: scaleX(1); }
+  to { transform: scaleX(0.5); }
+`;
+
+// Put on a parent of Butterfly to work its wings
+export const flutterWings = {
+  "& .butterfly-wing": {
+    transformBox: "view-box",
+    transformOrigin: "50% 45%",
+    animation: `${flutter} 0.32s ease-in-out infinite alternate`,
+  },
+};
+
 // Season CSS variable, for SVG style props
 export const seasonVar = (name) => `var(--el-season-${name})`;
+
+// The same as a whole style prop: style={fillVar("clover")}
+export const fillVar = (name) => ({ fill: seasonVar(name) });
+export const strokeVar = (name) => ({ stroke: seasonVar(name) });
 
 // A corner spider web: threads fan out from the top-left corner of a square of
 // the given size, joined by rings that sag toward the corner
